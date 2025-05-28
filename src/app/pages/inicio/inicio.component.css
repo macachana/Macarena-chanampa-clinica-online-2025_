@@ -1,0 +1,42 @@
+.image
+{
+    background-image: url("https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 88.5vh;
+    margin: 0;
+    filter: brightness(60%);
+}
+
+h1,h2,h3,p{
+    filter: none;
+}
+
+.contenedor
+{
+    position:absolute;
+    top:20%;
+    left:10%;
+    margin-right: 10%;
+    border-radius: .85em;
+    padding: 2%;
+
+    height: auto;
+    
+    width: auto;
+    background-color: black;
+    h1,h2,h3,p{
+        color:white;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: 700;
+    }
+}
+
+.botonesInicio
+{
+    display:flex;
+    flex-direction: row;
+    gap: 20px;
+    text-align: center;
+}
