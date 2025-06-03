@@ -1,33 +1,45 @@
-.image
-{
-    background-image: url("https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 88.5vh;
+body{
     margin: 0;
-    filter: brightness(60%);
+    background: #ececec;
 }
 
-h1,h2,h3,p{
-    filter: none;
-}
-
-.contenedor
+.contenedor-h
 {
-    position:absolute;
-    top:20%;
-    left:10%;
-    margin-right: 10%;
+    position: relative;
+    width: 100%;
+    height: 94.5vh; /* Ocupa toda la altura de la ventana */
+    overflow: hidden;
+}
 
-    padding: 2%;
+.contenedor-h img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: brightness(30%);
+}
 
-    height: auto;
-    width: auto;
-    background-color: black;
-    h1,h2,h3,p{
-        color:white;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-weight: 700;
-    }
+.contenedor {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.459);
+    margin: 0 20%;
+}
+
+.contenedor form{
+    display: flex;
+    flex-direction: column;
+    margin: 0 30% 0 30%;
+}
+
+b{
+    display: flex;
+    justify-content: start;
+    color:white;
 }

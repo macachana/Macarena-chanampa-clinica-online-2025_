@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    </head>
+    <body>
+        <div class="contenedor-h">
+            <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
+            <section class="contenedor">
+                <form class="formulario" [formGroup]="formularioPac">
+                    <label for="nombre"><b>Nombre:</b></label>
+                    <input type="text" formControlName="nombre" placeholder="Introduszca su nombre de pila"/>
+                    <div class="dato-invalido"></div>
+    
+                    <label for="apellido"><b>Apellido:</b></label>
+                    <input type="text" formControlName="apellido" placeholder="Introduszca su apellido"/>
+    
+                    <label for="edad"><b>Edad:</b></label>
+                    <input type="number" formControlName="edad" placeholder="Introduzca su edad"/>
+                    
+                    <label for="dni"><b>DNI:</b></label>
+                    <input type="number" formControlName="dni" placeholder="Introduzca su DNI"/>
+    
+                    <label for="obraSocial"><b>Obra social:</b></label>
+                    <input type="text" formControlName="obraSocial" placeholder="Introduszca el nombre de su obra social"/>
+    
+                    <label for="email"><b>Email:</b></label>
+                    <input type="email" formControlName="email" placeholder="Introduszca su email"/>
+    
+                    <label for="password"><b>Contraseña:</b></label>
+                    <input type="password" formControlName="password" placeholder="Introduszca una contraseña"/>
+    
+                    <label for="confirmaPass"><b>Confirmación de contraseña:</b></label>
+                    <input type="password" formControlName="confirmaPass" placeholder="Vuelva a introducir su contraseña"/>
+
+                    <label for="imgPerfil"><b>Imagen de perfil:</b></label>
+                    <input type="file" formControlName="imgPerfil" style="color:white;"/>
+
+                    <label for="segundaImgPerfil"><b>Segunda imagen de perfil:</b></label>
+                    <input type="file" formControlName="segundaImgPerfil" style="color:white;" />
+                </form>
+                <br>
+                <div class="botones">
+                    <button routerLink="/registro" type="button" class="btn btn-secondary"><i class="bi bi-reply-fill"></i></button>
+                    <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioPac.invalid">Enviar</button>
+                </div>
+            </section>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+    </body>
+</html>
