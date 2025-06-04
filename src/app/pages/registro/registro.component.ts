@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DatabaseService } from '../../services/database.service';
 
 @Component({
   selector: 'app-registro',
@@ -8,5 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent {
-
+  db = inject(DatabaseService);
 }

@@ -70,3 +70,24 @@ h1,h2,h3,p{
     color: rgb(255, 255, 255);
 }
 
+.registrosAdmin {
+    background: rgba(255, 255, 255, 0.774);
+    border: none;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    font-size: 18px;
+    width:180px;
+}
+
+.registrosAdmin:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.emoji
+{
+    font-size: 60px;
+}

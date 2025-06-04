@@ -13,14 +13,29 @@
         <div class="contenedor">
             <h3>Bienvenido a nuestra clínica virtual. Por favor seleccione su tipo de perfil.</h3>
             <div class="perfiles">
-                <button class="contenedor-especialista" routerLink="/registros/registro-especialista">
-                    <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0xnnDhCwHb4R5uS9mQlB7MsDpGN1ln5YGWA&s" alt="imagenEspecialistas"/> -->
-                    <div class="emoj">🧑🏽‍⚕️</div>ESPECIALISTA
-                </button>
-                <button class="contenedor-paciente" routerLink="/registros/registro-paciente">
-                    <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBAM0kpuY2MUn9BW-ksLYksLaFwCt1snBwbA&s" alt="imagenPaciente"/> -->
-                    <div class="emoj">😷</div>PACIENTE
-                </button>
+                @if(this.db.tipoUsuario == "")
+                {
+                    <button class="contenedor-especialista" routerLink="/registros/registro-especialista">
+                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0xnnDhCwHb4R5uS9mQlB7MsDpGN1ln5YGWA&s" alt="imagenEspecialistas"/> -->
+                        <div class="emoj">🧑🏽‍⚕️</div>ESPECIALISTA
+                    </button>
+                    <button class="contenedor-paciente" routerLink="/registros/registro-paciente">
+                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBAM0kpuY2MUn9BW-ksLYksLaFwCt1snBwbA&s" alt="imagenPaciente"/> -->
+                        <div class="emoj">😷</div>PACIENTE
+                    </button>
+                }
+                @else if(this.db.tipoUsuario == "administrador")
+                {
+                    <button class="contenedor-especialista registrosAdmin" routerLink="/registros/registro-especialista">
+                        <div class="emoji">🧑🏽‍⚕️</div>ESPECIALISTA
+                    </button>
+                    <button class="contenedor-paciente registrosAdmin" routerLink="/registros/registro-paciente">
+                        <div class="emoji">😷</div>PACIENTE
+                    </button>
+                    <button class="contenedor-paciente registrosAdmin" routerLink="/registros/registro-administrador">
+                        <div class="emoji">🧑🏽‍💻</div>ADMINISTRADOR
+                    </button>
+                }
             </div>
             <footer style="margin-top: 2rem;">
                 <p>&copy; 2025 Clínica Online</p>

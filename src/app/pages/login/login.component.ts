@@ -72,7 +72,7 @@ export class LoginComponent{
             icon: "success",
             title: "Bienvenido " + data[0].nombre,
             showConfirmButton: false,
-            timer: 3000
+            timer: 1000
           });
           setTimeout(()=>{
             this.router.navigate(["/home"]);
@@ -81,7 +81,7 @@ export class LoginComponent{
               this.emailIng = "";
               this.claveIng = "";
             },500);
-          },1500);
+          },1000);
         }else
         {
           Swal.fire({
