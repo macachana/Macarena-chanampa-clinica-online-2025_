@@ -11,7 +11,14 @@
     <div class="contenedor-h">
         <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
         <div class="contenedor">
-            <h3>Bienvenido a nuestra clínica virtual. Por favor seleccione su tipo de perfil.</h3>
+            @if(this.db.tipoUsuario == "")
+            {
+                <h3>Bienvenido a nuestra clínica virtual. Por favor seleccione su perfil.</h3>
+            }
+            @else 
+            {
+                <h3>Seleccione el perfil del usuario que quiere registrar</h3>
+            }
             <div class="perfiles">
                 @if(this.db.tipoUsuario == "")
                 {

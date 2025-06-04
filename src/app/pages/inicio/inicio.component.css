@@ -28,7 +28,7 @@ body{
     padding: 2rem;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.459);
+    background-color: rgba(0, 0, 0, 0.63);
     color:white;
     margin-right: 20px;
     margin-left: 20px;
@@ -36,6 +36,16 @@ body{
 
 h1,h2,h3,p{
     filter: none;
+}
+
+.btn
+{
+    font-weight: bold;
+}
+
+.btn:hover
+{
+    box-shadow: 0px 0px 50px rgb(200, 255, 0);
 }
 
 .botonesInicio
