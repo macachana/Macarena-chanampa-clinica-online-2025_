@@ -18,6 +18,7 @@
         <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
         <div class="contenedor">
             <div class="form">
+                <h2>Iniciar sesión</h2>
                 <form [formGroup]="formularioEsp">
                     <label for="email"><b>Correo electrónico:</b></label>
                     <input type="text" formControlName="email" class="form-control" id="email" [(ngModel)]="emailIng"/>
@@ -30,12 +31,12 @@
             </div>
             <br>
             <div class="botonesAcesso">
-                <button class="accesoDir" (click)="accesoDirecto(1)">😷</button>
-                <button class="accesoDir" (click)="accesoDirecto(2)">😷</button>
-                <button class="accesoDir" (click)="accesoDirecto(3)">😷</button>
-                <button class="accesoDir" (click)="accesoDirecto(4)">🧑🏽‍⚕️</button>
-                <button class="accesoDir" (click)="accesoDirecto(5)">👩🏽‍⚕️</button>
-                <button class="accesoDir" (click)="accesoDirecto(6)">🧑🏽‍💻</button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(1)">😷</button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(2)">😷</button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(3)">😷</button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(4)">🧑🏽‍⚕️</button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(5)">👩🏽‍⚕️</button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(6)">🧑🏽‍💻</button>
             </div>
         </div>
     </div>
