@@ -24,6 +24,7 @@
                     <th>DNI</th>
                     <th>Correo</th>
                     <th>Tipo</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,14 +41,24 @@
                         @if(usuario.tipo == "especialista")
                         {
                             <td>👩🏽‍⚕️{{usuario.tipo}}</td>
+                            <td class="botonesAccion">
+                                <button type="button" class="btn btn-outline-success">Habilitar</button>
+                                <button type="button" class="btn btn-outline-danger">Deshabilitar</button>
+                            </td>
                         }
                         @else if(usuario.tipo == "paciente")
                         {
                             <td>😷{{usuario.tipo}}</td>
+                            <td></td>
                         }
                         @else if(usuario.tipo == "administrador")
                         {
                             <td>🧑🏽‍💻{{usuario.tipo}}</td>
+                            <td></td>
+                        }
+                        @else
+                        {
+                            <td></td>                            
                         }
                     </tr>
                     }
