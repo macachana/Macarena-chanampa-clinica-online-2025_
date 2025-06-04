@@ -35,36 +35,33 @@ body{
 
 .perfiles
 {
-    display: flex;
     justify-content: center;
-    gap: 50px;
+    button
+    {
+        margin: 10px;
+    }
 }
 
 button {
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.774);
     border: none;
     text-align: center;
     padding: 1rem;
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
-
-    h3
-    {
-        color: rgb(0, 0, 0);
-    };
+    font-weight: bold;
+    font-size: 18px;
+    width:150px;
 }
 
 button:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
-
-@media (max-width:600px)  { 
-  .contenedor-h {
-    width: 90%;
-    height: 100vh;
-  }
+.emoj
+{
+    font-size: 60px;
 }
 
 h1,h2,h3,p{
