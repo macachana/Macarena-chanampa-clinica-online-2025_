@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { 
@@ -9,9 +9,16 @@ import {
   ReactiveFormsModule,
   ValidationErrors,
   Validators
- } from '@angular/forms';
+} from '@angular/forms';
+
+// services
+import { DatabaseService } from '../../services/database.service';
+import { AuthService } from '../../services/auth.service';
+import { StorageService } from '../../services/storage.service';
 
 import Swal from 'sweetalert2';
+import { Especialista } from '../../clases/especialista';
+import { Usuario } from '../../clases/usuario';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -20,6 +27,12 @@ import Swal from 'sweetalert2';
   styleUrl: './registro-especialista.component.css'
 })
 export class RegistroEspecialistaComponent {
+
+  db = inject(DatabaseService);
+  auth = inject(AuthService);
+  storage = inject(StorageService);
+
+  fotoChange : string = "";
 
   formularioEsp = new FormGroup({
     nombre: new FormControl('',{
@@ -46,7 +59,7 @@ export class RegistroEspecialistaComponent {
     confirmaClave: new FormControl('',{
       validators: [Validators.required]
     }),
-    imagenPerfil: new FormControl('',{
+    foto: new FormControl('',{
       validators: [Validators.required]
     })
   }, {validators: this.verificarConfirmacionClave });
@@ -70,17 +83,37 @@ export class RegistroEspecialistaComponent {
       return null;
   }
 
+  onCambioDeArchivo(evento : any)
+  {
+    const archivo = evento.target.files[0];
+    this.fotoChange = archivo;
+  }
+
   enviar()
   {
     if(this.formularioEsp.valid)
     {
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Especialista registrado. Ahora espere a ser habilitado por administración.",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      const {nombre ,apellido ,edad ,dni ,especialidad ,email ,clave ,foto} = this.formularioEsp.value;
+      
+      if(nombre && apellido && edad && dni && especialidad && email && clave && foto)
+      {
+        const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"especialista");
+        const especialista : Especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad);
+
+        this.storage.guardarImagenPaciente(this.fotoChange,nombre + "_" + especialidad);
+        this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista");
+        this.db.crearUsuario(usuario);
+        this.db.crearEspecialista(especialista);
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Especialista registrado. Ahora espere a ser habilitado por administración.",
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this.clearForm();
+      }
+
     }
     else
     {
@@ -89,8 +122,13 @@ export class RegistroEspecialistaComponent {
         icon: "error",
         title: "Ups. Parece que a ocurrido un error en el registro, vuelva a intentarlo.",
         showConfirmButton: false,
-        timer: 1500
+        timer: 2500
       });
     }
+  }
+
+  clearForm()
+  {
+   this.formularioEsp.reset(); 
   }
 }

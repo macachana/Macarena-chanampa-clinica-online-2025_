@@ -16,37 +16,165 @@
                     <input type="text" formControlName="nombre" placeholder="Introduszca su nombre de pila"/>
                     <div class="dato-invalido"></div>
     
+                    @if(formularioPac.controls.nombre.touched)
+                    {
+                        @if(formularioPac.controls.nombre.hasError("required"))
+                        {
+                            <small style="color:red;">El nombre es obligatorio.</small>
+                        }
+                        @else if(formularioPac.controls.nombre.hasError("minlength"))
+                        {
+                            <small style="color:red;">El nombre debe tener al menos 3 caracteres.</small>
+                        }
+                        @else if(formularioPac.controls.nombre.hasError("maxlength"))
+                        {
+                            <small style="color:red;">El nombre no puede tener más de 35 caracteres.</small>
+                        }
+                    }
+
                     <label for="apellido"><b>Apellido:</b></label>
                     <input type="text" formControlName="apellido" placeholder="Introduszca su apellido"/>
     
+                    @if(formularioPac.controls.apellido.touched)
+                    {
+                        @if(formularioPac.controls.apellido.hasError("required"))
+                        {
+                            <small style="color:red;">El apellido es obligatorio.</small>
+                        }
+                        @else if(formularioPac.controls.apellido.hasError("minlength"))
+                        {
+                            <small style="color:red;">El apellido debe tener al menos 3 caracteres.</small>
+                        }
+                        @else if(formularioPac.controls.apellido.hasError("maxlength"))
+                        {
+                            <small style="color:red;">El apellido no debe tener más de 35 caracteres.</small>
+                        }
+                    }
+
                     <label for="edad"><b>Edad:</b></label>
                     <input type="number" formControlName="edad" placeholder="Introduzca su edad"/>
-                    
+
+                    @if(formularioPac.controls.edad.touched)
+                    {
+                        @if(formularioPac.controls.edad.hasError("required"))
+                        {
+                            <small style="color:red;">La edad es obligatoria.</small>
+                        }
+                        @else if(formularioPac.controls.edad.hasError("max"))
+                        {
+                            <small style="color:red;">¡¡¡Ingrese una edad correcta!!!</small>
+                        }
+                        @else if(formularioPac.controls.edad.hasError("pattern"))
+                        {
+                            <small style="color:red;">No debe tener más de 2 dígitos</small>
+                        }
+                    }
+
                     <label for="dni"><b>DNI:</b></label>
                     <input type="number" formControlName="dni" placeholder="Introduzca su DNI"/>
-    
+
+                    @if(formularioPac.controls.dni.touched)
+                    {
+                        @if(formularioPac.controls.dni.hasError("required"))
+                        {
+                            <small style="color:red;">El DNI es obligatorio.</small>
+                        }
+                        @else if(formularioPac.controls.dni.hasError("pattern"))
+                        {
+                            <small style="color:red;">El dni debe tener entre 7 y 8 dígitos.</small>
+                        }
+                    }
+
                     <label for="obraSocial"><b>Obra social:</b></label>
                     <input type="text" formControlName="obraSocial" placeholder="Introduszca el nombre de su obra social"/>
-    
+
+                    @if(formularioPac.controls.obraSocial.touched)
+                    {
+                        @if(formularioPac.controls.obraSocial.hasError("required"))
+                        {
+                            <small style="color:red;">El nombre de la obra social  es obligatorio.</small>
+                        }
+                        @else if(formularioPac.controls.obraSocial.hasError("minlength"))
+                        {
+                            <small style="color:red;">El nombre de la obra social debe tener mínimo 6 caracteres.</small>
+                        }
+                        @else if(formularioPac.controls.obraSocial.hasError("maxlength"))
+                        {
+                            <small style="color:red;">El nombre de la obra social no debe tener más de 30 caracteres.</small>
+                        }
+                    }
+
                     <label for="email"><b>Email:</b></label>
                     <input type="email" formControlName="email" placeholder="Introduszca su email"/>
-    
+
+                    @if(formularioPac.controls.email.touched)
+                    {
+                        @if(formularioPac.controls.email.hasError("required"))
+                        {
+                            <small style="color:red;">El correo electrónico  es obligatorio.</small>
+                        }
+                        @else if(formularioPac.controls.email.hasError("email"))
+                        {
+                            <small style="color:red;">Error, el formato está mal.</small>
+                        }
+                    }
+
                     <label for="password"><b>Contraseña:</b></label>
-                    <input type="password" formControlName="password" placeholder="Introduszca una contraseña"/>
-    
+                    <input type="password" formControlName="clave" placeholder="Introduszca una contraseña"/>
+
+                    @if(formularioPac.controls.clave.touched)
+                    {
+                        @if(formularioPac.controls.clave.hasError("required"))
+                        {
+                            <small style="color:red;">La clave es obligatoria.</small>
+                        }
+                        @else if(formularioPac.controls.clave.hasError("minlength"))
+                        {
+                            <small style="color:red;">El clave debe tener mínimo 6 caracteres.</small>
+                        }
+                    }
+
                     <label for="confirmaPass"><b>Confirmación de contraseña:</b></label>
-                    <input type="password" formControlName="confirmaPass" placeholder="Vuelva a introducir su contraseña"/>
+                    <input type="password" formControlName="confirmaClave" placeholder="Vuelva a introducir su contraseña"/>
 
-                    <label for="imgPerfil"><b>Imagen de perfil:</b></label>
-                    <input type="file" formControlName="imgPerfil" style="color:white;"/>
+                    @if(formularioPac.controls.confirmaClave.touched)
+                    {
+                        @if(formularioPac.controls.confirmaClave.hasError("required"))
+                        {
+                            <small style="color:red;">La confirmación  es obligatoria.</small>
 
-                    <label for="segundaImgPerfil"><b>Segunda imagen de perfil:</b></label>
-                    <input type="file" formControlName="segundaImgPerfil" style="color:white;" />
+                        }@else if(formularioPac.hasError("noConfirmacion"))
+                        {
+                            <small style="color:red;">La confirmación  debe ser igual a la clave antes ingresada.</small>
+                        }
+                    }
+
+                    <label for="foto"><b>Imagen de perfil:</b></label>
+                    <input type="file" formControlName="foto" style="color:white;" (change)="onCambioDeArchivo($event,1)"/>
+                    @if(formularioPac.controls.foto.touched)
+                    {
+                        @if(formularioPac.controls.foto.hasError("required"))
+                        {
+                            <small style="color:red;">La foto es obligatoria.</small>
+                        }
+                    }
+
+                    <label for="foto02"><b>Segunda imagen de perfil:</b></label>
+                    <input type="file" formControlName="foto02" style="color:white;" (change)="onCambioDeArchivo($event,2)"/>
+                    
+                    @if(formularioPac.controls.foto02.touched)
+                    {
+                        @if(formularioPac.controls.foto02.hasError("required"))
+                        {
+                            <small style="color:red;">La foto es obligatoria.</small>
+                        }
+                    }
+
                 </form>
                 <br>
                 <div class="botones">
                     <button routerLink="/registro" type="button" class="btn btn-secondary"><i class="bi bi-reply-fill"></i></button>
-                    <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioPac.invalid">Enviar</button>
+                    <button (click)="enviar()" type="button" class="btn btn-success">Enviar</button>
                 </div>
             </section>
         </div>

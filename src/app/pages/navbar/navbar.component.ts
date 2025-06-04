@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+
+import { DatabaseService } from '../../services/database.service';
+import { AuthService } from '../../services/auth.service';
+import { Usuario } from '../../clases/usuario';
+
 @Component({
   selector: 'app-navbar',
   imports: [RouterLink],
@@ -8,4 +13,17 @@ import { RouterLink } from '@angular/router';
 })
 export class NavbarComponent {
 
+  db = inject(DatabaseService);
+  auth = inject(AuthService);
+  tipoUsuario : string = "";
+
+  ngOnInit()
+  {
+  }
+
+  cerrarSesion()
+  {
+    this.auth.cerrarSesion();
+    this.db.tipoUsuario = "";
+  }
 }

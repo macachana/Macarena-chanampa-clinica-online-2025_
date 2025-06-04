@@ -1,6 +1,6 @@
 import { Usuario } from "./usuario";
 
-export class Paciente{
+export class Administrador{
     id?: number;
     email: string = "";
     nombre: string = "";
@@ -8,10 +8,8 @@ export class Paciente{
     edad: number = 0;
     dni: number = 0;
     foto: string = "";
-    obraSocial : string = "";
-    foto02: string = "";
 
-    constructor(nombre: string, apellido: string, edad: number, email: string, dni: number,foto: string, foto02: string, obraSocial: string)
+    constructor(nombre:string, apellido:string, edad:number, email:string, dni:number, foto:string)
     {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -19,7 +17,5 @@ export class Paciente{
         this.email = email;
         this.dni = dni;
         this.foto = foto;
-        this.foto02 = foto02;
-        this.obraSocial = obraSocial;
     }
 }

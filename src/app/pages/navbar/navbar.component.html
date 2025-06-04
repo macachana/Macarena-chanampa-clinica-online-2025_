@@ -18,15 +18,60 @@
 
              <div class="collapse navbar-collapse show" id="collapseExample">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav nav-tabs nav-underline">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a routerLink="/login" class="nav-link">Iniciar sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a routerLink="/registro" class="nav-link">Registrarse</a>
-                    </li>
+                    @if(this.db.tipoUsuario == "")
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/login" class="nav-link">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link">Registrarse</a>
+                        </li>
+                    }@else if(this.db.tipoUsuario == "especialista")
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/login" class="nav-link">Turnos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link">Horario</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></a>
+                        </li>
+                    }@else if(this.db.tipoUsuario == "paciente")
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Mi perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/login" class="nav-link">Solicitar turno</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link">Mis turnos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></a>
+                        </li>
+                    }@else if(this.db.tipoUsuario == "administrador")
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/login" class="nav-link">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link">Registrarse</a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></a>
+                        </li>
+                    }
                 </ul>
              </div>
         </div>

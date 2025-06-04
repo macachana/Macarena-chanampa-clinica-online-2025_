@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -16,15 +17,26 @@
     <div class="contenedor-h">
         <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
         <div class="contenedor">
-            <form class="form" [formGroup]="formularioEsp">
-                <label for="email"><b>Correo electrónico:</b></label>
-                <input type="text" formControlName="email" class="form-control" id="email"/>
+            <div class="form">
+                <form [formGroup]="formularioEsp">
+                    <label for="email"><b>Correo electrónico:</b></label>
+                    <input type="text" formControlName="email" class="form-control" id="email" [(ngModel)]="emailIng"/>
+                    <br>
+                    <label for="contra"><b>Contraseña:</b></label>
+                    <input type="password" formControlName="contra" class="form-control" id="contra" [(ngModel)]="claveIng"/>
+                </form>
                 <br>
-                <label for="contra"><b>Contraseñia:</b></label>
-                <input type="password" formControlName="contra" class="form-control" id="contra"/>
-            </form>
+                <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioEsp.invalid">Enviar</button>
+            </div>
             <br>
-            <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioEsp.invalid">Enviar</button>
+            <div class="botonesAcesso">
+                <button class="accesoDir" (click)="accesoDirecto(1)"><i class="bi bi-person"></i>P</button>
+                <button class="accesoDir" (click)="accesoDirecto(2)"><i class="bi bi-person"></i>P</button>
+                <button class="accesoDir" (click)="accesoDirecto(3)"><i class="bi bi-person"></i>P</button>
+                <button class="accesoDir" (click)="accesoDirecto(4)"><i class="bi bi-person"></i>E</button>
+                <button class="accesoDir" (click)="accesoDirecto(5)"><i class="bi bi-person"></i>E</button>
+                <button class="accesoDir" (click)="accesoDirecto(6)"><i class="bi bi-person"></i>A</button>
+            </div>
         </div>
     </div>
 </body>

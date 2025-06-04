@@ -16,6 +16,8 @@ export class AuthService {
   
   constructor() {  
     this.sb.supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event,session);
+      
       this.usuarioActual = session?.user ?? null;
     });
   }
@@ -30,10 +32,11 @@ export class AuthService {
   }
 
   // Crear una Cuenta
-  async crearCuenta(correo:string, contraseña:string){
+  async crearCuenta(correo:string, contraseña:string,nombre:string, apellido:string, dni:number, tipo:string){
     const {data, error} = await this.sb.supabase.auth.signUp({
     email: correo,
-    password: contraseña
+    password: contraseña,
+    options: {data: {nombre,apellido,dni,tipo}}
     });
   }
   

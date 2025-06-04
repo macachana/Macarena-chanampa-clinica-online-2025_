@@ -22,24 +22,51 @@ body{
 }
 
 .contenedor {
+    display: flex;
+    flex-direction: row;
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
     top: 50%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.459);
-    margin: 0 20%;
+    margin: 0 28%;
+    border-radius: .85em;
 }
 
 .contenedor form{
     display: flex;
     flex-direction: column;
-    margin: 0 30% 0 30%;
+    gap: 10px;
 }
 
 b{
     display: flex;
     justify-content: start;
     color:white;
+}
+
+
+.botonesAcesso {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+}
+
+.accesoDir
+{
+    border-radius: .45em;
+}
+
+.bi-person
+{
+    font-size: 25px;
 }

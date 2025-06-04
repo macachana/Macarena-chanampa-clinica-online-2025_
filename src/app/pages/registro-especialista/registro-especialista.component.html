@@ -108,14 +108,14 @@
                         }
                     }
 
-                    <label for="email"><b>Correo electronico:</b></label>
+                    <label for="email"><b>Correo electrónico:</b></label>
                     <input type="email" formControlName="email" placeholder="Introduzca su correo electronico"/>
 
                     @if(formularioEsp.controls.email.touched)
                     {
                         @if(formularioEsp.controls.email.hasError("required"))
                         {
-                            <small style="color:red;">El correo electronico es obligatorio.</small>
+                            <small style="color:red;">El correo electrónico  es obligatorio.</small>
                         }
                         @else if(formularioEsp.controls.email.hasError("email"))
                         {
@@ -134,7 +134,7 @@
                         }
                         @else if(formularioEsp.controls.clave.hasError("minlength"))
                         {
-                            <small style="color:red;">El clave debe tener minimo 6 caracteres.</small>
+                            <small style="color:red;">El clave debe tener mínimo 6 caracteres.</small>
                         }
                     }
 
@@ -145,19 +145,20 @@
                     {
                         @if(formularioEsp.controls.confirmaClave.hasError("required"))
                         {
-                            <small style="color:red;">La confirmacion es obligatoria.</small>
+                            <small style="color:red;">La confirmación  es obligatoria.</small>
 
                         }@else if(formularioEsp.hasError("noConfirmacion"))
                         {
-                            <small style="color:red;">La confirmacion debe ser igual a la clave antes ingresada.</small>
+                            <small style="color:red;">La confirmación  debe ser igual a la clave antes ingresada.</small>
                         }
                     }
 
                     <br>
-                    <input type="file" formControlName="imagenPerfil" style="color:white;"/>
-                    @if(formularioEsp.controls.imagenPerfil.touched)
+                    <label for="foto"><b>Foto de perfil:</b></label>
+                    <input type="file" formControlName="foto" style="color:white;" (change)="onCambioDeArchivo($event)"/>
+                    @if(formularioEsp.controls.foto.touched)
                     {
-                        @if(formularioEsp.controls.imagenPerfil.hasError("required"))
+                        @if(formularioEsp.controls.foto.hasError("required"))
                         {
                             <small style="color:red;">La foto es obligatoria.</small>
                         }

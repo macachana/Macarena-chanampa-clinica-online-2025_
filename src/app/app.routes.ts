@@ -3,9 +3,10 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { ErrorComponent } from './pages/error/error.component';
-import { RouterModule } from '@angular/router';
 import { RegistroEspecialistaComponent } from './pages/registro-especialista/registro-especialista.component';
 import { RegistroPacienteComponent } from './pages/registro-paciente/registro-paciente.component';
+import { HomeComponent } from './pages/home/home.component';
+import { RegistroAdministradorComponent } from './pages/registro-administrador/registro-administrador.component';
 
 export const routes: Routes = [
     {
@@ -28,6 +29,14 @@ export const routes: Routes = [
     {
         path: 'registro-paciente',
         component: RegistroPacienteComponent
+    },
+    {
+        path: 'home',
+        component: HomeComponent
+    },
+    {
+        path: 'registro-administrador',
+        component: RegistroAdministradorComponent
     },
     {
         path: 'error',
