@@ -18,7 +18,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    filter: brightness(30%);
+    filter: brightness(50%);
 }
 
 .contenedor {
@@ -29,8 +29,9 @@ body{
     top: 50%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.459);
-    margin-left: 80px;
-    margin-right: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: .80em;
 }
 
 .perfiles

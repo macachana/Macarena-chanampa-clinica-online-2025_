@@ -7,6 +7,7 @@ import { Paciente } from '../clases/paciente';
 
 import Swal from 'sweetalert2';
 import { Usuario } from '../clases/usuario';
+import { Administrador } from '../clases/administrador';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class DatabaseService {
   apellidoUsuarioActual : string = "";
   idUsuarioIng : number = 0;
   tipoUsuario : string = "";
+  fotoPerfilUsuario : string = "";
 
   constructor() {
     this.supabase = createClient("https://xrexkrbpejzmwszuhags.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZXhrcmJwZWp6bXdzenVoYWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjQ1NzUsImV4cCI6MjA2MDQwMDU3NX0.rX9uMza6cojqtEKNMtrCoTSSyID9LVGc0x6gjTkOtLI");
@@ -25,7 +27,7 @@ export class DatabaseService {
   async listarUsuarios()
   {
     const { data, error } = await this.supabase.from("usuarios_clinica").select("*"); 
-    const usuarios = data as Especialista[];
+    const usuarios = data as Usuario[];
     return usuarios;
   }
 
@@ -33,17 +35,6 @@ export class DatabaseService {
   {
     const { data, error } = await this.supabase.from("usuarios_clinica").insert(usuario);
   }
-
-  // async buscarUsuario(email: string) : Promise<Boolean>
-  // {
-  //   const {data, error} = await this.supabase.from("usuarios_clinica").select("*").eq("email",email);
-  //   let estado = false;
-  //   if(data != null)
-  //   {
-  //     estado = true;
-  //   }
-  //   return estado;
-  // }
 
   async averiguarTipoUsuario()
   {
@@ -71,32 +62,6 @@ export class DatabaseService {
     const { data, error } = await this.supabase.from("especialistas").insert(especialista);
   }
 
-  async subirImagenEspecialista(blob: Blob, nombreArchivo: string): Promise<void> {
-    const { data, error } = await this.supabase.storage
-      .from('clinica') // nombre del bucket en Supabase
-      .upload(`especialistas/${nombreArchivo}`, blob, {
-        contentType: 'image/jpeg'
-      });
-
-    if (error) {
-      console.error('Error al subir la imagen:', error.message);
-      Swal.fire({
-        position: "top",
-        icon: "error",
-        title: "error al subir la imagen",
-        showConfirmButton: false,
-        timer: 1500
-      });
-    } else {
-      console.log('Imagen subida:', data?.path);
-    }
-  }
-
-  buscarEspecialista(email: string)
-  {
-
-  }
-
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
   async listarPacientes()
@@ -111,29 +76,15 @@ export class DatabaseService {
     const { data, error } = await this.supabase.from("pacientes").insert(paciente);
   }
 
-  async subirImagenPaciente(blob: Blob, nombreArchivo: string): Promise<void> {
-    const { data, error } = await this.supabase.storage
-      .from('clinica') // nombre del bucket en Supabase
-      .upload(`pacientes/${nombreArchivo}`, blob, {
-        contentType: 'image/jpeg'
-      });
-
-    if (error) {
-      console.error('Error al subir la imagen:', error.message);
-      Swal.fire({
-        position: "top",
-        icon: "error",
-        title: "error al subir la imagen del paciente",
-        showConfirmButton: false,
-        timer: 1500
-      });
-    } else {
-      console.log('Imagen subida:', data?.path);
-    }
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+  
+  async listarAdministrador() {
+    const { data, error } = await this.supabase.from("administradores").select("*");
+    const usuarios = data as Administrador[];
+    return usuarios;
   }
-
-  buscarPaciente(email: string)
-  {
-
+  
+  async crearAdministrador(administrador: Administrador) {
+    const { data, error } = await this.supabase.from("administradores").insert(administrador);
   }
 }

@@ -19,7 +19,7 @@
         <div class="contenedor">
             <div class="form">
                 <h2>Iniciar sesión</h2>
-                <form [formGroup]="formularioEsp">
+                <form [formGroup]="formularioLogin">
                     <label for="email"><b>Correo electrónico:</b></label>
                     <input type="text" formControlName="email" class="form-control" id="email" [(ngModel)]="emailIng"/>
                     <br>
@@ -27,7 +27,7 @@
                     <input type="password" formControlName="contra" class="form-control" id="contra" [(ngModel)]="claveIng"/>
                 </form>
                 <br>
-                <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioEsp.invalid">Enviar</button>
+                <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioLogin.invalid">Enviar</button>
             </div>
             <br>
             <div class="botonesAcesso">

@@ -74,8 +74,6 @@ export class RegistroEspecialistaComponent {
   {
     const clave = group.get('clave')?.value;
     const confirmaClave = group.get('confirmaClave')?.value;
-      console.log("clave: " + clave);
-      console.log("confirmacion: " + confirmaClave);
       
       if(clave && confirmaClave && clave !== confirmaClave)
         return {noConfirmacion: true};
