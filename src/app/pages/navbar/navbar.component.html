@@ -32,13 +32,10 @@
                     }@else if(this.db.tipoUsuario == "especialista")
                     {
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">Inicio</a>
+                            <a routerLink="/login" class="nav-link">Mi perfil</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/login" class="nav-link">Turnos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/registro" class="nav-link">Horario</a>
+                            <a routerLink="/registro" class="nav-link">Mis turnos</a>
                         </li>
                         <li class="nav-item">
                             <a routerLink="/registro" class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></a>
@@ -60,13 +57,16 @@
                     }@else if(this.db.tipoUsuario == "administrador")
                     {
                         <li class="nav-item">
-                            <a href="#" class="nav-link active">Inicio</a>
+                            <a routerLink="/login" class="nav-link">Mi perfil</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link">Solicitar turno</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a routerLink="/registro" class="nav-link">Turnos</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/login" class="nav-link">Iniciar sesión</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/registro" class="nav-link">Registrarse</a>
+                            <a routerLink="/registro" class="nav-link">Usuarios</a>
                         </li>
                         <li class="nav-item">
                             <a routerLink="/registro" class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></a>
