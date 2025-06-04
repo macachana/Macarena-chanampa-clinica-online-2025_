@@ -42,8 +42,8 @@
                         {
                             <td>👩🏽‍⚕️{{usuario.tipo}}</td>
                             <td class="botonesAccion">
-                                <button type="button" class="btn btn-outline-success">Habilitar</button>
-                                <button type="button" class="btn btn-outline-danger">Deshabilitar</button>
+                                <button type="button" class="btn btn-outline-success" (click)="cambiarEstadoEspecialista()" [disabled]="habilitado">Habilitar</button>
+                                <button type="button" class="btn btn-outline-danger" (click)="cambiarEstadoEspecialista()" [disabled]="!habilitado">Deshabilitar</button>
                             </td>
                         }
                         @else if(usuario.tipo == "paciente")
