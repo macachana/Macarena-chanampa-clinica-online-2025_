@@ -15,56 +15,58 @@
         <div class="contenedor">
             <button type="button" class="btn btn-dark" routerLink="/registro">Agregar usuario</button>
             <h3>Lista de usuarios registrados</h3>
-            <table class="table table-light table-striped-columns">
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>DNI</th>
-                    <th>Correo</th>
-                    <th>Tipo</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if(listaUsuarios.length > 0)
-                {
-                    @for(usuario of listaUsuarios; track usuario.id)
-                    {
-                    <tr class="table-primary">
-                        <td><i class="bi bi-person-circle"></i></td>
-                        <td>{{ usuario.nombre }}</td>
-                        <td>{{ usuario.apellido }}</td>
-                        <td>{{ usuario.dni }}</td>
-                        <td>{{ usuario.email }}</td>
-                        @if(usuario.tipo == "especialista")
-                        {
-                            <td>👩🏽‍⚕️{{usuario.tipo}}</td>
-                            <td class="botonesAccion">
-                                <button type="button" class="btn btn-outline-success" (click)="cambiarEstadoEspecialista()" [disabled]="habilitado">Habilitar</button>
-                                <button type="button" class="btn btn-outline-danger" (click)="cambiarEstadoEspecialista()" [disabled]="!habilitado">Deshabilitar</button>
-                            </td>
-                        }
-                        @else if(usuario.tipo == "paciente")
-                        {
-                            <td>😷{{usuario.tipo}}</td>
-                            <td></td>                            
-                        }
-                        @else if(usuario.tipo == "administrador")
-                        {
-                            <td>🧑🏽‍💻{{usuario.tipo}}</td>
-                            <td></td>                            
-                        }
-                        @else
-                        {
-                            <td></td>                            
-                        }
+            <div class="container-fluid">
+                <table class="table table-light table-striped-columns">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>DNI</th>
+                        <th>Correo</th>
+                        <th>Tipo</th>
+                        <th></th>
                     </tr>
-                    }
-                }                
-            </tbody>
-            </table>
+                </thead>
+                <tbody>
+                    @if(listaUsuarios.length > 0)
+                    {
+                        @for(usuario of listaUsuarios; track usuario.id)
+                        {
+                        <tr class="table-primary">
+                            <td><i class="bi bi-person-circle"></i></td>
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.apellido }}</td>
+                            <td>{{ usuario.dni }}</td>
+                            <td>{{ usuario.email }}</td>
+                            @if(usuario.tipo == "especialista")
+                            {
+                                <td>👩🏽‍⚕️{{usuario.tipo}}</td>
+                                <td class="botonesAccion">
+                                    <button type="button" class="btn btn-outline-success" (click)="cambiarEstadoEspecialista()" [disabled]="habilitado">Habilitar</button>
+                                    <button type="button" class="btn btn-outline-danger" (click)="cambiarEstadoEspecialista()" [disabled]="!habilitado">Deshabilitar</button>
+                                </td>
+                            }
+                            @else if(usuario.tipo == "paciente")
+                            {
+                                <td>😷{{usuario.tipo}}</td>
+                                <td></td>                            
+                            }
+                            @else if(usuario.tipo == "administrador")
+                            {
+                                <td>🧑🏽‍💻{{usuario.tipo}}</td>
+                                <td></td>                            
+                            }
+                            @else
+                            {
+                                <td></td>                            
+                            }
+                        </tr>
+                        }
+                    }                
+                </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
