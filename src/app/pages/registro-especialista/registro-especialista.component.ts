@@ -98,7 +98,7 @@ export class RegistroEspecialistaComponent {
         const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"especialista");
         const especialista : Especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad);
 
-        this.storage.guardarImagenPaciente(this.fotoChange,nombre + "_" + especialidad);
+        this.storage.guardarImagenEspecialista(this.fotoChange,nombre + "_" + especialidad);
         this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista");
         this.db.crearUsuario(usuario);
         this.db.crearEspecialista(especialista);

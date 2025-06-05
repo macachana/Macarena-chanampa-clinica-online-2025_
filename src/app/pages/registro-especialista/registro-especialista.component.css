@@ -1,14 +1,15 @@
 body{
     margin: 0;
     background: #ececec;
+    height: auto;
 }
 
 .contenedor-h
 {
     position: relative;
     width: 100%;
-    height: 94.5vh; /* Ocupa toda la altura de la ventana */
-    overflow: hidden;
+    height: 780px; /* Ocupa toda la altura de la ventana */
+    overflow:hidden;
 }
 
 .contenedor-h img
@@ -18,17 +19,14 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    filter: brightness(50%);
+    filter: brightness(40%);
 }
 
 .contenedor {
-    position: relative;
+    position:relative;
     z-index: 2;
     text-align: center;
     padding: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.459);
 }
 
 .contenedor form{

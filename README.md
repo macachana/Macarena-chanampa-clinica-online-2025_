@@ -19,12 +19,14 @@
 ## Alumna: Macarena nicole chanampa 
 
 ## ÍNDICE
-* [pagina de inicio](#paginaInicio)
-* [Pagina de registro](#paginaRegistro)
+* [página de inicio](#paginaInicio)
+* [Página de registro](#paginaRegistro)
+* [Registro de especialista](#registroEspecialistas)
+* [Registro de paciente](#registroPacientes)
 
 ---
 
-## PAGINA DE INICIO
+## PáGINA DE INICIO
 
 ### Desde aquí las personas son recibidas e indicadas a realizar ya sea el inicio de sesión o el registro para acceder a la clínica online.
 <a name="paginaInicio"></a>
@@ -32,8 +34,25 @@
 
 ---
 
-## PAGINA DE REGISTRO
+## PáGINA DE REGISTRO
 
 ### Desde esta página de registro dependiendo del perfil, se podrán inscribir tanto los pacientes como los especialistas que vayan a trabajar en la clínica.
 <a name="paginaRegistro"></a>
 ![PaginaRegistro](./src/assets/pagina_de_registro.png)
+
+---
+
+## PÁGINA DE REGISTRO DE ESPECIALISTAS
+
+### Desde aquí se pueden registrar los especialistas, y al completar los datos, deben esperar hasta que los administradores los habiliten.
+<a name="paginaRegistroEspecialistas"></a>
+![PaginaRegistroEspecialistas](./src/assets/registro_especialista.png)
+
+---
+
+## PáGINA DE REGISTRO DE PACIENTES
+
+### Desde aquí se pueden registrar los pacientes, y al completar los datos. Ya podrán solicitar turnos y gestionarlos.
+<a name="paginaRegistroPacientes"></a>
+![PaginaRegistroEspecialistas](./src/assets/registro_paciente.png)
+

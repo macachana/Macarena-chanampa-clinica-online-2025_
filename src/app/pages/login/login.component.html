@@ -15,28 +15,58 @@
 <body>
     <div class="image"></div>
     <div class="contenedor-h">
-        <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
+        <div class="imagen-fondo">
+            <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
+        </div>
         <div class="contenedor">
             <div class="form">
                 <h2>Iniciar sesión</h2>
                 <form [formGroup]="formularioLogin">
                     <label for="email"><b>Correo electrónico:</b></label>
                     <input type="text" formControlName="email" class="form-control" id="email" [(ngModel)]="emailIng"/>
+                    @if(formularioLogin.controls.email.touched)
+                    {
+                        @if(formularioLogin.controls.email.hasError("required"))
+                        {
+                            <small style="color:red;">El correo electrónico  es obligatorio.</small>
+                        }
+                        @else if(formularioLogin.controls.email.hasError("email"))
+                        {
+                            <small style="color:red;">Error, el formato está mal.</small>
+                        }
+                    }
                     <br>
                     <label for="contra"><b>Contraseña:</b></label>
                     <input type="password" formControlName="contra" class="form-control" id="contra" [(ngModel)]="claveIng"/>
+                    @if(formularioLogin.controls.contra.touched)
+                    {
+                        @if(formularioLogin.controls.contra.hasError("required"))
+                        {
+                            <small style="color:red;">La contra es obligatoria.</small>
+                        }
+                        @else if(formularioLogin.controls.contra.hasError("minlength"))
+                        {
+                            <small style="color:red;">El clave debe tener mínimo 6 caracteres.</small>
+                        }
+                    }
                 </form>
                 <br>
                 <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioLogin.invalid">Enviar</button>
             </div>
             <br>
             <div class="botonesAcesso">
-                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(1)">😷</button>
-                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(2)">😷</button>
-                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(3)">😷</button>
-                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(4)">🧑🏽‍⚕️</button>
-                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(5)">👩🏽‍⚕️</button>
-                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(6)">🧑🏽‍💻</button>
+
+                <!-- pacientes -->
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(1)"><img src="{{imagenesAcceso(1)}}"/></button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(2)"><img src="{{imagenesAcceso(2)}}"/></button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(3)"><img src="{{imagenesAcceso(3)}}"/></button>
+                
+                <!-- especialistas -->
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(4)"><img src="{{imagenesAcceso(4)}}"/></button>
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(5)"><img src="{{imagenesAcceso(5)}}"/></button>
+                
+                <!-- administradores -->
+                <button type="button" class="btn btn-outline-light accesoDir" (click)="accesoDirecto(6)"><img src="{{imagenesAcceso(6)}}"/></button>
             </div>
         </div>
     </div>

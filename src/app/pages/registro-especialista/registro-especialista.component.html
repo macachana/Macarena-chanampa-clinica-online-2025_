@@ -11,7 +11,7 @@
     <body>
         <div class="contenedor-h">
             <img src="https://i.postimg.cc/Y0sGJY9R/56-sin-t-tulo.jpg"/>
-            <section class="contenedor">
+            <section class="contenedor container-fluid">
                 <form [formGroup]="formularioEsp">
                     <label for="nombre"><b>Nombre:</b></label>
                     <input type="text" formControlName="nombre" placeholder="Introduzca su nombre de pila"/>
@@ -153,7 +153,6 @@
                         }
                     }
 
-                    <br>
                     <label for="foto"><b>Foto de perfil:</b></label>
                     <input type="file" formControlName="foto" style="color:white;" (change)="onCambioDeArchivo($event)"/>
                     @if(formularioEsp.controls.foto.touched)

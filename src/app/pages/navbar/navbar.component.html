@@ -19,7 +19,7 @@
 
              <div class="collapse navbar-collapse show" id="collapseExample">
                 <ul class="navbar-nav nav-tabs nav-underline flex-column flex-sm-row">
-                    @if(this.db.tipoUsuario == "")
+                    @if(this.auth.usuarioActual == null || this.db.tipoUsuario == "")
                     {
                         <li class="nav-item">
                             <a routerLink="/inicio" class="nav-link active">Inicio</a>
@@ -30,57 +30,60 @@
                         <li class="nav-item">
                             <a routerLink="/registro" class="nav-link">Registrarse</a>
                         </li>
-                    }@else if(this.db.tipoUsuario == "especialista")
+                    }@else
                     {
-                        <li class="nav-item">
-                            <a routerLink="/home" class="nav-link active">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
-                        </li>
-                    }@else if(this.db.tipoUsuario == "paciente")
-                    {
-                        <li class="nav-item">
-                            <a routerLink="/home" class="nav-link active">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/solicitar_turno" class="nav-link">Solicitar turno</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
-                        </li>
-                    }@else if(this.db.tipoUsuario == "administrador")
-                    {
-                        <li class="nav-item">
-                            <a routerLink="/home" class="nav-link active">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/solicitar_turno" class="nav-link">Solicitar turno</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/turnos" class="nav-link">Turnos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/usuarios" class="nav-link">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
-                        </li>
+                        @if(this.db.tipoUsuario == "especialista")
+                        {
+                            <li class="nav-item">
+                                <a routerLink="/home" class="nav-link active">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
+                            </li>
+                        }@else if(this.db.tipoUsuario == "paciente")
+                        {
+                            <li class="nav-item">
+                                <a routerLink="/home" class="nav-link active">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/solicitar_turno" class="nav-link">Solicitar turno</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
+                            </li>
+                        }@else if(this.db.tipoUsuario == "administrador")
+                        {
+                            <li class="nav-item">
+                                <a routerLink="/home" class="nav-link active">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/solicitar_turno" class="nav-link">Solicitar turno</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/turnos" class="nav-link">Turnos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a routerLink="/usuarios" class="nav-link">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
+                            </li>
+                        }
                     }
                 </ul>
              </div>

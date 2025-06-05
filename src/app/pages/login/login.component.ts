@@ -101,8 +101,8 @@ export class LoginComponent{
     switch(numeroAcceso)
     {
       case 1:
-        this.emailIng = "";
-        this.claveIng = "";
+        this.emailIng = "mariaValle@gmail.com";
+        this.claveIng = "125896";
         // (<HTMLImageElement>document.getElementById("fotoU01")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/";
         break;
       case 2:
@@ -116,8 +116,8 @@ export class LoginComponent{
         // (<HTMLImageElement>document.getElementById("fotoU03")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_45785869";
         break;
       case 4:
-        this.emailIng = "";
-        this.claveIng = "";
+        this.emailIng = "leon_carpio25@gmail.com";
+        this.claveIng = "carpio";
         // (<HTMLImageElement>document.getElementById("fotoU04")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/";
         break;
       case 5:
@@ -139,7 +139,7 @@ export class LoginComponent{
     switch(numeroAcceso)
     {
       case 1:
-        url = "";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Mateo_48799566";
         break;
       case 2:
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Martina_12589635";
@@ -148,10 +148,10 @@ export class LoginComponent{
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_45785869";
         break;
       case 4:
-        url = "";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Leon_Doctor";
         break;
       case 5:
-        url = "";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela_Odontologia";
         break;
       case 6:
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/Roberto_Urizurus";

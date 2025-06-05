@@ -96,7 +96,7 @@ export class RegistroAdministradorComponent {
         const administrador : Administrador = new Administrador(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange);
 
         this.storage.guardarImagenAdministrador(this.fotoChange,nombre + "_" + apellido);
-        this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista");
+        this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"administrador");
         this.db.crearUsuario(usuario);
         this.db.crearAdministrador(administrador);
         Swal.fire({
