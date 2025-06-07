@@ -8,20 +8,31 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
-import { DatabaseService } from '../../services/database.service';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+
+// importación de h captcha
+import { NgHcaptchaModule } from 'ng-hcaptcha';
+
+//
+import { DatabaseService } from '../../services/database.service';
+import { AuthService } from '../../services/auth.service';
 import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,ReactiveFormsModule],
+  imports: [FormsModule,ReactiveFormsModule,NgHcaptchaModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent{
+
+  // variables de hcaptcha
+  robot : boolean = false;
+  expirado : boolean = false;
+  captchaToken: string | null = null;
+
   emailIng = "";
   claveIng = "";
 
@@ -46,6 +57,10 @@ export class LoginComponent{
   {
     this.emailIng = "";
     this.claveIng = "";
+    // Esto hace que hCaptcha llame a `window.onCaptchaSuccess` al validar
+    (window as any).onCaptchaSuccess = (token: string) => {
+      this.captchaToken = token;
+    };
   }
 
   ngOnInit()
@@ -114,6 +129,7 @@ export class LoginComponent{
                   showConfirmButton: false,
                   timer: 1000
                 });
+                this.resetCaptcha();
                 setTimeout(()=>{
                   this.router.navigate(["/home"]);
                   this.clearForm();
@@ -214,4 +230,24 @@ export class LoginComponent{
     this.formularioLogin.reset();
   }
 
+  //////////////////////// HCAPTCHA //////////////////////////
+
+  onCaptchaSuccess(token: string): void {
+    this.captchaToken = token;
+    this.robot = true;
+    this.expirado = false;
+    console.log("Captcha verificado: ", token);
+  }
+
+  onCaptchaExpired(): void {
+    this.captchaToken = null;
+    this.expirado = true;
+    console.log("Captcha expirado");
+  }
+
+  resetCaptcha() {
+    const captchaWidget = (window as any).hcaptcha;
+    if (captchaWidget) captchaWidget.reset();
+    this.captchaToken = null;
+  }
 }

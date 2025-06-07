@@ -10,6 +10,7 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import {NgHcaptchaModule } from 'ng-hcaptcha';
 
 // services
 import { DatabaseService } from '../../services/database.service';
@@ -19,14 +20,20 @@ import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { Especialista } from '../../clases/especialista';
 import { Usuario } from '../../clases/usuario';
+import { HcaptchaService } from '../../services/hcaptcha.service';
 
 @Component({
   selector: 'app-registro-especialista',
-  imports: [FormsModule,ReactiveFormsModule,RouterLink],
+  imports: [FormsModule,ReactiveFormsModule,RouterLink,NgHcaptchaModule],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css'
 })
 export class RegistroEspecialistaComponent {
+
+  // variables de hcaptcha
+  robot : boolean = false;
+  expirado : boolean = false;
+  captchaToken: string | null = null;
 
   db = inject(DatabaseService);
   auth = inject(AuthService);
@@ -109,6 +116,7 @@ export class RegistroEspecialistaComponent {
           showConfirmButton: false,
           timer: 2000
         });
+        this.resetCaptcha();
         this.clearForm();
       }
 
@@ -128,5 +136,26 @@ export class RegistroEspecialistaComponent {
   clearForm()
   {
    this.formularioEsp.reset(); 
+  }
+
+  //////////////////////// HCAPTCHA //////////////////////////
+
+  onCaptchaSuccess(token: string): void {
+    this.captchaToken = token;
+    this.robot = true;
+    this.expirado = false;
+    console.log("Captcha verificado: ", token);
+  }
+
+  onCaptchaExpired(): void {
+    this.captchaToken = null;
+    this.expirado = true;
+    console.log("Captcha expirado");
+  }
+
+  resetCaptcha() {
+    const captchaWidget = (window as any).hcaptcha;
+    if (captchaWidget) captchaWidget.reset();
+    this.captchaToken = null;
   }
 }

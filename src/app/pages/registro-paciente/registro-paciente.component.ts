@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import {NgHcaptchaModule } from 'ng-hcaptcha';
 
 // services
 import { DatabaseService } from '../../services/database.service';
@@ -10,17 +11,29 @@ import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { Paciente } from '../../clases/paciente';
 import { Usuario } from '../../clases/usuario';
+import { HcaptchaService } from '../../services/hcaptcha.service';
 
 @Component({
   selector: 'app-registro-paciente',
-  imports: [FormsModule, ReactiveFormsModule,RouterLink],
+  imports: [FormsModule, ReactiveFormsModule,RouterLink,NgHcaptchaModule
+  ],
   templateUrl: './registro-paciente.component.html',
-  styleUrl: './registro-paciente.component.css'
+  styleUrl: './registro-paciente.component.css',
+  standalone: true
 })
+
 export class RegistroPacienteComponent {
+
+  // variables de hcaptcha
+  robot : boolean = false;
+  expirado : boolean = false;
+  captchaToken: string | null = null;
+
+  // services
   db = inject(DatabaseService);
   auth = inject(AuthService);
   storage = inject(StorageService);
+  captcha = inject(HcaptchaService);
 
   primeraFoto : string = "";
   segundaFoto : string = "";
@@ -62,6 +75,10 @@ export class RegistroPacienteComponent {
     this.formularioPac.statusChanges.subscribe((valor) => {
       console.log(valor);
     });
+    // Esto hace que hCaptcha llame a `window.onCaptchaSuccess` al validar
+    (window as any).onCaptchaSuccess = (token: string) => {
+      this.captchaToken = token;
+    };
   }
 
   verificarConfirmacionClave(group: AbstractControl): ValidationErrors | null
@@ -115,6 +132,7 @@ export class RegistroPacienteComponent {
           showConfirmButton: false,
           timer: 2000
         });
+        this.resetCaptcha();
         this.clearForm();
       }
 
@@ -134,5 +152,26 @@ export class RegistroPacienteComponent {
   clearForm()
   {
     this.formularioPac.reset();
+  }
+
+  //////////////////////// HCAPTCHA //////////////////////////
+
+  onCaptchaSuccess(token: string): void {
+    this.captchaToken = token;
+    this.robot = true;
+    this.expirado = false;
+    console.log("Captcha verificado: ", token);
+  }
+
+  onCaptchaExpired(): void {
+    this.captchaToken = null;
+    this.expirado = true;
+    console.log("Captcha expirado");
+  }
+
+  resetCaptcha() {
+    const captchaWidget = (window as any).hcaptcha;
+    if (captchaWidget) captchaWidget.reset();
+    this.captchaToken = null;
   }
 }

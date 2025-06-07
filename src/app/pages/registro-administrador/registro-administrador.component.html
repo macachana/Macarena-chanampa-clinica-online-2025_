@@ -143,7 +143,15 @@
                             <small style="color:red;">La foto es obligatoria.</small>
                         }
                     }
+                    <br>
+                    <ng-hcaptcha
+                    [siteKey]="'94b8cc4a-8d70-4460-b110-43b0f5b062cc'"
+                    (verify)="onCaptchaSuccess($event)"
+                    (expired)="onCaptchaExpired()"
+                    >
+                    </ng-hcaptcha>
                 </form>
+
                 <br>
                 <div class="botones">
                     <button routerLink="/registro" type="button" class="btn btn-secondary"><i class="bi bi-reply-fill"></i></button>

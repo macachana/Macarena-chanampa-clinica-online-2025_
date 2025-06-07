@@ -10,6 +10,7 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import {NgHcaptchaModule } from 'ng-hcaptcha';
 
 // services
 import { DatabaseService } from '../../services/database.service';
@@ -20,14 +21,22 @@ import Swal from 'sweetalert2';
 import { Especialista } from '../../clases/especialista';
 import { Usuario } from '../../clases/usuario';
 import { Administrador } from '../../clases/administrador';
+import { HcaptchaService } from '../../services/hcaptcha.service';
 
 @Component({
   selector: 'app-registro-administrador',
-  imports: [FormsModule,ReactiveFormsModule,RouterLink],
+  imports: [FormsModule,ReactiveFormsModule,RouterLink,NgHcaptchaModule],
   templateUrl: './registro-administrador.component.html',
   styleUrl: './registro-administrador.component.css'
 })
 export class RegistroAdministradorComponent {
+
+  // variables de hcaptcha
+  robot : boolean = false;
+  expirado : boolean = false;
+  captchaToken: string | null = null;
+  
+  // services
   db = inject(DatabaseService);
   auth = inject(AuthService);
   storage = inject(StorageService);
@@ -106,6 +115,7 @@ export class RegistroAdministradorComponent {
           showConfirmButton: false,
           timer: 2000
         });
+        this.resetCaptcha();
         this.clearForm();
       }
 
@@ -125,5 +135,26 @@ export class RegistroAdministradorComponent {
   clearForm()
   {
    this.formularioAdm.reset(); 
+  }
+
+  //////////////////////// HCAPTCHA //////////////////////////
+
+  onCaptchaSuccess(token: string): void {
+    this.captchaToken = token;
+    this.robot = true;
+    this.expirado = false;
+    console.log("Captcha verificado: ", token);
+  }
+
+  onCaptchaExpired(): void {
+    this.captchaToken = null;
+    this.expirado = true;
+    console.log("Captcha expirado");
+  }
+
+  resetCaptcha() {
+    const captchaWidget = (window as any).hcaptcha;
+    if (captchaWidget) captchaWidget.reset();
+    this.captchaToken = null;
   }
 }
