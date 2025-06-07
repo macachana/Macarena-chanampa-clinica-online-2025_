@@ -77,8 +77,6 @@ export class LoginComponent{
     
     if(data != null)
     {
-      if(this.captchaToken != null)
-      {
         this.db.tipoUsuario = data[0].tipo;
           
         console.log("Tipo de usuario:" + this.db.tipoUsuario);
@@ -166,16 +164,6 @@ export class LoginComponent{
           timer: 2000
         });
       }
-    }else
-    {
-        Swal.fire({
-          position: "top",
-          icon: "error",
-          title: "Ups. usuario no registrado vuelva a intentarlo.",
-          showConfirmButton: false,
-          timer: 2000
-        });
-    }
   }
 
   accesoDirecto(numeroAcceso: number)
