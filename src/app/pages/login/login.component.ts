@@ -57,10 +57,6 @@ export class LoginComponent{
   {
     this.emailIng = "";
     this.claveIng = "";
-    // Esto hace que hCaptcha llame a `window.onCaptchaSuccess` al validar
-    (window as any).onCaptchaSuccess = (token: string) => {
-      this.captchaToken = token;
-    };
   }
 
   ngOnInit()
