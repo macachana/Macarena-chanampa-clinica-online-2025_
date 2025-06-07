@@ -11,6 +11,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
-    { provide: CAPTCHA_CONFIG, useValue: hcaptchaSettings}
+    // { provide: CAPTCHA_CONFIG, useValue: hcaptchaSettings}
   ]
 };
