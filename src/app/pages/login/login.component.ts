@@ -57,20 +57,26 @@ export class LoginComponent{
 
   async enviar()
   {
-    const {data, error} = await this.db.supabase.from("usuarios_clinica").select("*").eq("email",this.emailIng);
+    // traemos de la tabla usuarios_clinica el usuario que coincida con el email ingresado.
+    const { data, error } = await this.db.supabase.from("usuarios_clinica").select("*").eq("email",this.emailIng);
+    
+    
     if(data != null)
     {
       this.db.tipoUsuario = data[0].tipo;
+        
+      console.log("Tipo de usuario:" + this.db.tipoUsuario);
+      if(this.db.tipoUsuario !== "especialista")
+      {
 
-
-      this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
+        // ahora si el tipo no es "especialista", entonces ingresa como cualquier otro usuario.
+        this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
         if(resultado.data.session != null)
         {
-          console.log("tipo de usuario:" + this.db.tipoUsuario);
           Swal.fire({
             position: "top",
             icon: "success",
-            title: "Bienvenido " + data[0].nombre,
+            title: "Bienvenido/a " + data[0].nombre,
             showConfirmButton: false,
             timer: 1000
           });
@@ -81,17 +87,66 @@ export class LoginComponent{
               this.emailIng = "";
               this.claveIng = "";
             },500);
-          },1000);
-        }else
-        {
-          Swal.fire({
-            position: "top",
-            icon: "error",
-            title: "Ups. usuario no registrado vuelva a intentarlo.",
-            showConfirmButton: false,
-            timer: 2000
-          });
+          },1000);           
         }
+        });
+      }
+      else
+      {
+        // en el caso de que el usuario es de tipo especialista, consultamos la tabla de especialistas, y buscamos el especialista con el email ingresado.
+        const especialista = await this.db.supabase.from("especialistas").select("*").eq("email",this.emailIng);
+
+        if(especialista.data !== null)
+        {
+          console.log("estado:" + especialista.data[0].estado);
+          
+          // si el estado del especialista es habilitado, se hace el proceso de inicio de sesion.
+          if(especialista.data[0].estado == "habilitado")
+          {
+            this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
+              if(resultado.data.session != null)
+              {
+                console.log("tipo de usuario:" + this.db.tipoUsuario);
+                Swal.fire({
+                  position: "top",
+                  icon: "success",
+                  title: "Bienvenido/a " + data[0].nombre,
+                  showConfirmButton: false,
+                  timer: 1000
+                });
+                setTimeout(()=>{
+                  this.router.navigate(["/home"]);
+                  this.clearForm();
+                  setTimeout(()=>{
+                    this.emailIng = "";
+                    this.claveIng = "";
+                  },500);
+                },1000);
+              }
+            });
+          }
+          else
+          {
+            // si no está habilitado se muestra un mensaje indicando este caso.
+            Swal.fire({
+              position: "top",
+              icon: "error",
+              title: "Error, no fue habilitado por administración, espere a ser habilitado...",
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+        }
+      }
+    }
+    else
+    {
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "Ups. usuario no registrado vuelva a intentarlo.",
+        showConfirmButton: false,
+        timer: 2000
       });
     }
   }
@@ -103,32 +158,26 @@ export class LoginComponent{
       case 1:
         this.emailIng = "mariaValle@gmail.com";
         this.claveIng = "125896";
-        // (<HTMLImageElement>document.getElementById("fotoU01")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/";
         break;
       case 2:
         this.emailIng = "martina_punicedo@gmail.com";
         this.claveIng = "martina";        
-        // (<HTMLImageElement>document.getElementById("fotoU02")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Martina_12589635";
         break;
       case 3:
         this.emailIng = "mariaChanampa_2025@gmail.com";
         this.claveIng = "mariaC";        
-        // (<HTMLImageElement>document.getElementById("fotoU03")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_45785869";
         break;
       case 4:
         this.emailIng = "leon_carpio25@gmail.com";
         this.claveIng = "carpio";
-        // (<HTMLImageElement>document.getElementById("fotoU04")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/";
         break;
       case 5:
         this.emailIng = "marianela.campana22@gmail.com"
         this.claveIng = "marianela";
-        // (<HTMLImageElement>document.getElementById("fotoU05")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela";
         break;
       case 6:
-        this.emailIng = "roberto.urizurus@gmail.com";
+        this.emailIng = "roberto46.urizuru@gmail.com";
         this.claveIng = "roberto";
-        // (<HTMLImageElement>document.getElementById("fotoU06")).src = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/Roberto_Urizurus";
         break;
     }
   }
@@ -154,7 +203,7 @@ export class LoginComponent{
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela_Odontologia";
         break;
       case 6:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/Roberto_Urizurus";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/Roberto_Urizuru";
         break;
     }
     return url;

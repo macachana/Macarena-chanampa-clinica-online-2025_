@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { DatabaseService } from '../../services/database.service';
 import { Usuario } from '../../clases/usuario';
 import { RouterLink } from '@angular/router';
+import { Especialista } from '../../clases/especialista';
 
 @Component({
   selector: 'app-usuarios',
@@ -13,17 +14,46 @@ export class UsuariosComponent {
 
   db = inject(DatabaseService);
   listaUsuarios: Usuario[] = [];
-  habilitado = true;
+  
+  listaEspecialistas: Especialista[] = [];
+
+
   ngOnInit()
   {
     this.db.listarUsuarios().then((usuarios: Usuario[]) => {
       this.listaUsuarios = usuarios;
       console.log(this.listaUsuarios);
     });
+    this.db.listarEspecialistas().then((especialistas: Especialista[])=>{
+      this.listaEspecialistas = especialistas;
+    });
   }
 
-  cambiarEstadoEspecialista()
+  cambiarEstadoEspecialista(estado: string,email: string)
   {
-    this.habilitado = !this.habilitado;
+
+    let estadoNuevo = "";
+    if(estado == "deshabilitado")
+    {
+      estadoNuevo = "habilitado";
+    }
+    else
+    {
+      estadoNuevo = "deshabilitado";
+    }
+    const data = this.db.modificarEstado(estadoNuevo,email);
+    setTimeout(()=>{
+      this.ngOnInit();
+    },2000);
+    console.log(data);
+  }
+
+  estadoBoolean(estado: string):boolean
+  {
+    if(estado == "habilitado")
+    {
+      return true;
+    }
+    return false;
   }
 }

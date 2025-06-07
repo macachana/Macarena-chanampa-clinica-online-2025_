@@ -54,12 +54,28 @@ export class DatabaseService {
 
   async listarEspecialistas() {
     const { data, error } = await this.supabase.from("especialistas").select("*");
-    const usuarios = data as Especialista[];
-    return usuarios;
+    const especialistas = data as Especialista[];
+    return especialistas;
   }
   
   async crearEspecialista(especialista: Especialista) {
     const { data, error } = await this.supabase.from("especialistas").insert(especialista);
+  }
+
+  async modificarEstado(estadoNuevo: string, email: string)
+  {
+    const { data, error } = await this.supabase.from("especialistas").update({ estado: estadoNuevo }).eq('email', email).select('*');
+
+    if(error)
+    {
+      console.error("error al actualizar los datos");
+    }
+    else
+    {
+      console.log("datos actualizados",data);
+    }
+
+    return data;
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -23,15 +23,15 @@ body{
 
 .contenedor {
     position: relative;
-    z-index: 2;
+    /* z-index: 2; */
     text-align: center;
     padding: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 40%;
+    transform: translateY(-60%);
     background-color: rgba(0, 0, 0, 0.459);
     color:white;
-    margin-right: 20px;
-    margin-left: 20px;
+    /* margin-right: 40px; */
+    /* margin-left: 40px; */
 }
 
 .imagenPerfil
