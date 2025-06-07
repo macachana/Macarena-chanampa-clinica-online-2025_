@@ -108,7 +108,7 @@ export class RegistroEspecialistaComponent {
         if(this.captchaToken != null)
         {
           this.storage.guardarImagenEspecialista(this.fotoChange,nombre + "_" + especialidad);
-          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista",this.captchaToken);
+          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista");
           this.db.crearUsuario(usuario);
           this.db.crearEspecialista(especialista);
           Swal.fire({

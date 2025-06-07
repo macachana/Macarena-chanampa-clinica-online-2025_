@@ -107,7 +107,7 @@ export class RegistroAdministradorComponent {
         if(this.captchaToken != null)
         {
           this.storage.guardarImagenAdministrador(this.fotoChange,nombre + "_" + apellido);
-          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"administrador",this.captchaToken);
+          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"administrador");
           this.db.crearUsuario(usuario);
           this.db.crearAdministrador(administrador);
           Swal.fire({

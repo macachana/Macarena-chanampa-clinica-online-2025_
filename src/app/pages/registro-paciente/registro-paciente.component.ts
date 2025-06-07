@@ -122,7 +122,7 @@ export class RegistroPacienteComponent {
         {
           this.storage.guardarImagenPaciente(this.primeraFoto,nombre + "_" + dni);
           this.storage.guardarImagenPaciente(this.segundaFoto,nombre + "_" + dni + "_02");
-          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"paciente",this.captchaToken);
+          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"paciente");
           this.db.crearUsuario(usuario);
           this.db.crearPacientes(paciente);
           Swal.fire({
