@@ -24,7 +24,8 @@ import { StorageService } from '../../services/storage.service';
   selector: 'app-login',
   imports: [FormsModule,ReactiveFormsModule,NgHcaptchaModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  standalone: true
 })
 export class LoginComponent{
 

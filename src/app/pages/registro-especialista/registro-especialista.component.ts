@@ -26,7 +26,8 @@ import { HcaptchaService } from '../../services/hcaptcha.service';
   selector: 'app-registro-especialista',
   imports: [FormsModule,ReactiveFormsModule,RouterLink,NgHcaptchaModule],
   templateUrl: './registro-especialista.component.html',
-  styleUrl: './registro-especialista.component.css'
+  styleUrl: './registro-especialista.component.css',
+  standalone: true
 })
 export class RegistroEspecialistaComponent {
 

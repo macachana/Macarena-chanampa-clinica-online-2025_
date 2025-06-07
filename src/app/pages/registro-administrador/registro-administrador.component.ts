@@ -27,7 +27,8 @@ import { HcaptchaService } from '../../services/hcaptcha.service';
   selector: 'app-registro-administrador',
   imports: [FormsModule,ReactiveFormsModule,RouterLink,NgHcaptchaModule],
   templateUrl: './registro-administrador.component.html',
-  styleUrl: './registro-administrador.component.css'
+  styleUrl: './registro-administrador.component.css',
+  standalone: true
 })
 export class RegistroAdministradorComponent {
 
