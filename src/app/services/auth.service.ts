@@ -32,11 +32,11 @@ export class AuthService {
   }
 
   // Crear una Cuenta
-  async crearCuenta(correo:string, contraseña:string,nombre:string, apellido:string, dni:number, tipo:string){
+  async crearCuenta(correo:string, contraseña:string,nombre:string, apellido:string, dni:number, tipo:string,captchaToken: string){
     const {data, error} = await this.sb.supabase.auth.signUp({
     email: correo,
     password: contraseña,
-    options: {data: {nombre,apellido,dni,tipo}}
+    options: {data: {nombre,apellido,dni,tipo, captchaToken}}
     });
   }
   

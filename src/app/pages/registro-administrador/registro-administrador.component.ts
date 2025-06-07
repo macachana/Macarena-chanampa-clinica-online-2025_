@@ -104,19 +104,32 @@ export class RegistroAdministradorComponent {
         const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"administrador");
         const administrador : Administrador = new Administrador(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange);
 
-        this.storage.guardarImagenAdministrador(this.fotoChange,nombre + "_" + apellido);
-        this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"administrador");
-        this.db.crearUsuario(usuario);
-        this.db.crearAdministrador(administrador);
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Administrador registrado.",
-          showConfirmButton: false,
-          timer: 2000
-        });
-        this.resetCaptcha();
-        this.clearForm();
+        if(this.captchaToken != null)
+        {
+          this.storage.guardarImagenAdministrador(this.fotoChange,nombre + "_" + apellido);
+          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"administrador",this.captchaToken);
+          this.db.crearUsuario(usuario);
+          this.db.crearAdministrador(administrador);
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Administrador registrado.",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.resetCaptcha();
+          this.clearForm();
+        }else
+        {
+          Swal.fire({
+            position: "top",
+            icon: "error",
+            title: "ERROR con el captcha.",
+            showConfirmButton: false,
+            timer: 2000
+          });         
+          this.resetCaptcha(); 
+        }
       }
 
     }

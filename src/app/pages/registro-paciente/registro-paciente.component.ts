@@ -117,23 +117,35 @@ export class RegistroPacienteComponent {
       {
         const paciente : Paciente = new Paciente(nombre,apellido,parseInt(edad),email,parseInt(dni),this.primeraFoto,this.segundaFoto,obraSocial);
         const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"paciente");
-
-
-        this.storage.guardarImagenPaciente(this.primeraFoto,nombre + "_" + dni);
-        this.storage.guardarImagenPaciente(this.segundaFoto,nombre + "_" + dni + "_02");
-
-        this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"paciente")
-        this.db.crearUsuario(usuario);
-        this.db.crearPacientes(paciente);
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Paciente registrado.",
-          showConfirmButton: false,
-          timer: 2000
-        });
-        this.resetCaptcha();
-        this.clearForm();
+        
+        if(this.captchaToken != null)
+        {
+          this.storage.guardarImagenPaciente(this.primeraFoto,nombre + "_" + dni);
+          this.storage.guardarImagenPaciente(this.segundaFoto,nombre + "_" + dni + "_02");
+          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"paciente",this.captchaToken);
+          this.db.crearUsuario(usuario);
+          this.db.crearPacientes(paciente);
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Paciente registrado.",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.resetCaptcha();
+          this.clearForm();
+        }
+        else
+        {
+          Swal.fire({
+            position: "top",
+            icon: "error",
+            title: "ERROR con el captcha.",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.resetCaptcha();
+        }
       }
 
     }

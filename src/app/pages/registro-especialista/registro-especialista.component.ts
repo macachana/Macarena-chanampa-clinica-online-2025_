@@ -105,19 +105,33 @@ export class RegistroEspecialistaComponent {
         const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"especialista");
         const especialista : Especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad,"deshabilitado");
 
-        this.storage.guardarImagenEspecialista(this.fotoChange,nombre + "_" + especialidad);
-        this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista");
-        this.db.crearUsuario(usuario);
-        this.db.crearEspecialista(especialista);
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Especialista registrado. Ahora espere a ser habilitado por administración.",
-          showConfirmButton: false,
-          timer: 2000
-        });
-        this.resetCaptcha();
-        this.clearForm();
+        if(this.captchaToken != null)
+        {
+          this.storage.guardarImagenEspecialista(this.fotoChange,nombre + "_" + especialidad);
+          this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista",this.captchaToken);
+          this.db.crearUsuario(usuario);
+          this.db.crearEspecialista(especialista);
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Especialista registrado. Ahora espere a ser habilitado por administración.",
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.resetCaptcha();
+          this.clearForm();
+        }
+        else
+        {
+          Swal.fire({
+            position: "top",
+            icon: "error",
+            title: "ERROR CON EL CAPTCHA.",
+            showConfirmButton: false,
+            timer: 2000
+          });        
+          this.resetCaptcha();  
+        }
       }
 
     }
