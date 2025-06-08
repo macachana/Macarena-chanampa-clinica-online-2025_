@@ -13,12 +13,13 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 // importación de h captcha
-import { NgHcaptchaModule } from 'ng-hcaptcha';
+// import { NgHcaptchaModule } from 'ng-hcaptcha';
 
 //
 import { DatabaseService } from '../../services/database.service';
 import { AuthService } from '../../services/auth.service';
 import { StorageService } from '../../services/storage.service';
+import { NgHcaptchaModule } from 'ng-hcaptcha';
 
 @Component({
   selector: 'app-login',
@@ -72,95 +73,114 @@ export class LoginComponent{
     // traemos de la tabla usuarios_clinica el usuario que coincida con el email ingresado.
     const { data, error } = await this.db.supabase.from("usuarios_clinica").select("*").eq("email",this.emailIng);
     
-    if(data != null)
+    console.log(data);
+    if(this.captchaToken == null)
     {
-        this.db.tipoUsuario = data[0].tipo;
-          
-        console.log("Tipo de usuario:" + this.db.tipoUsuario);
-        if(this.db.tipoUsuario !== "especialista")
-        {
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "ERROR CON EL CAPTCHA",
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+    else
+    {
 
-          // ahora si el tipo no es "especialista", entonces ingresa como cualquier otro usuario.
-          this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
-          if(resultado.data.session != null)
+      if(data != null)
+      {
+          this.db.tipoUsuario = data[0].tipo;
+          
+          console.log("Tipo de usuario:" + this.db.tipoUsuario);
+          if(this.db.tipoUsuario !== "especialista")
           {
-            Swal.fire({
-              position: "top",
-              icon: "success",
-              title: "Bienvenido/a " + data[0].nombre,
-              showConfirmButton: false,
-              timer: 1000
-            });
-            setTimeout(()=>{
-              this.router.navigate(["/home"]);
-              this.clearForm();
-              setTimeout(()=>{
-                this.emailIng = "";
-                this.claveIng = "";
-              },500);
-            },1000);           
+            // ahora si el tipo no es "especialista", entonces ingresa como cualquier otro usuario.
+            this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
+            
+              console.log(resultado);
+  
+              if(resultado.data.session != null)
+              {
+                Swal.fire({
+                  position: "top",
+                  icon: "success",
+                  title: "Bienvenido/a " + data[0].nombre,
+                  showConfirmButton: false,
+                  timer: 1000
+                });
+                setTimeout(()=>{
+                  this.router.navigate(["/home"]);
+                  this.clearForm();
+                  setTimeout(()=>{
+                    this.emailIng = "";
+                    this.claveIng = "";
+                  },500);
+                },1000);           
+              }
+              });
           }
-          });
+          else
+          {
+            // en el caso de que el usuario es de tipo especialista, consultamos la tabla de especialistas, y buscamos el especialista con el email ingresado.
+            const especialista = await this.db.supabase.from("especialistas").select("*").eq("email",this.emailIng);
+  
+            if(especialista.data !== null)
+            {
+              console.log(especialista.data);
+              console.log("estado:" + especialista.data[0].estado);
+              
+              // si el estado del especialista es habilitado, se hace el proceso de inicio de sesion.
+              if(especialista.data[0].estado == "habilitado")
+              {
+                this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
+                  console.log(resultado);
+                  if(resultado.data.session != null)
+                  {
+                    console.log("tipo de usuario:" + this.db.tipoUsuario);
+                    Swal.fire({
+                      position: "top",
+                      icon: "success",
+                      title: "Bienvenido/a " + data[0].nombre,
+                      showConfirmButton: false,
+                      timer: 1000
+                    });
+                    this.resetCaptcha();
+                    setTimeout(()=>{
+                      this.router.navigate(["/home"]);
+                      this.clearForm();
+                      setTimeout(()=>{
+                        this.emailIng = "";
+                        this.claveIng = "";
+                      },500);
+                    },1000);
+                  }
+                });
+              }
+              else
+              {
+                // si no está habilitado se muestra un mensaje indicando este caso.
+                Swal.fire({
+                  position: "top",
+                  icon: "error",
+                  title: "Error, no fue habilitado por administración, espere a ser habilitado...",
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              }
+            }
+          }
         }
         else
         {
-          // en el caso de que el usuario es de tipo especialista, consultamos la tabla de especialistas, y buscamos el especialista con el email ingresado.
-          const especialista = await this.db.supabase.from("especialistas").select("*").eq("email",this.emailIng);
-
-          if(especialista.data !== null)
-          {
-            console.log("estado:" + especialista.data[0].estado);
-            
-            // si el estado del especialista es habilitado, se hace el proceso de inicio de sesion.
-            if(especialista.data[0].estado == "habilitado")
-            {
-              this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
-                if(resultado.data.session != null)
-                {
-                  console.log("tipo de usuario:" + this.db.tipoUsuario);
-                  Swal.fire({
-                    position: "top",
-                    icon: "success",
-                    title: "Bienvenido/a " + data[0].nombre,
-                    showConfirmButton: false,
-                    timer: 1000
-                  });
-                  this.resetCaptcha();
-                  setTimeout(()=>{
-                    this.router.navigate(["/home"]);
-                    this.clearForm();
-                    setTimeout(()=>{
-                      this.emailIng = "";
-                      this.claveIng = "";
-                    },500);
-                  },1000);
-                }
-              });
-            }
-            else
-            {
-              // si no está habilitado se muestra un mensaje indicando este caso.
-              Swal.fire({
-                position: "top",
-                icon: "error",
-                title: "Error, no fue habilitado por administración, espere a ser habilitado...",
-                showConfirmButton: false,
-                timer: 3000
-              });
-            }
-          }
+          Swal.fire({
+            position: "top",
+            icon: "error",
+            title: "ERROR con el captcha.",
+            showConfirmButton: false,
+            timer: 2000
+          });
         }
-      }
-      else
-      {
-        Swal.fire({
-          position: "top",
-          icon: "error",
-          title: "ERROR con el captcha.",
-          showConfirmButton: false,
-          timer: 2000
-        });
-      }
+    }
   }
 
   accesoDirecto(numeroAcceso: number)

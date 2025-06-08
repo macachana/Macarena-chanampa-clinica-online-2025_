@@ -6,9 +6,11 @@ import { RouterLink } from '@angular/router';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from "./pages/navbar/navbar.component";
 
+import { NgHcaptchaModule } from 'ng-hcaptcha';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NgbCollapseModule, NavbarComponent],
+  imports: [RouterOutlet, NgbCollapseModule, NavbarComponent,NgHcaptchaModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
