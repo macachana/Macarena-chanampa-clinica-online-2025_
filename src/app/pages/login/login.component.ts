@@ -200,11 +200,11 @@ export class LoginComponent{
         this.claveIng = "mariaC";        
         break;
       case 4:
-        this.emailIng = "leon_carpio25@gmail.com";
-        this.claveIng = "carpio";
+        this.emailIng = "armandoValenzuela45@gmail.com";
+        this.claveIng = "armando";
         break;
       case 5:
-        this.emailIng = "marianela.campana22@gmail.com"
+        this.emailIng = "marianelaCampana25@gmail.com"
         this.claveIng = "marianela";
         break;
       case 6:
@@ -229,7 +229,7 @@ export class LoginComponent{
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_45785869";
         break;
       case 4:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Leon_Doctor";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Armando_Doctor";
         break;
       case 5:
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela_Odontologia";
