@@ -56,6 +56,7 @@
                         (expired)="onCaptchaExpired()"
                     >
                     </ng-hcaptcha>
+                    <h4>{{mensajeCaptcha}}</h4>
                 </form>
                 <br>
                 <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioLogin.invalid">Enviar</button>

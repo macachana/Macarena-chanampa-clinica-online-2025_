@@ -35,6 +35,8 @@ export class LoginComponent{
   expirado : boolean = false;
   captchaToken: string | null = null;
 
+  mensajeCaptcha : string = "";
+
   emailIng = "";
   claveIng = "";
 
@@ -166,6 +168,7 @@ export class LoginComponent{
                   showConfirmButton: false,
                   timer: 3000
                 });
+                this.resetCaptcha();
               }
             }
           }
@@ -175,7 +178,7 @@ export class LoginComponent{
           Swal.fire({
             position: "top",
             icon: "error",
-            title: "ERROR con el captcha.",
+            title: "¡VERIFIQUE QUE NO ES UN ROBOT!.",
             showConfirmButton: false,
             timer: 2000
           });
@@ -252,13 +255,14 @@ export class LoginComponent{
     this.captchaToken = token;
     this.robot = true;
     this.expirado = false;
-    console.log("Captcha verificado: ", token);
+    this.mensajeCaptcha = "Captcha verificado ✅";
+    // console.log("Captcha verificado: ", token);
   }
 
   onCaptchaExpired(): void {
     this.captchaToken = null;
     this.expirado = true;
-    console.log("Captcha expirado");
+    this.mensajeCaptcha = "Captcha expirado";
   }
 
   resetCaptcha() {
