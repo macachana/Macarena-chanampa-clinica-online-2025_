@@ -263,11 +263,15 @@ export class LoginComponent{
     this.captchaToken = null;
     this.expirado = true;
     this.mensajeCaptcha = "Captcha expirado";
+    setTimeout(()=>{
+      this.mensajeCaptcha = "";
+    },3000);
   }
 
   resetCaptcha() {
     const captchaWidget = (window as any).hcaptcha;
     if (captchaWidget) captchaWidget.reset();
     this.captchaToken = null;
+    this.mensajeCaptcha = "";
   }
 }
