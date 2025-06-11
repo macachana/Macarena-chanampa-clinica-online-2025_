@@ -31,6 +31,8 @@
                                 <label class="Linfo">{{especialista.apellido}}</label>
                                 <label class="tituloInfo">Edad:</label>   
                                 <label class="Linfo">{{especialista.edad}} años</label>
+                            </div>
+                            <div class="infCol">
                                 <label class="tituloInfo">DNI:</label>
                                 <label class="Linfo">{{especialista.dni}}</label>
                                 <label class="tituloInfo">Email:</label> 
@@ -40,14 +42,30 @@
                                     <label class="tituloInfo">Especialidades:</label>
                                     <label class="Linfo">{{especialista.especialidad}}/{{especialista.segundaEspecialidad}}</label>         
                                     <button class="btn btn-outline-secondary">{{especialista.especialidad}}</button>
-                                    <button class="btn btn-outline-secondary">{{especialista.segundaEspecialidad}}</button>                             
+                                    <button class="btn btn-outline-secondary" (click)="cambiarEspecialidadElegida(especialista.segundaEspecialidad)">{{especialista.segundaEspecialidad}}</button>                             
                                 }
                                 @else {
                                     <label class="tituloInfo">Especialidad:</label>
                                     <label class="Linfo">{{especialista.especialidad}}</label>                                  
                                 }
                             </div>
-                            <div class="infCol">  
+                            <div class="infCol">
+                                <div class="botonesRow">
+                                    <button class="btn btn-primary" (click)="agregarHorario('lunes')">Lunes</button>
+                                    <button class="btn btn-primary" (click)="agregarHorario('martes')">Martes</button>
+                                    <button class="btn btn-primary" (click)="agregarHorario('miercoles')">Miercoles</button>
+                                </div>
+                                <div class="botonesRow">
+                                    <button class="btn btn-primary" (click)="agregarHorario('jueves')">Jueves</button>
+                                    <button class="btn btn-primary" (click)="agregarHorario('viernes')">Viernes</button>
+                                    <button class="btn btn-primary" (click)="agregarHorario('sabado')">Sabado</button>
+                                </div>
+                                <select class="form-select" aria-label="Duración de consulta" id="duracionElegida">
+                                <option selected>30 min</option>
+                                <option value="1">60 min</option>
+                                <option value="2">90 min</option>
+                                <option value="3">120 min</option>
+                                </select>
                             </div>
                         </div>
                     }

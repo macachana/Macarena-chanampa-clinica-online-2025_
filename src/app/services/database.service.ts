@@ -199,4 +199,25 @@ export class DatabaseService {
       "mensaje":mensaje
     });
   }
+
+  //////////////////////////// HORARIOS ////////////////////////////
+  async agregarHorario(idEspecialista: number, dia: string, especialidad: string, duracion: number)
+  {
+    const { data, error } = await this.supabase.from("horarios-especialistas").insert({
+      "especialista":idEspecialista,
+      "dia":dia,
+      "estado":"ocupado",
+      "especialidad":especialidad,
+      "duracion":duracion
+    });
+    
+    if(error)
+    {
+      console.error("Horario no agregado.");
+    }
+    else
+    {
+      console.log("Horario agregado.");
+    }
+  }
 }
