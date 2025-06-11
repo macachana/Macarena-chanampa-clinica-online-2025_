@@ -1,1 +1,62 @@
-<p>turnos works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="contenedor-h">
+        <div class="imagenFondo">
+            <img src="https://i.postimg.cc/MK4HPRB3/59-C64206-ADC9-47-BF-961-C-F2-CA5750-A25-D.png"/>
+        </div>
+        <div class="contenedor">
+            <div class="input-group mb-3 filtro">
+                <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
+                <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
+                <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
+            </div>                
+            <table class="table table-info table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Especialista</th>
+                        <th>Especialidad</th>
+                        <th>Paciente</th>
+                        <th>Obra social</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        @if(this.listaTurnos.length > 0)
+                        {
+                            @for(turno of listaTurnos; track turno.id)
+                            {
+                                <tr>
+                                    <td>{{ turno.id }}</td>
+                                    <td>{{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }} </td>
+                                    <td>{{ turno.especialista.nombre }}</td>
+                                    <td>{{ turno.especialidad }}</td>
+                                    <td>{{ turno.paciente.nombre }}</td>
+                                    <td>{{ turno.paciente.obraSocial }}</td>
+                                    <td>{{ turno.estado.toUpperCase() }}</td>
+                                    @if(turno.estado == "solicitado")
+                                    {
+                                        <td>
+                                            <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>
+                                        </td>                                                
+                                    }
+                                    @else 
+                                    {
+                                        <td></td>
+                                    }
+                                </tr>
+                            }
+                        }
+                </tbody>
+            </table>    
+        </div>
+    </div>
+</body>
+</html>

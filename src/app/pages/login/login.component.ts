@@ -12,10 +12,6 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-// importación de h captcha
-// import { NgHcaptchaModule } from 'ng-hcaptcha';
-
-//
 import { DatabaseService } from '../../services/database.service';
 import { AuthService } from '../../services/auth.service';
 import { StorageService } from '../../services/storage.service';
@@ -92,6 +88,9 @@ export class LoginComponent{
       if(data != null)
       {
           this.db.tipoUsuario = data[0].tipo;
+          this.db.emailUsuarioAct = data[0].email;
+          this.db.nombreUsuarioActual = data[0].nombre;
+          this.db.idUsuarioIng = data[0].id;
           
           console.log("Tipo de usuario:" + this.db.tipoUsuario);
           if(this.db.tipoUsuario !== "especialista")
@@ -188,6 +187,7 @@ export class LoginComponent{
 
   accesoDirecto(numeroAcceso: number)
   {
+    this.resetCaptcha();
     switch(numeroAcceso)
     {
       case 1:
@@ -195,12 +195,12 @@ export class LoginComponent{
         this.claveIng = "125896";
         break;
       case 2:
-        this.emailIng = "martina_punicedo@gmail.com";
+        this.emailIng = "martinaCaseros@hotmail.com";
         this.claveIng = "martina";        
         break;
       case 3:
-        this.emailIng = "mariaChanampa_2025@gmail.com";
-        this.claveIng = "mariaC";        
+        this.emailIng = "mariaChanampa@gmail.com";
+        this.claveIng = "mariachanampa";        
         break;
       case 4:
         this.emailIng = "armandoValenzuela45@gmail.com";
@@ -223,13 +223,13 @@ export class LoginComponent{
     switch(numeroAcceso)
     {
       case 1:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Mateo_48799566";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Mateo_46785654";
         break;
       case 2:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Martina_12589635";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Martina_42458785";
         break;
       case 3:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_45785869";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_40789654";
         break;
       case 4:
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Armando_Doctor";

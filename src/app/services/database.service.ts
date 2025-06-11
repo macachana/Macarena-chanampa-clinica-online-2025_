@@ -15,14 +15,21 @@ import { Administrador } from '../clases/administrador';
 export class DatabaseService {
   supabase;
   nombreUsuarioActual : string= "";
-  apellidoUsuarioActual : string = "";
   idUsuarioIng : number = 0;
   tipoUsuario : string = "";
-  fotoPerfilUsuario : string = "";
+  emailUsuarioAct : string = "";
+  // fotoPerfilUsuario : string = "";
+  
+  mostrarCuestionario : boolean = false;
+  idTurno : number = 0;
+
+  cuestionarioTerminado : boolean = false;
 
   constructor() {
     this.supabase = createClient("https://xrexkrbpejzmwszuhags.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZXhrcmJwZWp6bXdzenVoYWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjQ1NzUsImV4cCI6MjA2MDQwMDU3NX0.rX9uMza6cojqtEKNMtrCoTSSyID9LVGc0x6gjTkOtLI");
   }
+
+  //////////////////////////// USUARIOS ////////////////////////////
 
   async listarUsuarios()
   {
@@ -50,7 +57,7 @@ export class DatabaseService {
     }
   } 
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////// ESPECIALISTAS ////////////////////////////
 
   async listarEspecialistas() {
     const { data, error } = await this.supabase.from("especialistas").select("*");
@@ -78,7 +85,7 @@ export class DatabaseService {
     return data;
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////// PACIENTES ////////////////////////////
 
   async listarPacientes()
   {
@@ -92,7 +99,7 @@ export class DatabaseService {
     const { data, error } = await this.supabase.from("pacientes").insert(paciente);
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////// ADMINISTRADORES ////////////////////////////
   
   async listarAdministrador() {
     const { data, error } = await this.supabase.from("administradores").select("*");
@@ -102,5 +109,67 @@ export class DatabaseService {
   
   async crearAdministrador(administrador: Administrador) {
     const { data, error } = await this.supabase.from("administradores").insert(administrador);
+  }
+
+  //////////////////////////// TURNOS ////////////////////////////
+
+  async listarTurnos()
+  {
+    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(nombre,email),estado,paciente(nombre,email,obraSocial),especialidad");
+    let turnos : any[] = [];
+    if(data)
+    {
+      turnos = data;
+    }
+
+    return turnos;
+  }
+
+  async cambiarEstadoTurno(estadoNuevo: string,idTurno: number)
+  {
+    const { data, error } = await this.supabase.from("turnos").update({estado: estadoNuevo}).eq("id",idTurno);
+
+    if(error)
+    {
+      console.error("error al actualizar el estado del paciente");
+    }
+    else
+    {
+      console.log("datos actualizados");
+    }
+
+    return data;
+  }
+
+  async agregarTurno(idEspecialista: number, idPaciente: number, especialidad: string, )
+  {
+    const { data, error } = await this.supabase.from("turnos").insert({
+      "especialista": idEspecialista,
+      "especialidad": especialidad,
+      "paciente": idPaciente,
+      "estado": 'solicitado'
+    });
+  }
+
+  //////////////////////////// COMENTARIOS/RESEÑAS ////////////////////////////
+
+  async listarComentarios()
+  {
+    const { data, error } = await this.supabase.from("cuestionarios").select("id,usuario(id,nombre,tipo),turno(id),mensaje");
+    let comentarios: any[] = [];
+    if(data)
+    {
+      comentarios = data;
+    }
+    return comentarios;
+  }
+
+  async agregarComentario(idUsuario : number,idTurno : number, mensaje: string)
+  {
+    const { data, error } = await this.supabase.from("cuestionarios").insert({
+      "usuario":idUsuario,
+      "turno":idTurno,
+      "mensaje":mensaje
+    });
   }
 }

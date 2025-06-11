@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { DatabaseService } from '../../services/database.service';
 import { AuthService } from '../../services/auth.service';
@@ -21,6 +20,7 @@ export class NavbarComponent {
 
   router = inject(Router);
   tipoUsuario : string = "";
+  bloqueo : boolean = true;
 
   ngOnInit()
   {

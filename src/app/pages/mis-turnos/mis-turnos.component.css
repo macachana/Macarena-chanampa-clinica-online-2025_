@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    background: #ececec;
+}
+
+.contenedor-h
+{
+    position: relative;
+    width: 100%;
+    height: 94.5vh; /* Ocupa toda la altura de la ventana */
+    overflow: hidden;
+}
+
+.contenedor-h img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: brightness(50%);
+}
+
+.contenedor {
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.459);
+    color:white;
+    /* margin-right: 40px;
+    margin-left: 40px; */
+}
+
+.filtro
+{
+    width:60%;
+}
+
+.mensajeBusqueda
+{
+    display: flex;
+    justify-content: start;
+    margin: 5px 0px 10px 0px;
+    font-size: 15px;
+    font-weight: bold;
+}

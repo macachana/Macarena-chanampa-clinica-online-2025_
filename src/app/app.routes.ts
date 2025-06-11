@@ -9,6 +9,7 @@ import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
 import { TurnosComponent } from './pages/turnos/turnos.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { EncuestaComponent } from './pages/encuesta/encuesta.component';
 
 export const routes: Routes = [
     {
@@ -51,6 +52,10 @@ export const routes: Routes = [
     {
         path: 'usuarios',
         component: UsuariosComponent
+    },
+    {
+        path: 'encuesta',
+        component: EncuestaComponent
     },
     {
         path: 'error',
