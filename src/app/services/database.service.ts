@@ -84,6 +84,18 @@ export class DatabaseService {
     return data;
   }
 
+  // async obtenerEspecialidades()
+  // {
+  //   const { data,error } = await this.supabase.from("especialistas").select("especialidad,segundaEspecialidad");
+  //   let especialidades : any[] = [];
+  //   if(data)
+  //   {
+  //     especialidades = data;
+  //   }
+
+  //   return especialidades;
+  // }
+
   //////////////////////////// PACIENTES ////////////////////////////
 
   async listarPacientes()

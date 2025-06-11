@@ -13,7 +13,7 @@
             <img src="https://i.postimg.cc/MK4HPRB3/59-C64206-ADC9-47-BF-961-C-F2-CA5750-A25-D.png"/>
         </div>
         <div class="contenedor">
-            <button type="button" class="btn btn-dark" routerLink="/registro">Agregar usuario</button>
+            <button type="button" class="btn btn-light botonAgregarUsuario" routerLink="/registro">Agregar usuario</button>
             <h3>Lista de usuarios registrados</h3>
                 <table class="table table-light table-bordered border-primary">
                     <thead>
@@ -32,7 +32,25 @@
                             @for(usuario of listaUsuarios; track usuario.id)
                             {
                                 <tr class="table-primary">
-                                    <td><i class="bi bi-person-circle"></i></td>
+                                    @if(usuario.tipo == "administrador")
+                                    {
+                                        <td>
+                                            <img class="imagenPerfil" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/{{usuario.nombre}}_{{usuario.apellido}}"/>
+                                        </td>
+                                    }
+                                    @else if(usuario.tipo == "especialista")
+                                    {
+                                        <td>
+                                            <img class="imagenPerfil" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/{{usuario.nombre}}_Especialista"/>
+                                        </td>
+                                    }
+                                    @else 
+                                    {
+                                        <td>
+                                            <img class="imagenPerfil" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/{{usuario.nombre}}_{{usuario.dni}}"/>
+                                        </td>
+                                    }
+
                                     <td>{{ usuario.nombre }} {{ usuario.apellido }}</td>
                                     <td>{{ usuario.dni }}</td>
                                     <td>{{ usuario.email }}</td>

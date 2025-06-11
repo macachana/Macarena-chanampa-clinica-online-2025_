@@ -232,10 +232,10 @@ export class LoginComponent{
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/Maria_40789654";
         break;
       case 4:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Armando_Doctor";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Armando_Especialista";
         break;
       case 5:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela_Odontologia";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela_Especialista";
         break;
       case 6:
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/Roberto_Urizuru";

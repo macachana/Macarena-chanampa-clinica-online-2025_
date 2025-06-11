@@ -108,6 +108,21 @@
                         }
                     }
 
+                    <label for="segundaEspecialidad"><b>Segunda especialidad (si tiene):</b></label>
+                    <input type="text" formControlName="segundaEspecialidad" placeholder="Seleccione su especialidad"/>
+                    
+                    @if(formularioEsp.controls.especialidad.touched)
+                    {
+                        @if(formularioEsp.controls.especialidad.hasError("minlength"))
+                        {
+                            <small style="color:red;">El nombre de la especialidad debe tener al menos 5 caracteres.</small>
+                        }
+                        @else if(formularioEsp.controls.especialidad.hasError("maxlength"))
+                        {
+                            <small style="color:red;">El nombre de la especialidad no debe tener más de 30 caracteres.</small>
+                        }
+                    }
+                    
                     <label for="email"><b>Correo electrónico:</b></label>
                     <input type="email" formControlName="email" placeholder="Introduzca su correo electronico"/>
 
@@ -169,6 +184,7 @@
                     (expired)="onCaptchaExpired()"
                     >
                     </ng-hcaptcha>
+                    <h4>{{mensajeCaptcha}}</h4>
                 </form>
                 <br>
                 <div class="botones">

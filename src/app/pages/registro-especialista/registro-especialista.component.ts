@@ -42,6 +42,8 @@ export class RegistroEspecialistaComponent {
 
   fotoChange : string = "";
 
+  mensajeCaptcha : string = "";
+
   formularioEsp = new FormGroup({
     nombre: new FormControl('',{
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(35)]
@@ -57,6 +59,9 @@ export class RegistroEspecialistaComponent {
     }),
     especialidad: new FormControl('',{
       validators: [Validators.required, Validators.minLength(6),Validators.maxLength(30)]
+    }),
+    segundaEspecialidad: new FormControl('',{
+      validators: [Validators.minLength(6),Validators.maxLength(30)]
     }),
     email: new FormControl('',{
       validators: [Validators.required, Validators.email]
@@ -99,16 +104,23 @@ export class RegistroEspecialistaComponent {
   {
     if(this.formularioEsp.valid)
     {
-      const {nombre ,apellido ,edad ,dni ,especialidad ,email ,clave ,foto} = this.formularioEsp.value;
+      let especialista : Especialista;
+      const {nombre ,apellido ,edad ,dni ,especialidad ,segundaEspecialidad,email ,clave ,foto} = this.formularioEsp.value;
       
       if(nombre && apellido && edad && dni && especialidad && email && clave && foto)
       {
         const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"especialista");
-        const especialista : Especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad,"deshabilitado");
+        if(segundaEspecialidad)
+        {
+          especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad,segundaEspecialidad,"deshabilitado");
+        }else
+        {
+          especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad,null,"deshabilitado");
+        }
 
         if(this.captchaToken != null)
         {
-          this.storage.guardarImagenEspecialista(this.fotoChange,nombre + "_" + especialidad);
+          this.storage.guardarImagenEspecialista(this.fotoChange,nombre + "_Especialista");
           this.auth.crearCuenta(email,clave,nombre,apellido,parseInt(dni),"especialista");
           this.db.crearUsuario(usuario);
           this.db.crearEspecialista(especialista);
@@ -159,18 +171,23 @@ export class RegistroEspecialistaComponent {
     this.captchaToken = token;
     this.robot = true;
     this.expirado = false;
-    console.log("Captcha verificado: ", token);
+    this.mensajeCaptcha = "Captcha verificado ✅";
+    // console.log("Captcha verificado: ", token);
   }
 
   onCaptchaExpired(): void {
     this.captchaToken = null;
     this.expirado = true;
-    console.log("Captcha expirado");
+    this.mensajeCaptcha = "Captcha expirado";
+    setTimeout(()=>{
+      this.mensajeCaptcha = "";
+    },3000);
   }
 
   resetCaptcha() {
     const captchaWidget = (window as any).hcaptcha;
     if (captchaWidget) captchaWidget.reset();
     this.captchaToken = null;
+    this.mensajeCaptcha = "";
   }
 }

@@ -38,6 +38,8 @@ export class RegistroPacienteComponent {
   primeraFoto : string = "";
   segundaFoto : string = "";
 
+  mensajeCaptcha : string = "";
+
   formularioPac = new FormGroup({
     nombre: new FormControl('',{
       validators: [Validators.required, Validators.minLength(3), Validators.maxLength(35)]
@@ -172,18 +174,23 @@ export class RegistroPacienteComponent {
     this.captchaToken = token;
     this.robot = true;
     this.expirado = false;
-    console.log("Captcha verificado: ", token);
+    this.mensajeCaptcha = "Captcha verificado ✅";
+    // console.log("Captcha verificado: ", token);
   }
 
   onCaptchaExpired(): void {
     this.captchaToken = null;
     this.expirado = true;
-    console.log("Captcha expirado");
+    this.mensajeCaptcha = "Captcha expirado";
+    setTimeout(()=>{
+      this.mensajeCaptcha = "";
+    },3000);
   }
 
   resetCaptcha() {
     const captchaWidget = (window as any).hcaptcha;
     if (captchaWidget) captchaWidget.reset();
     this.captchaToken = null;
+    this.mensajeCaptcha = "";    
   }
 }

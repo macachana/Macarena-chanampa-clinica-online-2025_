@@ -1,38 +1,42 @@
 body{
     margin: 0;
     background: #ececec;
+    height: auto;
 }
 
 .contenedor-h
 {
     position: relative;
     width: 100%;
-    height: 94.5vh; /* Ocupa toda la altura de la ventana */
-    overflow: hidden;
+    height: 120vh; /* Ocupa toda la altura de la ventana */
+    overflow:hidden;
 }
 
-.contenedor-h img
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.459);
+    margin: 50px 0px;
+    color:white;
+}
+
+.imagenFondo img
 {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    filter: brightness(50%);
-}
-
-.contenedor {
-    position: relative;
-    padding: 2rem;
-    text-align: center;
-    margin-top: 50px;
-    background-color: rgba(0, 0, 0, 0.459);
-    color:white;
+    filter: brightness(40%);
 }
 
 .imagenPerfil
 {
-    width: 20;
+    width: 50px;
+    height: auto;
 }
 
 .botonesAccion
@@ -41,4 +45,9 @@ body{
   flex-direction: row;
   gap:10px;
   justify-content: center;
+}
+
+.botonAgregarUsuario
+{
+    margin: 1% 35%;
 }

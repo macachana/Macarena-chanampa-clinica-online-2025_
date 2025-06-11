@@ -8,7 +8,7 @@ body{
 {
     position: relative;
     width: 100%;
-    height: 120vh; /* Ocupa toda la altura de la ventana */
+    height: 130vh; /* Ocupa toda la altura de la ventana */
     overflow:hidden;
 }
 
@@ -19,7 +19,7 @@ body{
     text-align: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.459);
-    margin: 50px 0px;
+    margin: 10px 0px;
     color:white;
 }
 

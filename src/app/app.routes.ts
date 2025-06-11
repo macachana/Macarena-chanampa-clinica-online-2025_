@@ -19,15 +19,18 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        title: 'Inicio de sesión'
     },
     {
         path: 'registro',
-        component: RegistroComponent
+        component: RegistroComponent,
+        title: 'Registro'
     },
     {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
+        title: 'Inicio'
     },
     {
         path: 'registros',
@@ -35,27 +38,33 @@ export const routes: Routes = [
     },
     {
         path: 'mi_perfil',
-        component: MiPerfilComponent
+        component: MiPerfilComponent,
+        title: 'Mi perfil'
     },
     {
         path: 'mis_turnos',
-        component: MisTurnosComponent
+        component: MisTurnosComponent,
+        title: 'Mis turnos'
     },
     {
         path: 'solicitar_turno',
-        component: SolicitarTurnoComponent
+        component: SolicitarTurnoComponent,
+        title: 'Solicitar turno'
     },
     {
         path: 'turnos',
-        component: TurnosComponent
+        component: TurnosComponent,
+        title: 'Lista de turnos'
     },
     {
         path: 'usuarios',
-        component: UsuariosComponent
+        component: UsuariosComponent,
+        title: 'Lista de usuarios'
     },
     {
         path: 'encuesta',
-        component: EncuestaComponent
+        component: EncuestaComponent,
+        title: 'Encuesta'
     },
     {
         path: 'error',

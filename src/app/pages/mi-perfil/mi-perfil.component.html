@@ -21,7 +21,7 @@
                     @if(especialista.email == this.db.emailUsuarioAct)
                     {
                         <div class="imagenes">
-                            <img class="imagen1" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/{{especialista.nombre}}_{{especialista.especialidad}}"/>
+                            <img class="imagen1" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/{{especialista.nombre}}_Especialista"/>
                         </div>
                         <div class="inf">
                             <div class="infCol">
@@ -34,9 +34,18 @@
                                 <label class="tituloInfo">DNI:</label>
                                 <label class="Linfo">{{especialista.dni}}</label>
                                 <label class="tituloInfo">Email:</label> 
-                                <label class="Linfo">{{especialista.email}}</label>
-                                <label class="tituloInfo">Especialidad:</label> 
-                                <label class="Linfo">{{especialista.especialidad}}</label>
+                                <label class="Linfo">{{especialista.email}}</label> 
+                                @if(especialista.segundaEspecialidad != null)
+                                {
+                                    <label class="tituloInfo">Especialidades:</label>
+                                    <label class="Linfo">{{especialista.especialidad}}/{{especialista.segundaEspecialidad}}</label>         
+                                    <button class="btn btn-outline-secondary">{{especialista.especialidad}}</button>
+                                    <button class="btn btn-outline-secondary">{{especialista.segundaEspecialidad}}</button>                             
+                                }
+                                @else {
+                                    <label class="tituloInfo">Especialidad:</label>
+                                    <label class="Linfo">{{especialista.especialidad}}</label>                                  
+                                }
                             </div>
                             <div class="infCol">  
                             </div>
