@@ -45,10 +45,9 @@ export class EncuestaComponent {
   agregarComentario()
   {
     const idUsuario : number = this.db.idUsuarioIng;
-    console.log(idUsuario);
-
     const idTurno : number = this.db.idTurno;
-    console.log(idTurno);
+    const estadoNuevo : string = this.db.estadoNuevoCuestionario;
+
     this.db.agregarComentario(idUsuario,this.db.idTurno,this.comentario).then((data)=>{
       console.log(data);
       if(data == undefined)
@@ -60,6 +59,10 @@ export class EncuestaComponent {
           showConfirmButton: false,
           timer: 2000
         });
+
+        this.db.cambiarEstadoTurno(estadoNuevo,this.db.idTurno);
+        this.db.cambiarContieneComentario(this.db.idTurno);
+
         if(this.db.tipoUsuario == "administrador")
         {
           setTimeout(()=>{
@@ -69,7 +72,7 @@ export class EncuestaComponent {
         else
         {
           setTimeout(()=>{
-            this.router.navigate(["/mis-turnos"]);
+            this.router.navigate(["/mis_turnos"]);
           },2100);
         }
       }

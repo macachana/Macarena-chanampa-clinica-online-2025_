@@ -50,32 +50,42 @@
                                             @if(turno.estado == "aceptado")
                                             {
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>
+                                                    <button type="button" class="btn btn-outline-danger"  (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
                                                 </td>
                                             }
                                             @else if(turno.estado == "realizado")
                                             {
-                                                @for(comentario of listaComentarios; track comentario.id)
+                                                @if(turno.ContieneComentario)
                                                 {
-                                                    @if(comentario.turno.id == turno.id)
-                                                    {
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
-                                                        </td>
-                                                    }
-                                                    @else 
-                                                    {
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-danger" routerLink="/encuesta">CALIFICAR ATENCIÓN</button>
-                                                        </td> 
-                                                    }
-                                                }                                               
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
+                                                    </td> 
+                                                }
+                                                @else 
+                                                {
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('calificado',turno.id)">CALIFICAR ATENCIÓN</button>
+                                                    </td> 
+                                                }                                              
                                             }
                                             @else if(turno.estado == "solicitado")
                                             {
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>
+                                                    <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
                                                 </td>
+                                            }
+                                            @else 
+                                            {
+                                                @if(turno.ContieneComentario)
+                                                {
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
+                                                    </td> 
+                                                }
+                                                @else 
+                                                {
+                                                    <td></td>
+                                                }
                                             }
                                         </tr>
                                     }
@@ -120,18 +130,18 @@
                                             {
                                                 <td>
                                                     <button type="button" class="btn btn-outline-success" (click)="cambiarEstado('realizado',turno.id)">FINALIZAR</button>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>
+                                                    <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
                                                 </td>
                                             }
                                             @else if(turno.estado == "solicitado")
                                             {
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>
+                                                    <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
                                                     <button type="button" class="btn btn-outline-success" (click)="cambiarEstado('aceptado',turno.id)">ACEPTAR</button>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('rechazado',turno.id)">RECHAZAR</button>
+                                                    <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('rechazado',turno.id)">RECHAZAR</button>
                                                 </td>                                                
                                             }
-                                            @else if(turno.estado == "realizado")
+                                            @else
                                             {
                                                 @for(comentario of listaComentarios; track comentario.id)
                                                 {
@@ -142,10 +152,6 @@
                                                         </td>
                                                     }
                                                 }
-                                            }
-                                            @else 
-                                            {
-                                                <td></td>
                                             }
                                         </tr>
                                     }

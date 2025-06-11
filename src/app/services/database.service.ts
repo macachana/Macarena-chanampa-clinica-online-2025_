@@ -22,8 +22,7 @@ export class DatabaseService {
   
   mostrarCuestionario : boolean = false;
   idTurno : number = 0;
-
-  cuestionarioTerminado : boolean = false;
+  estadoNuevoCuestionario : string = "";
 
   constructor() {
     this.supabase = createClient("https://xrexkrbpejzmwszuhags.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZXhrcmJwZWp6bXdzenVoYWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjQ1NzUsImV4cCI6MjA2MDQwMDU3NX0.rX9uMza6cojqtEKNMtrCoTSSyID9LVGc0x6gjTkOtLI");
@@ -115,7 +114,7 @@ export class DatabaseService {
 
   async listarTurnos()
   {
-    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(nombre,email),estado,paciente(nombre,email,obraSocial),especialidad");
+    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(nombre,email),estado,paciente(nombre,email,obraSocial),especialidad,ContieneComentario");
     let turnos : any[] = [];
     if(data)
     {
@@ -136,6 +135,22 @@ export class DatabaseService {
     else
     {
       console.log("datos actualizados");
+    }
+
+    return data;
+  }
+
+  async cambiarContieneComentario(idTurno: number)
+  {
+    const { data, error } = await this.supabase.from("turnos").update({"ContieneComentario":true}).eq("id",idTurno);
+
+    if(error)
+    {
+      console.error("no se pudo actualizar el estado Contiene Comentario");
+    }
+    else
+    {
+      console.log("estado Contiene Comentario actualizado");
     }
 
     return data;

@@ -10,11 +10,11 @@ import {
   Validators
 } from '@angular/forms';
 
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mis-turnos',
-  imports: [FormsModule,ReactiveFormsModule,RouterLink],
+  imports: [FormsModule,ReactiveFormsModule],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css'
 })
@@ -102,34 +102,14 @@ export class MisTurnosComponent {
 
   cambiarEstado(estadoNuevo: string,idTurno : number = 0)
   {
-    if(estadoNuevo == "cancelado" || estadoNuevo == "rechazado")
-    {
-      this.db.mostrarCuestionario = false;
-      this.db.idTurno = idTurno;
-      // redirigir a encuesta
-      this.router.navigate(['/encuesta']);
-      // una ves terminado la encuesta
-      setTimeout(()=>{
-        this.db.cambiarEstadoTurno(estadoNuevo,idTurno).then((data)=>{
-          if(data != null)
-          {
-            this.ngOnInit();
-          }
-        });
-      },1000);
-    }
-    else
-    {
-      console.log("modificar el estado nuevo del tuno: " + idTurno);
-        this.db.cambiarEstadoTurno(estadoNuevo,idTurno).then((data)=>{
-          console.log(data);
-        if(data != null)
-        {
-          this.ngOnInit();
-        }
-      });
-    }
-
+    console.log("modificar el estado nuevo del tuno: " + idTurno);
+      this.db.cambiarEstadoTurno(estadoNuevo,idTurno).then((data)=>{
+        console.log(data);
+      if(data != null)
+      {
+        this.ngOnInit();
+      }
+    });
   }
 
   verComentario(idTurno : number)
@@ -140,6 +120,13 @@ export class MisTurnosComponent {
     setTimeout(()=>{
       this.router.navigate(['/encuesta']);
     },1000);
+  }
+
+  iniciarCuestionarioTurno(estadoNuevo: string,idTurno : number)
+  {
+    this.db.idTurno = idTurno;
+    this.db.estadoNuevoCuestionario = estadoNuevo;
+    this.router.navigate(['/encuesta']);
   }
 }
 

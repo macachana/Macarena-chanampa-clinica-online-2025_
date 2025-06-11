@@ -195,7 +195,7 @@ export class LoginComponent{
         this.claveIng = "125896";
         break;
       case 2:
-        this.emailIng = "martinaCaseros@hotmail.com";
+        this.emailIng = "martinaCaseros@gmail.com";
         this.claveIng = "martina";        
         break;
       case 3:
