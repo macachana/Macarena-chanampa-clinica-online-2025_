@@ -14,8 +14,8 @@
         </div>
         <div class="contenedor">
             <button type="button" class="btn btn-light botonAgregarUsuario" routerLink="/registro">Agregar usuario</button>
-            <h3>Lista de usuarios registrados</h3>
-            <h3>Lista de administradores</h3>
+            <label class="titulo">Lista de usuarios registrados</label>
+            <label class="subTitulo">Lista de administradores</label>
             <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
                 <table class="table table-light table-bordered border-primary">
                     <thead>
@@ -46,7 +46,7 @@
                 </table>
             </div>
 
-            <h3>Lista de especialistas</h3>
+            <label class="subTitulo">Lista de especialistas</label>
             <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
                 <table class="table table-light table-bordered border-primary">
                     <thead>
@@ -86,11 +86,12 @@
                 </table>  
             </div>
 
-            <h3>Lista de pacientes</h3>
+            <label class="subTitulo">Lista de pacientes</label>
             <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
                 <table class="table table-light table-bordered border-primary">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Imagen</th>
                             <th>Nombre</th>
                             <th>Correo</th>
@@ -103,6 +104,7 @@
                             @for(paciente of listaPacientes; track paciente.id)
                             {
                                 <tr class="table-primary">
+                                    <td>{{ paciente.id }}</td>
                                     <td>
                                         <img class="imagenPerfil" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/{{paciente.nombre}}_{{paciente.dni}}"/>
                                     </td>   
