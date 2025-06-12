@@ -27,13 +27,11 @@ body{
     flex-direction: row;
     position: relative;
     text-align: center;
-    align-items: center;
     justify-content: center;
-    top: 50%;
-    transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.459);
     border-radius: .85em;
-    margin: 0px 10px;
+    margin: 20px 10px 0px 10px;
+    height: 95%;
 }
 
 .contenedor h2
@@ -47,7 +45,12 @@ body{
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin: 0px 0px 0px 10px;
+    margin: 100px 0px 0px 20px;
+}
+
+.form
+{
+    margin-top: 10px;
 }
 
 b{
@@ -67,8 +70,6 @@ h4
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    text-align: center;
     padding: 2rem;
 }
 
@@ -98,4 +99,5 @@ h4
 .captcha
 {
     width: 80px;
+    margin-top: 160px;
 }
