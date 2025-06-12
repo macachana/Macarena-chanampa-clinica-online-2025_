@@ -49,6 +49,7 @@
                             <small style="color:red;">El clave debe tener mínimo 6 caracteres.</small>
                         }
                     }
+                    <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioLogin.invalid">Enviar</button>                    
                     <ng-hcaptcha
                         [siteKey]="'94b8cc4a-8d70-4460-b110-43b0f5b062cc'"
                         (verify)="onCaptchaSuccess($event)"
@@ -58,7 +59,6 @@
                     </ng-hcaptcha>
                     <h4>{{mensajeCaptcha}}</h4>
                 </form>
-                <button (click)="enviar()" type="button" class="btn btn-success" [disabled]="formularioLogin.invalid">Enviar</button>
             </div>
             <br>
             <div class="botonesAcesso">
