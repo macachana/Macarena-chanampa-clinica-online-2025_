@@ -13,15 +13,65 @@
             <img src="https://i.postimg.cc/MK4HPRB3/59-C64206-ADC9-47-BF-961-C-F2-CA5750-A25-D.png"/>
         </div>
         <div class="contenedor">
+            <div class="input-group mb-3 filtro">
+                <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
+                <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
+                <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
+            </div>
+            <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
             @if(this.db.tipoUsuario == "paciente")
             {
-                <div class="input-group mb-3 filtro">
-                    <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
-                    <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
-                    <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @if(this.listaTurnos.length > 0)
+                    {
+                        @for(turno of this.listaTurnos; track turno.id)
+                        {
+                            @if(turno.paciente.email == this.db.emailUsuarioAct)
+                            {
+
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">Turno nro: {{ turno.id }}</div>
+                                        <div class="card-body">
+                                            <div>Fecha: {{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }}</div>
+                                            <div>Especialista: {{ turno.especialista.nombre }}</div>
+                                            <div>Especialidad: {{ turno.especialidad }}</div>
+                                            <div>Obra social: {{ turno.paciente.obraSocial }}</div>
+                                            <div>Estado: {{ turno.estado.toUpperCase() }}</div>
+                                            @if(turno.estado == "aceptado")
+                                            {
+                                                    <button type="button" class="btn btn-outline-danger"  (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
+                                            }
+                                            @else if(turno.estado == "realizado")
+                                            {
+                                                @if(turno.ContieneComentario)
+                                                {
+                                                    <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
+                                                }
+                                                @else 
+                                                {
+                                                    <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('calificado',turno.id)">CALIFICAR ATENCIÓN</button>
+                                                }                                              
+                                            }
+                                            @else if(turno.estado == "solicitado")
+                                            {
+                                                <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
+                                            }
+                                            @else 
+                                            {
+                                                @if(turno.ContieneComentario)
+                                                {
+                                                    <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }                
+                    }
                 </div>
-                <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
-                <table class="table table-info table-bordered border-dark">
+                <!-- <table class="table table-info table-bordered border-dark">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -92,15 +142,54 @@
                                 }
                             }
                     </tbody>
-                </table>
+                </table> -->
             }@else 
-            {
-                <div class="input-group mb-3 filtro">
-                    <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
-                    <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
-                    <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
-                </div>                
-                <table class="table table-info table-bordered border-dark">
+            {       
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @if(this.listaTurnos.length > 0)
+                    {
+                        @for(turno of this.listaTurnos; track turno.id)
+                        {
+                            @if(turno.especialista.email == this.db.emailUsuarioAct)
+                            {
+
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">Turno nro: {{ turno.id }}</div>
+                                        <div class="card-body">
+                                            <div>Fecha: {{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }}</div>
+                                            <div>Especialidad: {{ turno.especialidad }}</div>
+                                            <div>Obra social: {{ turno.paciente.obraSocial }}</div>
+                                            <div>Estado: {{ turno.estado.toUpperCase() }}</div>
+                                            @if(turno.estado == "aceptado")
+                                            {
+                                                <button type="button" class="btn btn-outline-success" (click)="cambiarEstado('realizado',turno.id)">FINALIZAR</button>
+                                                <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
+                                            }
+                                            @else if(turno.estado == "solicitado")
+                                            {
+                                                <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
+                                                <button type="button" class="btn btn-outline-success" (click)="cambiarEstado('aceptado',turno.id)">ACEPTAR</button>
+                                                <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('rechazado',turno.id)">RECHAZAR</button>                           
+                                            }
+                                            @else
+                                            {
+                                                @for(comentario of listaComentarios; track comentario.id)
+                                                {
+                                                    @if(comentario.turno.id == turno.id)
+                                                    {
+                                                        <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }                
+                    }
+                </div>        
+                <!-- <table class="table table-info table-bordered border-dark">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -158,7 +247,7 @@
                                 }
                             }
                     </tbody>
-                </table>
+                </table> -->
             }
         </div>
     </div>

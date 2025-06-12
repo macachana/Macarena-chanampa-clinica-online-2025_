@@ -14,8 +14,38 @@
                 <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
                 <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
                 <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
-            </div>                
-            <table class="table table-info table-bordered border-dark">
+            </div>     
+            <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
+            <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                        @if(this.listaTurnos.length > 0)
+                        {
+                            @for(turno of this.listaTurnos; track turno.id)
+                            {
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">Turno nro: {{ turno.id }}</div>
+                                        <div class="card-body">
+                                            <div>Fecha: {{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }}</div>
+                                            <div>Especialista: {{ turno.especialista.nombre }}</div>
+                                            <div>Especialidad: {{ turno.especialidad }}</div>
+                                            <div>Paciente: {{ turno.paciente.nombre }}</div>
+                                            <div>Obra social: {{ turno.paciente.obraSocial }}</div>
+                                            <div>Estado: {{ turno.estado.toUpperCase() }}</div>
+                                            @if(turno.estado == "solicitado")
+                                            {
+                                                <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>                                       
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }                
+                        }
+                </div>           
+            </div>
+
+            <!-- <table class="table table-info table-bordered border-dark">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -55,7 +85,7 @@
                             }
                         }
                 </tbody>
-            </table>    
+            </table>     -->
         </div>
     </div>
 </body>

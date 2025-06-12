@@ -61,6 +61,7 @@ export class TurnosComponent {
   {
     if(this.busquedaTexto != "")
     {
+
       for(let i = 0; i < this.listaTurnos.length; i++)
       {
         if(this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialista.nombre.toLowerCase() || (this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialidad.toLowerCase()))
@@ -85,6 +86,7 @@ export class TurnosComponent {
       else
       {
         this.mensajeEstadoB = "No hay ningun especialista o especialidad con ese nombre";
+        this.listaTurnos = [];
       }
     }
   }
