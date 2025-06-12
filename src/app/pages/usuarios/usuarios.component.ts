@@ -3,6 +3,7 @@ import { DatabaseService } from '../../services/database.service';
 import { Usuario } from '../../clases/usuario';
 import { RouterLink } from '@angular/router';
 import { Especialista } from '../../clases/especialista';
+import { Paciente } from '../../clases/paciente';
 
 @Component({
   selector: 'app-usuarios',
@@ -16,6 +17,7 @@ export class UsuariosComponent {
   listaUsuarios: Usuario[] = [];
   
   listaEspecialistas: Especialista[] = [];
+  listaPacientes: Paciente[] = [];
 
 
   ngOnInit()
@@ -26,6 +28,10 @@ export class UsuariosComponent {
     });
     this.db.listarEspecialistas().then((especialistas: Especialista[])=>{
       this.listaEspecialistas = especialistas;
+    });
+
+    this.db.listarPacientes().then((pacientes: Paciente[])=>{
+      this.listaPacientes = pacientes;
     });
   }
 

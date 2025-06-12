@@ -1,14 +1,13 @@
 body{
     margin: 0;
-    background: #ececec;
-    height: auto;
+    background-color: rgb(44, 0, 0);    
 }
 
 .contenedor-h
 {
     position: relative;
     width: 100%;
-    height: 120vh; /* Ocupa toda la altura de la ventana */
+    height: auto; /* Ocupa toda la altura de la ventana */
     overflow:hidden;
 }
 
@@ -18,8 +17,8 @@ body{
     position: relative;
     text-align: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.459);
-    margin: 50px 0px;
+    margin: 10px;
+    padding: 50px;
     color:white;
 }
 
@@ -35,7 +34,7 @@ body{
 
 .imagenPerfil
 {
-    width: 50px;
+    width: 90px;
     height: auto;
 }
 
@@ -50,4 +49,55 @@ body{
 .botonAgregarUsuario
 {
     margin: 1% 35%;
+}
+
+/* .tarjetaUsuario
+{
+    width: 18em;
+    height: auto;
+    margin: 10px;
+    left: 50%;
+    transform: translate(-50%); 
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+} */
+
+.listaUsuarios
+{
+    padding: 5px;
+}
+
+.este {
+  height: 400px;
+  line-height: 1em;
+  overflow-x: scroll;
+  overflow-y: scroll;
+  width: auto;
+  border: 1px solid;
+  --sb-track-color: #000000;
+  --sb-thumb-color: #fcff61;
+  --sb-size: 15px;  
+}
+
+.este::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.este::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 15px;
+}
+
+.este::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 15px;
+  border: 3px solid;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .este {
+      scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
 }
