@@ -93,6 +93,8 @@
                         <tr>
                             <th>#</th>
                             <th>Imagen</th>
+                            <th>Edad</th>
+                            <th>DNI</th>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Obra social</th>
@@ -108,6 +110,8 @@
                                     <td>
                                         <img class="imagenPerfil" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/{{paciente.nombre}}_{{paciente.dni}}"/>
                                     </td>   
+                                    <td>{{ paciente.edad }}</td>
+                                    <td>{{ paciente.dni }}</td>
                                     <td>{{ paciente.nombre }} {{ paciente.apellido }}</td>
                                     <td>{{ paciente.email }}</td>  
                                     <td>{{ paciente.obraSocial }}</td>                           

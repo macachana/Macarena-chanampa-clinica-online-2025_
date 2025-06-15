@@ -22,8 +22,15 @@
                     {
                         @if(comentario.turno.id == this.db.idTurno)
                         {
-                            <div class="textoInput">Turno: {{comentario.turno.id}}</div>                    
-                            <div class="textoInput">{{ comentario.usuario.tipo }}:{{ comentario.usuario.nombre }}</div>
+                            <div class="textoInput">Turno: {{comentario.turno.id}}</div>          
+                            @if(comentario.usuario.email == this.db.emailUsuarioAct)
+                            {
+                                <div class="textoInput">Usted escribio este comentario</div>
+                            }          
+                            @else
+                            {
+                                <div class="textoInput">Lo escribio el/la {{comentario.usuario.tipo}} {{ comentario.usuario.nombre }}</div>
+                            } 
                             <div class="textoInput">Comentario:</div>
                             <textarea class="form-control" id="commentText" rows="3" class="comentario">{{ comentario.mensaje }}</textarea>    
                         }

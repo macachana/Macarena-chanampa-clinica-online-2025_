@@ -10,6 +10,7 @@ import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno
 import { TurnosComponent } from './pages/turnos/turnos.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { EncuestaComponent } from './pages/encuesta/encuesta.component';
+import { PacientesComponent } from './pages/pacientes/pacientes.component';
 
 export const routes: Routes = [
     {
@@ -65,6 +66,11 @@ export const routes: Routes = [
         path: 'encuesta',
         component: EncuestaComponent,
         title: 'Encuesta'
+    },
+    {
+        path: 'pacientes',
+        component: PacientesComponent,
+        title: 'Lista de pacientes'
     },
     {
         path: 'error',

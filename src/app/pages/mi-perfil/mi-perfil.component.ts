@@ -16,6 +16,7 @@ import {
 import { Administrador } from '../../clases/administrador';
 import { Especialista } from '../../clases/especialista';
 import { Paciente } from '../../clases/paciente';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -31,6 +32,7 @@ export class MiPerfilComponent {
   listaAdministradores : Administrador[] = [];
   listaEspecialistas : Especialista[] = [];
   listaPacientes : Paciente[] = [];
+  listaHorarios : any[] = [];
 
   especialidadElegida : string = "";
   idEspecialista : number | undefined = 0;
@@ -54,30 +56,42 @@ export class MiPerfilComponent {
       console.log("lista de pacientes");
       console.log(this.listaPacientes);
     });
+
+    this.db.listarHorarios().then((horarios : any[])=>{
+      this.listaHorarios = horarios;
+    });
+
   }
 
   agregarHorario(dia:string)
   {
-    const duracionElegida = (<HTMLSelectElement>document.getElementById("duracionElegida")).value;
+    let valor = "";
+    const duracionElegida = (<HTMLSelectElement>document.getElementById("duracionElegida"));
 
-    console.log(duracionElegida);
+    duracionElegida.addEventListener('change', (event) => {
+      valor = (event.target as HTMLSelectElement).value;
+    })
+
+    let horarioDiaOcupado = false;
+
+    console.log(duracionElegida.value);
     
     let duracion : number = 0;
 
 
-    if(duracionElegida == "30 min")
+    if(duracionElegida.value == "30")
     {
       duracion = 30;
     }
-    else if(duracionElegida == "60 min")
+    else if(duracionElegida.value == "60")
     {
       duracion = 60;
     }
-    else if(duracionElegida == "90 min")
+    else if(duracionElegida.value == "90")
     {
       duracion = 90;      
     }
-    else if(duracionElegida == "120 min")
+    else if(duracionElegida.value == "120")
     {
       duracion = 120;
     }
@@ -93,7 +107,36 @@ export class MiPerfilComponent {
     
     if(this.idEspecialista)
     {
-      this.db.agregarHorario(this.idEspecialista,dia,this.especialidadElegida,duracion);
+      for(let i = 0;i < this.listaHorarios.length; i++)
+      {
+        if((parseInt(this.listaHorarios[i].especialista.id) == this.idEspecialista) && (this.listaHorarios[i].dia == dia) && (parseInt(this.listaHorarios[i].duracion) == duracion))
+        {
+          horarioDiaOcupado = true;
+        }
+      }
+
+      if(horarioDiaOcupado == false)
+      {
+        this.db.agregarHorario(this.idEspecialista,dia,this.especialidadElegida,duracion);
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Horario agregado",
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
+      else
+      {
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: "Error. El día y horario ya fue agregado, ingrese otro.",
+          showConfirmButton: false,
+          timer: 2000
+        });        
+      }
+
     }
   }
 

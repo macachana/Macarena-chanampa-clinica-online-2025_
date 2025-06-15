@@ -61,10 +61,10 @@
                                     <button class="btn btn-primary" (click)="agregarHorario('sabado')">Sabado</button>
                                 </div>
                                 <select class="form-select" aria-label="Duración de consulta" id="duracionElegida">
-                                <option selected>30 min</option>
-                                <option value="1">60 min</option>
-                                <option value="2">90 min</option>
-                                <option value="3">120 min</option>
+                                <option selected value="30">30 min</option>
+                                <option value="60">60 min</option>
+                                <option value="90">90 min</option>
+                                <option value="120">120 min</option>
                                 </select>
                             </div>
                         </div>
@@ -87,14 +87,14 @@
                                 <label class="Linfo">{{administrador.nombre}}</label>
                                 <label class="tituloInfo">Apellido:</label>
                                 <label class="Linfo">{{administrador.apellido}}</label>
-                                <label class="tituloInfo">Edad:</label>   
-                                <label class="Linfo">{{administrador.edad}} años</label>
+                                <label class="tituloInfo">Email:</label> 
+                                <label class="Linfo">{{administrador.email}}</label>                                      
                             </div>
                             <div class="infCol">
+                                <label class="tituloInfo">Edad:</label>   
+                                <label class="Linfo">{{administrador.edad}} años</label>
                                 <label class="tituloInfo">DNI:</label>
-                                <label class="Linfo">{{administrador.dni}}</label>
-                                <label class="tituloInfo">Email:</label> 
-                                <label class="Linfo">{{administrador.email}}</label>   
+                                <label class="Linfo">{{administrador.dni}}</label> 
                             </div>
                         </div>
                     }

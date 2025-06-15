@@ -41,6 +41,12 @@ h1,h2,h3,p,b{
     color: rgb(255, 255, 255);
 }
 
+h4
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:white;
+}
+
 b{
     display: flex;
     justify-content: start;

@@ -44,6 +44,9 @@
                                 <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
                             </li>
                             <li class="nav-item">
+                                <a routerLink="/pacientes" class="nav-link">Pacientes</a>
+                            </li>
+                            <li class="nav-item">
                                 <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
                             </li>
                         }@else if(this.db.tipoUsuario == "paciente")

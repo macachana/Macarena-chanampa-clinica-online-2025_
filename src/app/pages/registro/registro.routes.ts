@@ -6,15 +6,18 @@ import { RegistroAdministradorComponent } from "../registro-administrador/regist
 const routes: Routes = [
     {
         path: 'registro-especialista',
-        component: RegistroEspecialistaComponent
+        component: RegistroEspecialistaComponent,
+        title: 'Registro de especialistas'
     },
     {
         path: 'registro-paciente',
-        component: RegistroPacienteComponent
+        component: RegistroPacienteComponent,
+        title: 'Registro de pacientes'
     },
     {
         path: 'registro-administrador',
-        component: RegistroAdministradorComponent
+        component: RegistroAdministradorComponent,
+        title: 'Registro de administrador'
     }
 ];
 

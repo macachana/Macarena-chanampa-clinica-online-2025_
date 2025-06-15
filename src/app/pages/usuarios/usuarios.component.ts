@@ -24,7 +24,6 @@ export class UsuariosComponent {
   {
     this.db.listarUsuarios().then((usuarios: Usuario[]) => {
       this.listaUsuarios = usuarios;
-      console.log(this.listaUsuarios);
     });
     this.db.listarEspecialistas().then((especialistas: Especialista[])=>{
       this.listaEspecialistas = especialistas;

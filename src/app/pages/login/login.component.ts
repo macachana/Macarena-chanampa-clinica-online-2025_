@@ -187,30 +187,35 @@ export class LoginComponent{
 
   accesoDirecto(numeroAcceso: number)
   {
-    this.resetCaptcha();
     switch(numeroAcceso)
     {
       case 1:
+        this.resetCaptcha();        
         this.emailIng = "mariaValle@gmail.com";
         this.claveIng = "125896";
         break;
       case 2:
+        this.resetCaptcha();         
         this.emailIng = "martinaCaseros@gmail.com";
-        this.claveIng = "martina";        
+        this.claveIng = "martina";
         break;
       case 3:
+        this.resetCaptcha();       
         this.emailIng = "mariaChanampa@gmail.com";
-        this.claveIng = "mariachanampa";        
+        this.claveIng = "mariachanampa";  
         break;
       case 4:
+        this.resetCaptcha(); 
         this.emailIng = "armandoValenzuela45@gmail.com";
         this.claveIng = "armando";
         break;
       case 5:
+        this.resetCaptcha(); 
         this.emailIng = "marianelaCampana25@gmail.com"
         this.claveIng = "marianela";
         break;
       case 6:
+        this.resetCaptcha(); 
         this.emailIng = "roberto46.urizuru@gmail.com";
         this.claveIng = "roberto";
         break;

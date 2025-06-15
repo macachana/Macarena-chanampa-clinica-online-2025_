@@ -126,7 +126,7 @@ export class DatabaseService {
 
   async listarTurnos()
   {
-    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(nombre,email),estado,paciente(nombre,email,obraSocial),especialidad,ContieneComentario");
+    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(id,nombre,email),estado,paciente(nombre,apellido,edad,email,dni,obraSocial),especialidad,ContieneComentario,fecha,horario,duracion_minutos");
     let turnos : any[] = [];
     if(data)
     {
@@ -168,13 +168,17 @@ export class DatabaseService {
     return data;
   }
 
-  async agregarTurno(idEspecialista: number, idPaciente: number, especialidad: string, )
+  async agregarTurno(idEspecialista: number, idPaciente: number, especialidad: string, fecha: string,horario: string,duracion_minutos: number)
   {
     const { data, error } = await this.supabase.from("turnos").insert({
       "especialista": idEspecialista,
       "especialidad": especialidad,
       "paciente": idPaciente,
-      "estado": 'solicitado'
+      "estado": 'solicitado',
+      "ContieneComentario": false,
+      "fecha": fecha,
+      "horario":horario,
+      "duracion_minutos":duracion_minutos
     });
   }
 
@@ -182,7 +186,7 @@ export class DatabaseService {
 
   async listarComentarios()
   {
-    const { data, error } = await this.supabase.from("cuestionarios").select("id,usuario(id,nombre,tipo),turno(id),mensaje");
+    const { data, error } = await this.supabase.from("cuestionarios").select("id,usuario(id,nombre,email,tipo),turno(id),mensaje");
     let comentarios: any[] = [];
     if(data)
     {
@@ -201,6 +205,18 @@ export class DatabaseService {
   }
 
   //////////////////////////// HORARIOS ////////////////////////////
+
+  async listarHorarios()
+  {
+    const { data, error } = await this.supabase.from("horarios-especialistas").select("especialista(id,nombre),dia,especialidad,duracion");
+    let horarios: any[] = [];
+    if(data)
+    {
+      horarios = data;
+    }
+    return horarios;    
+  }
+
   async agregarHorario(idEspecialista: number, dia: string, especialidad: string, duracion: number)
   {
     const { data, error } = await this.supabase.from("horarios-especialistas").insert({
