@@ -23,6 +23,7 @@ export class DatabaseService {
   mostrarCuestionario : boolean = false;
   idTurno : number = 0;
   estadoNuevoCuestionario : string = "";
+  mostrarSpinner: boolean = false;
 
   constructor() {
     this.supabase = createClient("https://xrexkrbpejzmwszuhags.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZXhrcmJwZWp6bXdzenVoYWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjQ1NzUsImV4cCI6MjA2MDQwMDU3NX0.rX9uMza6cojqtEKNMtrCoTSSyID9LVGc0x6gjTkOtLI");

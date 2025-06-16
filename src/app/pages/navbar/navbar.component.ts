@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { DatabaseService } from '../../services/database.service';
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +9,7 @@ import { Usuario } from '../../clases/usuario';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -31,5 +31,14 @@ export class NavbarComponent {
     this.auth.cerrarSesion();
     this.router.navigate(['/inicio']);
     this.db.tipoUsuario = "";
+  }
+
+  redirigir(ruta: string)
+  {
+    this.db.mostrarSpinner = true;
+    setTimeout(()=>{
+      this.router.navigate([ruta]);
+      this.db.mostrarSpinner = false;
+    },2000);      
   }
 }

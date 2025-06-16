@@ -22,29 +22,29 @@
                     @if(this.auth.usuarioActual == null || this.db.tipoUsuario == "")
                     {
                         <li class="nav-item">
-                            <a routerLink="/inicio" class="nav-link">Inicio</a>
+                            <a (click)="redirigir('/inicio')" class="nav-link">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/login" class="nav-link">Iniciar sesión</a>
+                            <a (click)="redirigir('/login')" class="nav-link">Iniciar sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a routerLink="/registro" class="nav-link">Registrarse</a>
+                            <a (click)="redirigir('/registro')" class="nav-link">Registrarse</a>
                         </li>
                     }@else
                     {
                         @if(this.db.tipoUsuario == "especialista")
                         {
                             <li class="nav-item">
-                                <a routerLink="/home" class="nav-link">Inicio</a>
+                                <a (click)="redirigir('/home')" class="nav-link">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
+                                <a (click)="redirigir('/mi_perfil')" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
+                                <a (click)="redirigir('/mis_turnos')" class="nav-link">Mis turnos</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/pacientes" class="nav-link">Pacientes</a>
+                                <a (click)="redirigir('/pacientes')" class="nav-link">Pacientes</a>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
@@ -52,16 +52,16 @@
                         }@else if(this.db.tipoUsuario == "paciente")
                         {
                             <li class="nav-item">
-                                <a routerLink="/home" class="nav-link">Inicio</a>
+                                <a (click)="redirigir('/home')" class="nav-link">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
+                                <a (click)="redirigir('/mi_perfil')" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/solicitar_turno" class="nav-link">Solicitar turno</a>
+                                <a (click)="redirigir('/solicitar_turno')" class="nav-link">Solicitar turno</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/mis_turnos" class="nav-link">Mis turnos</a>
+                                <a (click)="redirigir('/mis_turnos')" class="nav-link">Mis turnos</a>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
@@ -69,19 +69,19 @@
                         }@else if(this.db.tipoUsuario == "administrador")
                         {
                             <li class="nav-item">
-                                <a routerLink="/home" class="nav-link">Inicio</a>
+                                <a (click)="redirigir('/home')" class="nav-link">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/mi_perfil" class="nav-link">Mi perfil</a>
+                                <a (click)="redirigir('/mi_perfil')" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/solicitar_turno" class="nav-link">Solicitar turno</a>
+                                <a (click)="redirigir('/solicitar_turno')" class="nav-link">Solicitar turno</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/turnos" class="nav-link">Turnos</a>
+                                <a (click)="redirigir('/turnos')" class="nav-link">Turnos</a>
                             </li>
                             <li class="nav-item">
-                                <a routerLink="/usuarios" class="nav-link">Usuarios</a>
+                                <a (click)="redirigir('/usuarios')" class="nav-link">Usuarios</a>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>

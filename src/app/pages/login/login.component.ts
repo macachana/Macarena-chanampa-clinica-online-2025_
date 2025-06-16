@@ -102,21 +102,16 @@ export class LoginComponent{
 
             if(resultado.data.session != null)
             {
-              Swal.fire({
-                position: "top",
-                icon: "success",
-                title: "Bienvenido/a " + data[0].nombre,
-                showConfirmButton: false,
-                timer: 1000
-              });
+              this.db.mostrarSpinner = true;
               setTimeout(()=>{
                 this.router.navigate(["/home"]);
                 this.clearForm();
+                this.db.mostrarSpinner = false;
                 setTimeout(()=>{
                   this.emailIng = "";
                   this.claveIng = "";
                 },500);
-              },1000);           
+              },2000);           
             }
             else
             {

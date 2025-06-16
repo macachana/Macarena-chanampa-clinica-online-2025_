@@ -7,6 +7,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from "./pages/navbar/navbar.component";
 
 import { NgHcaptchaModule } from 'ng-hcaptcha';
+import { DatabaseService } from './services/database.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,5 @@ export class AppComponent {
 
   isCollapsed = false;
   router = inject(Router);
-
-  title = 'Clinica-Online';
+  db = inject(DatabaseService);
 }
