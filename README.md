@@ -24,16 +24,15 @@
 - [PáGINA DE REGISTRO](#paginaRegistro)
 - [REGISTRO DE ESPECIALISTAS](#registroEspecialistas)
 - [REGISTRO DE PACIENTES](#registroPacientes)
-- ['MI PERFIL' DE PACIENTE](#perfilPaciente)
-- ['MI PERFIL' DE ESPECIALISTA](#perfilEspecialista)
-- ['MI PERFIL' DE ADMINISTRADOR](#perfilAdministrador)
+- [SECCION PACIENTE](#seccionPaciente)
+- [SECCION ESPECIALISTA](#seccionEspecialista)
+- [SECCION ADMINISTRADOR](#seccionAdministrador)
 
 ---
 
 ## PáGINA DE INICIO
 
 ### Desde aquí las personas son recibidas e indicadas a realizar ya sea el inicio de sesión o el registro para acceder a la clínica online.
-<a name="paginaInicio"></a>
 ![PaginaInicio](./src/assets/pagina_de_inicio.png)
 
 ---
@@ -41,7 +40,6 @@
 ## PÁGINA DE INICIO DE SESIÓN
 
 ### aquí es donde pueden ingresar tanto pacientes, especialistas y administradores. Para ingresar, debe hacer una mini prueba con captcha.
-<a name="paginaInicioSesion"></a>
 ![PaginaInicioSesion](./src/assets/pagina_inicio_de_sesion.png)
 ![PaginaInicioSesion02](./src/assets/pagina_inicio_de_sesion_02.png)
 
@@ -50,7 +48,6 @@
 ## PáGINA DE REGISTRO
 
 ### Desde esta página de registro dependiendo del perfil, se podrán inscribir tanto los pacientes como los especialistas que vayan a trabajar en la clínica.
-<a name="paginaRegistro"></a>
 ![PaginaRegistro](./src/assets/pagina_de_registro.png)
 
 ---
@@ -58,7 +55,6 @@
 ## REGISTRO DE ESPECIALISTAS
 
 ### Desde aquí se pueden registrar los especialistas, y al completar los datos, deben esperar hasta que los administradores los habiliten.
-<a name="paginaRegistroEspecialistas"></a>
 ![PaginaRegistroEspecialistas](./src/assets/registro_especialista.png)
 
 ---
@@ -66,37 +62,63 @@
 ## REGISTRO DE PACIENTES
 
 ### Desde aquí se pueden registrar los pacientes, y al completar los datos. Ya podrán solicitar turnos y gestionarlos.
-<a name="paginaRegistroPacientes"></a>
 ![PaginaRegistroEspecialistas](./src/assets/registro_paciente.png)
 
 ---
 
+# SECCION DE PACIENTE
+
 ## 'MI PERFIL' DE PACIENTE
 
 ### Desde está sección se podran visualizar los datos del paciente que ingreso. Como su nombre, apellido, imágenes, etc.
-<a name="perfilPaciente"></a>
 ![PaginaRegistroEspecialistas](./src/assets/perfil_paciente.png)
+
+## SOLICITAR TURNO
+## Desde está sección se puede solicitar un turno, eligiendo especialidad, especialista, día disponible del especialista elegido y un horario disponible
+![PaginaSolicitarTurno](./src/assets/paciente_solicitar_turno_g.gif)
+
+## MIS TURNOS
+
 
 ---
 
-## 'MI PERFIL' DE ESPECIALISTA
+# SECCION DE ESPECIALISTA
 
+## 'MI PERFIL' DE ESPECIALISTA
 ### Desde está sección se podran visualizar los datos del especialista que ingresa y también podra seleccionar su horario dependiendo de su especialidad.
-<a name="perfilEspecialista"></a>
 ![PaginaRegistroEspecialistas](./src/assets/perfil_especialista.png)
 ![PaginaRegistroEspecialistas](./src/assets/perfil_especialista_02.png)
 
+## MIS TURNOS
+### Desde está seccion el especialista puede ver los turnos que tiene y saber su estado y lo que puede hacer, ya sea, cancelarlo, rechazarlo o aceptarlo.
+![PaginaMisTurnos](./src/assets/especialista_turnos.png)
+
+## PACIENTES
+### Desde está seccion el especialista visualiza los datos de los pacientes a los que atendio al menos una ves.
+![PaginaListaPacientes](./src/assets/especialista_pacientes.png)
+
 ---
+
+# SECCION DE ADMINISTRADOR
 
 ## 'MI PERFIL' DE ADMINISTRADOR
 
 ### Desde está sección se podran visualizar los datos del administrador que se logueo.
-<a name="perfilAdministrador"></a>
 ![PaginaRegistroEspecialistas](./src/assets/perfil_administrador.png)
 
+## SOLICITAR TURNO
+
+### Desde está sección el administrador puede solicitar turno para alguno de los pacientes ya registrados, luego elige especialidad, especialista, fecha y horario.
+![PaginaSolicitarTurno](./src/assets/Adm_solicitar_turno.gif)
+
+## TURNOS
+
+### Desde está sección se puede visualizar  una lista de los turnos que solicitaron los pacientes y los que solicito el administrador mismo.
+![PaginaListaTurnos](./src/assets/adm_turnos.png)
+
+## USUARIOS
+
+## Desde está sección el administrador visualiza los administradores, especialistas y pacientes registrados. También puede habilitar o deshabilitar especialistas.
+![PaginaListaUsuarios](./src/assets/adm_usuarios.gif)
+
 ---
-
-
-
----
-
