@@ -11,17 +11,16 @@
         </div>
         <div class="contenedor">
             <div class="input-group mb-3 filtro">
-                <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
-                <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
-                <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
+                <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" (ngModelChange)="filtrarTurno()" placeholder="Buscar turno..." />
+                <!-- <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>               -->
             </div>     
             <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
             <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
 
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                        @if(this.listaTurnos.length > 0)
+                        @if(this.listaEncontrados.length > 0)
                         {
-                            @for(turno of this.listaTurnos; track turno.id)
+                            @for(turno of this.listaEncontrados; track turno.id)
                             {
                                 <div class="col">
                                     <div class="card">
