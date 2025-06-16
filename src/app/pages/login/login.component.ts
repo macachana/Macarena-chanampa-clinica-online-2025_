@@ -120,7 +120,13 @@ export class LoginComponent{
             }
             else
             {
-
+              Swal.fire({
+                position: "top",
+                icon: "error",
+                title: "Error. Verifique su correo o contraseña",
+                showConfirmButton: false,
+                timer: 1000
+              });
             }
             });
         }
