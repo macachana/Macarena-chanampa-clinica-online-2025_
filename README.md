@@ -19,14 +19,14 @@
 ## Alumna: Macarena nicole chanampa 
 
 ## ÍNDICE
-* [página de inicio](#paginaInicio)
-* [página de inicio de sesión](#paginaInicioSesion)
-* [Página de registro](#paginaRegistro)
-* [Registro de especialista](#registroEspecialistas)
-* [Registro de paciente](#registroPacientes)
-* ['MI PERFIL' de paciente](#perfilPaciente)
-* ['MI PERFIL' de especialista](#perfilEspecialista)
-* ['MI PERFIL' de administrador](#perfilAdministrador)
+- [PáGINA DE INICIO](#paginaInicio)
+- [PÁGINA DE INICIO DE SESIÓN](#paginaInicioSesion)
+- [PáGINA DE REGISTRO](#paginaRegistro)
+- [REGISTRO DE ESPECIALISTAS](#registroEspecialistas)
+- [REGISTRO DE PACIENTES](#registroPacientes)
+- ['MI PERFIL' DE PACIENTE](#perfilPaciente)
+- ['MI PERFIL' DE ESPECIALISTA](#perfilEspecialista)
+- ['MI PERFIL' DE ADMINISTRADOR](#perfilAdministrador)
 
 ---
 
@@ -55,7 +55,7 @@
 
 ---
 
-## PÁGINA DE REGISTRO DE ESPECIALISTAS
+## REGISTRO DE ESPECIALISTAS
 
 ### Desde aquí se pueden registrar los especialistas, y al completar los datos, deben esperar hasta que los administradores los habiliten.
 <a name="paginaRegistroEspecialistas"></a>
@@ -63,7 +63,7 @@
 
 ---
 
-## PáGINA DE REGISTRO DE PACIENTES
+## REGISTRO DE PACIENTES
 
 ### Desde aquí se pueden registrar los pacientes, y al completar los datos. Ya podrán solicitar turnos y gestionarlos.
 <a name="paginaRegistroPacientes"></a>
