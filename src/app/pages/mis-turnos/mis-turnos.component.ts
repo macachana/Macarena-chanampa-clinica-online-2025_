@@ -35,6 +35,10 @@ export class MisTurnosComponent {
 
   constructor()
   {
+  }
+
+  ngOnInit()
+  {
     this.db.listarTurnos().then((turnos: any[])=>{
       this.todosTurnos = true;
       this.listaTurnosCompleta = turnos;
@@ -45,10 +49,7 @@ export class MisTurnosComponent {
       this.listaComentarios = comentarios;
       console.log(this.listaComentarios);
     });
-  }
 
-  ngOnInit()
-  {
     if(this.todosTurnos == true)
     {
       this.listaTurnos = this.listaTurnosCompleta;
@@ -104,10 +105,11 @@ export class MisTurnosComponent {
   {
     console.log("modificar el estado nuevo del tuno: " + idTurno);
       this.db.cambiarEstadoTurno(estadoNuevo,idTurno).then((data)=>{
-        console.log(data);
-      if(data != null)
+      if(data == null)
       {
-        this.ngOnInit();
+        setTimeout(()=>{
+          this.ngOnInit();
+        },500);
       }
     });
   }

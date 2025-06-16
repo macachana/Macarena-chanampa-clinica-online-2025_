@@ -40,32 +40,41 @@
                                 @if(especialista.segundaEspecialidad != null)
                                 {
                                     <label class="tituloInfo">Especialidades:</label>
-                                    <label class="Linfo">{{especialista.especialidad}}/{{especialista.segundaEspecialidad}}</label>         
-                                    <button class="btn btn-outline-secondary">{{especialista.especialidad}}</button>
-                                    <button class="btn btn-outline-secondary" (click)="cambiarEspecialidadElegida(especialista.segundaEspecialidad)">{{especialista.segundaEspecialidad}}</button>                             
+                                    <label class="Linfo">{{especialista.especialidad}}/{{especialista.segundaEspecialidad}}</label>   
                                 }
                                 @else {
                                     <label class="tituloInfo">Especialidad:</label>
-                                    <label class="Linfo">{{especialista.especialidad}}</label>                                  
+                                    <label class="Linfo">{{especialista.especialidad}}</label>                                     
                                 }
                             </div>
                             <div class="infCol">
-                                <div class="botonesRow">
-                                    <button class="btn btn-primary" (click)="agregarHorario('lunes')">Lunes</button>
-                                    <button class="btn btn-primary" (click)="agregarHorario('martes')">Martes</button>
-                                    <button class="btn btn-primary" (click)="agregarHorario('miercoles')">Miercoles</button>
-                                </div>
-                                <div class="botonesRow">
-                                    <button class="btn btn-primary" (click)="agregarHorario('jueves')">Jueves</button>
-                                    <button class="btn btn-primary" (click)="agregarHorario('viernes')">Viernes</button>
-                                    <button class="btn btn-primary" (click)="agregarHorario('sabado')">Sabado</button>
-                                </div>
+                                @if(especialista.segundaEspecialidad != null)
+                                {
+                                    <label>Seleccione la especialidad:</label>      
+                                    <div class="btn btn-secondary" id="especialidadUno" (click)="cambiarEspecialidadElegida(especialista.especialidad,'especialidadUno')">{{especialista.especialidad}}</div>
+                                    <div class="btn btn-secondary" id="especialidadDos" (click)="cambiarEspecialidadElegida(especialista.segundaEspecialidad,'especialidadDos')">{{especialista.segundaEspecialidad}}</div>                             
+                                }
+                                @else {
+                                    <label>especialidad: {{especialista.especialidad}}</label>                               
+                                }                                
+                                <label>Primero seleccione la duración de los turnos:</label>
                                 <select class="form-select" aria-label="Duración de consulta" id="duracionElegida">
                                 <option selected value="30">30 min</option>
                                 <option value="60">60 min</option>
                                 <option value="90">90 min</option>
                                 <option value="120">120 min</option>
-                                </select>
+                                </select>                                
+                                <label>Por último el día:</label>
+                                <div class="botonesRow">
+                                    <button class="btn btn-primary" id="lunes" (click)="agregarHorario('lunes')">Lunes</button>
+                                    <button class="btn btn-primary" id="martes" (click)="agregarHorario('martes')">Martes</button>
+                                    <button class="btn btn-primary" id="miercoles" (click)="agregarHorario('miercoles')">Miercoles</button>
+                                </div>
+                                <div class="botonesRow">
+                                    <button class="btn btn-primary" id="jueves" (click)="agregarHorario('jueves')">Jueves</button>
+                                    <button class="btn btn-primary" id="viernes" (click)="agregarHorario('viernes')">Viernes</button>
+                                    <button class="btn btn-primary" id="sabado" (click)="agregarHorario('sabado')">Sabado</button>
+                                </div>
                             </div>
                         </div>
                     }

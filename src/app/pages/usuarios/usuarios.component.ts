@@ -49,7 +49,7 @@ export class UsuariosComponent {
     const data = this.db.modificarEstado(estadoNuevo,email);
     setTimeout(()=>{
       this.ngOnInit();
-    },2000);
+    },500);
     console.log(data);
   }
 

@@ -73,12 +73,13 @@ export class SolicitarTurnoComponent {
   listaEspecialistas : Especialista[] = [];
   listaPacientes: Paciente[] = [];
   listaTurnos: any[] = [];
-
   listaHorarios : any[] = [];
   listaFechas: any[] = [];
+
   todosHorarios : string[] = [];
   horariosOcupados: string[] = [];
   horariosDisponibles: string[] = [];
+  diasLaborales : string[] = [];
 
   ngOnInit()
   {
@@ -130,25 +131,6 @@ export class SolicitarTurnoComponent {
       this.listaTurnos = turnos;
     });
 
-    let l = 15;
-    for (let i = 1; i <= l; i++) {
-      const hoy = new Date();
-      const fecha = new Date(hoy);
-      fecha.setDate(hoy.getDate() + i);
-      const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
-      if(this.obtenerNombreDia(formato) != "domingo")
-      {
-        if(this.listaFechas.length < 15)
-        {
-          const mes = this.determinarMes(formato.split('-')[1]);
-          this.listaFechas.push({"id":i,"fecha": formato.split('-')[2] + ' de ' + mes,"dia":this.obtenerNombreDia(formato)});
-          l ++;
-        }
-      }
-    } 
-
-    console.log(this.listaFechas);
-
     this.db.listarHorarios().then((horarios: any[])=>{
       this.listaHorarios = horarios;
     });
@@ -180,12 +162,45 @@ export class SolicitarTurnoComponent {
 
   seleccionarEspecialista(id : number)
   {
+    this.diasLaborales = [];
+    this.listaFechas = [];
     if(this.db.tipoUsuario == "paciente")
     {
       this.segundaSeleccion = false;
   
       if(id != null)
       {
+        for(let i = 0; i < this.listaHorarios.length; i++)
+        {
+          if((this.listaHorarios[i].especialista.id == id) && (this.listaHorarios[i].especialidad == this.especialidadElegida))
+          {
+            console.log(this.listaHorarios[i].especialista.id + " = " + id);
+            console.log(this.listaHorarios[i].especialidad + " = " + this.especialidadElegida);
+            this.diasLaborales.push(this.listaHorarios[i].dia);
+          }
+        }
+
+        let l = 15;
+        for (let i = 1; i <= l; i++) {
+          const hoy = new Date();
+          const fecha = new Date(hoy);
+          fecha.setDate(hoy.getDate() + i);
+
+          const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
+          const nombreDia = this.obtenerNombreDia(formato);
+
+          if(this.diasLaborales.includes(nombreDia))
+          {
+            if(this.listaFechas.length < 15)
+            {
+              const mes = this.determinarMes(formato.split('-')[1]);
+              this.listaFechas.push({"id":i,"fecha": formato.split('-')[2] + ' de ' + mes,"dia":this.obtenerNombreDia(formato)});              
+              l ++;
+            }
+            console.log(this.listaFechas);
+          }
+        } 
+        
         this.especialistaElegido = id;
         this.terceraSeleccion = true;
       }
@@ -193,12 +208,40 @@ export class SolicitarTurnoComponent {
     else
     {
       this.terceraSeleccion = false;
-  
+
       if(id != null)
       {
-        this.especialistaElegido = id;
-        this.cuartaSeleccion = true;
-      }      
+        for(let i = 0; i < this.listaHorarios.length; i++)
+        {
+          if((this.listaHorarios[i].especialista.id == id) && (this.listaHorarios[i].especialidad == this.especialidadElegida))
+          {
+            this.diasLaborales.push(this.listaHorarios[i].dia);
+          }
+        }
+
+        let l = 15;
+        for (let i = 1; i <= l; i++) {
+          const hoy = new Date();
+          const fecha = new Date(hoy);
+          fecha.setDate(hoy.getDate() + i);
+
+          const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
+          const nombreDia = this.obtenerNombreDia(formato);
+
+          if(this.diasLaborales.includes(this.obtenerNombreDia(formato)))
+          {
+            if(this.listaFechas.length < 15)
+            {
+              const mes = this.determinarMes(formato.split('-')[1]);
+              this.listaFechas.push({"id":i,"fecha": formato.split('-')[2] + ' de ' + mes,"dia":this.obtenerNombreDia(formato)});              
+              l ++;
+            }
+            console.log(this.listaFechas);
+          }
+        } 
+      }    
+      this.especialistaElegido = id;
+      this.cuartaSeleccion = true;        
     }
   }
 
@@ -211,15 +254,15 @@ export class SolicitarTurnoComponent {
       {
         this.fechaElegida = fecha;
         this.diaSemanaElegida = diaSemana;
+
         for(let i = 0; i < this.listaHorarios.length; i++)
         {
           if((this.listaHorarios[i].especialista.id == this.especialistaElegido) && (this.listaHorarios[i].dia == this.diaSemanaElegida))
           {
             this.duracionTurno = this.listaHorarios[i].duracion;
-            console.log("Duracion de turno: " + this.duracionTurno);
           }
         }
-  
+
         if(this.duracionTurno != 0)
         {
             this.generarHorarios(this.duracionTurno);
@@ -234,14 +277,14 @@ export class SolicitarTurnoComponent {
       {
         this.fechaElegida = fecha;
         this.diaSemanaElegida = diaSemana;
+
         for(let i = 0; i < this.listaHorarios.length; i++)
         {
           if((this.listaHorarios[i].especialista.id == this.especialistaElegido) && (this.listaHorarios[i].dia == this.diaSemanaElegida))
           {
             this.duracionTurno = this.listaHorarios[i].duracion;
-            console.log("Duracion de turno: " + this.duracionTurno);
           }
-        }
+        }        
   
         if(this.duracionTurno != 0)
         {

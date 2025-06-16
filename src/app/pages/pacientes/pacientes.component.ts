@@ -14,7 +14,8 @@ export class PacientesComponent {
   db = inject(DatabaseService);
   router = inject(Router);
 
-  listaTurnos : any[] = [];
+  pacientesAgregados : Set<String> = new Set<string>();
+  listaTurnos: any[] = [];
   listaPacientes : Paciente[] = [];
 
   constructor()
@@ -29,7 +30,11 @@ export class PacientesComponent {
       {
         if((turnos[i].especialista.email == this.db.emailUsuarioAct) && (turnos[i].estado == "realizado"))
         {
-          this.listaTurnos.push(turnos[i]);
+          if(!this.pacientesAgregados.has(turnos[i].paciente.email))
+          {
+            this.listaTurnos.push(turnos[i]);
+            this.pacientesAgregados.add(turnos[i].paciente.email);
+          }
         }
       }
     });

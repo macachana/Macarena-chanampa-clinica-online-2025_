@@ -33,11 +33,11 @@
                                     <div class="card">
                                         <div class="card-header">Turno nro: {{ turno.id }}</div>
                                         <div class="card-body">
-                                            <div>Fecha: {{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }}</div>
+                                            <div>Fecha: {{ turno.fecha }}</div>
                                             <div>Especialista: {{ turno.especialista.nombre }}</div>
                                             <div>Especialidad: {{ turno.especialidad }}</div>
                                             <div>Obra social: {{ turno.paciente.obraSocial }}</div>
-                                            <div>Estado: {{ turno.estado.toUpperCase() }}</div>
+                                            <div>Estado: <div style="font-weight: bold;">{{ turno.estado.toUpperCase() }}</div></div>
                                             @if(turno.estado == "aceptado")
                                             {
                                                     <button type="button" class="btn btn-outline-danger"  (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
@@ -157,13 +157,14 @@
                                     <div class="card">
                                         <div class="card-header">Turno nro: {{ turno.id }}</div>
                                         <div class="card-body">
-                                            <div>Fecha: {{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }}</div>
+                                            <div>Fecha: {{ turno.fecha }}</div>
+                                            <div>Paciente: {{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</div>
                                             <div>Especialidad: {{ turno.especialidad }}</div>
                                             <div>Obra social: {{ turno.paciente.obraSocial }}</div>
-                                            <div>Estado: {{ turno.estado.toUpperCase() }}</div>
+                                            <div>Estado: <div style="font-weight: bold;">{{ turno.estado.toUpperCase() }}</div></div>
                                             @if(turno.estado == "aceptado")
                                             {
-                                                <button type="button" class="btn btn-outline-success" (click)="cambiarEstado('realizado',turno.id)">FINALIZAR</button>
+                                                <button type="button" class="btn btn-outline-success" (click)="iniciarCuestionarioTurno('realizado',turno.id)">FINALIZAR</button>
                                                 <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
                                             }
                                             @else if(turno.estado == "solicitado")
@@ -171,6 +172,24 @@
                                                 <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
                                                 <button type="button" class="btn btn-outline-success" (click)="cambiarEstado('aceptado',turno.id)">ACEPTAR</button>
                                                 <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('rechazado',turno.id)">RECHAZAR</button>                           
+                                            }
+                                            @else if(turno.estado == "realizado")
+                                            {
+                                                @if(turno.historial_subido == true)
+                                                {
+                                                    <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER HISTORIAL</button>
+                                                }
+                                                @else 
+                                                {
+                                                    <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">AGREGAR HISTORIAL</button>
+                                                }
+                                                @for(comentario of listaComentarios; track comentario.id)
+                                                {
+                                                    @if(comentario.turno.id == turno.id)
+                                                    {
+                                                        <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
+                                                    }
+                                                }
                                             }
                                             @else
                                             {

@@ -20,9 +20,13 @@
 
 ## ÍNDICE
 * [página de inicio](#paginaInicio)
+* [página de inicio de sesión](#paginaInicioSesion)
 * [Página de registro](#paginaRegistro)
 * [Registro de especialista](#registroEspecialistas)
 * [Registro de paciente](#registroPacientes)
+* ['MI PERFIL' de paciente](#perfilPaciente)
+* ['MI PERFIL' de especialista](#perfilEspecialista)
+* ['MI PERFIL' de administrador](#perfilAdministrador)
 
 ---
 
@@ -31,6 +35,15 @@
 ### Desde aquí las personas son recibidas e indicadas a realizar ya sea el inicio de sesión o el registro para acceder a la clínica online.
 <a name="paginaInicio"></a>
 ![PaginaInicio](./src/assets/pagina_de_inicio.png)
+
+---
+
+## PÁGINA DE INICIO DE SESIÓN
+
+### aquí es donde pueden ingresar tanto pacientes, especialistas y administradores. Para ingresar, debe hacer una mini prueba con captcha.
+<a name="paginaInicioSesion"></a>
+![PaginaInicioSesion](./src/assets/pagina_inicio_de_sesion.png)
+![PaginaInicioSesion02](./src/assets/pagina_inicio_de_sesion_02.png)
 
 ---
 
@@ -55,4 +68,35 @@
 ### Desde aquí se pueden registrar los pacientes, y al completar los datos. Ya podrán solicitar turnos y gestionarlos.
 <a name="paginaRegistroPacientes"></a>
 ![PaginaRegistroEspecialistas](./src/assets/registro_paciente.png)
+
+---
+
+## 'MI PERFIL' DE PACIENTE
+
+### Desde está sección se podran visualizar los datos del paciente que ingreso. Como su nombre, apellido, imágenes, etc.
+<a name="perfilPaciente"></a>
+![PaginaRegistroEspecialistas](./src/assets/perfil_paciente.png)
+
+---
+
+## 'MI PERFIL' DE ESPECIALISTA
+
+### Desde está sección se podran visualizar los datos del especialista que ingresa y también podra seleccionar su horario dependiendo de su especialidad.
+<a name="perfilEspecialista"></a>
+![PaginaRegistroEspecialistas](./src/assets/perfil_especialista.png)
+![PaginaRegistroEspecialistas](./src/assets/perfil_especialista_02.png)
+
+---
+
+## 'MI PERFIL' DE ADMINISTRADOR
+
+### Desde está sección se podran visualizar los datos del administrador que se logueo.
+<a name="perfilAdministrador"></a>
+![PaginaRegistroEspecialistas](./src/assets/perfil_administrador.png)
+
+---
+
+
+
+---
 

@@ -126,7 +126,7 @@ export class DatabaseService {
 
   async listarTurnos()
   {
-    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(id,nombre,email),estado,paciente(nombre,apellido,edad,email,dni,obraSocial),especialidad,ContieneComentario,fecha,horario,duracion_minutos");
+    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(id,nombre,email),estado,paciente(nombre,apellido,edad,email,dni,obraSocial),especialidad,ContieneComentario,fecha,horario,duracion_minutos,historial_subido");
     let turnos : any[] = [];
     if(data)
     {
@@ -178,7 +178,8 @@ export class DatabaseService {
       "ContieneComentario": false,
       "fecha": fecha,
       "horario":horario,
-      "duracion_minutos":duracion_minutos
+      "duracion_minutos":duracion_minutos,
+      "historial_subido":false
     });
   }
 
@@ -236,4 +237,18 @@ export class DatabaseService {
       console.log("Horario agregado.");
     }
   }
+
+  async actualizarHorario(idEspecialista: number, dia: string, duracion: number)
+  {
+    const { data, error } = await this.supabase.from("horarios-especialistas").update({"duracion":duracion}).eq("especialista",idEspecialista).eq("dia",dia);
+    if(error)
+    {
+      console.error("No se pudo eliminar el horario " + error);
+    }
+    else
+    {
+      console.log("Horario actualizado");
+    }
+  }
+  
 }

@@ -87,101 +87,115 @@ export class LoginComponent{
 
       if(data != null)
       {
-          this.db.tipoUsuario = data[0].tipo;
-          this.db.emailUsuarioAct = data[0].email;
-          this.db.nombreUsuarioActual = data[0].nombre;
-          this.db.idUsuarioIng = data[0].id;
+        this.db.tipoUsuario = data[0].tipo;
+        this.db.emailUsuarioAct = data[0].email;
+        this.db.nombreUsuarioActual = data[0].nombre;
+        this.db.idUsuarioIng = data[0].id;
+        
+        console.log("Tipo de usuario:" + this.db.tipoUsuario);
+        if(this.db.tipoUsuario !== "especialista")
+        {
+          // ahora si el tipo no es "especialista", entonces ingresa como cualquier otro usuario.
+          this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
           
-          console.log("Tipo de usuario:" + this.db.tipoUsuario);
-          if(this.db.tipoUsuario !== "especialista")
-          {
-            // ahora si el tipo no es "especialista", entonces ingresa como cualquier otro usuario.
-            this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
-            
-              console.log(resultado);
-  
-              if(resultado.data.session != null)
-              {
-                Swal.fire({
-                  position: "top",
-                  icon: "success",
-                  title: "Bienvenido/a " + data[0].nombre,
-                  showConfirmButton: false,
-                  timer: 1000
-                });
-                setTimeout(()=>{
-                  this.router.navigate(["/home"]);
-                  this.clearForm();
-                  setTimeout(()=>{
-                    this.emailIng = "";
-                    this.claveIng = "";
-                  },500);
-                },1000);           
-              }
-              });
-          }
-          else
-          {
-            // en el caso de que el usuario es de tipo especialista, consultamos la tabla de especialistas, y buscamos el especialista con el email ingresado.
-            const especialista = await this.db.supabase.from("especialistas").select("*").eq("email",this.emailIng);
-  
-            if(especialista.data !== null)
+            console.log(resultado);
+
+            if(resultado.data.session != null)
             {
-              console.log(especialista.data);
-              console.log("estado:" + especialista.data[0].estado);
-              
-              // si el estado del especialista es habilitado, se hace el proceso de inicio de sesion.
-              if(especialista.data[0].estado == "habilitado")
-              {
-                this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
-                  console.log(resultado);
-                  if(resultado.data.session != null)
-                  {
-                    console.log("tipo de usuario:" + this.db.tipoUsuario);
-                    Swal.fire({
-                      position: "top",
-                      icon: "success",
-                      title: "Bienvenido/a " + data[0].nombre,
-                      showConfirmButton: false,
-                      timer: 1000
-                    });
-                    this.resetCaptcha();
-                    setTimeout(()=>{
-                      this.router.navigate(["/home"]);
-                      this.clearForm();
-                      setTimeout(()=>{
-                        this.emailIng = "";
-                        this.claveIng = "";
-                      },500);
-                    },1000);
-                  }
-                });
-              }
-              else
-              {
-                // si no está habilitado se muestra un mensaje indicando este caso.
-                Swal.fire({
-                  position: "top",
-                  icon: "error",
-                  title: "Error, no fue habilitado por administración, espere a ser habilitado...",
-                  showConfirmButton: false,
-                  timer: 3000
-                });
-                this.resetCaptcha();
-              }
+              Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Bienvenido/a " + data[0].nombre,
+                showConfirmButton: false,
+                timer: 1000
+              });
+              setTimeout(()=>{
+                this.router.navigate(["/home"]);
+                this.clearForm();
+                setTimeout(()=>{
+                  this.emailIng = "";
+                  this.claveIng = "";
+                },500);
+              },1000);           
             }
-          }
+            else
+            {
+
+            }
+            });
         }
         else
         {
-          Swal.fire({
-            position: "top",
-            icon: "error",
-            title: "¡VERIFIQUE QUE NO ES UN ROBOT!.",
-            showConfirmButton: false,
-            timer: 2000
-          });
+          // en el caso de que el usuario es de tipo especialista, consultamos la tabla de especialistas, y buscamos el especialista con el email ingresado.
+          const especialista = await this.db.supabase.from("especialistas").select("*").eq("email",this.emailIng);
+
+          if(especialista.data !== null)
+          {
+            console.log(especialista.data);
+            console.log("estado:" + especialista.data[0].estado);
+            
+            // si el estado del especialista es habilitado, se hace el proceso de inicio de sesion.
+            if(especialista.data[0].estado == "habilitado")
+            {
+              this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
+                console.log(resultado);
+                if(resultado.data.session != null)
+                {
+                  console.log("tipo de usuario:" + this.db.tipoUsuario);
+                  Swal.fire({
+                    position: "top",
+                    icon: "success",
+                    title: "Bienvenido/a " + data[0].nombre,
+                    showConfirmButton: false,
+                    timer: 1000
+                  });
+                  this.resetCaptcha();
+                  setTimeout(()=>{
+                    this.router.navigate(["/home"]);
+                    this.clearForm();
+                    setTimeout(()=>{
+                      this.emailIng = "";
+                      this.claveIng = "";
+                    },500);
+                  },1000);
+                }
+                else
+                {
+                  Swal.fire({
+                    position: "top",
+                    icon: "error",
+                    title: "Error. Verifique su correo o contraseña",
+                    showConfirmButton: false,
+                    timer: 1000
+                  });
+                }
+              });
+            }
+            else
+            {
+              // si no está habilitado se muestra un mensaje indicando este caso.
+              Swal.fire({
+                position: "top",
+                icon: "error",
+                title: "Error, no fue habilitado por administración, espere a ser habilitado...",
+                showConfirmButton: false,
+                timer: 3000
+              });
+              this.resetCaptcha();
+            }
+          }
         }
+      }
+      else
+      {
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: "¡VERIFIQUE QUE NO ES UN ROBOT!.",
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
     }
   }
 

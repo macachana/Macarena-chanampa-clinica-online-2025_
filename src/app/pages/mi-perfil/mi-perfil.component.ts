@@ -49,6 +49,14 @@ export class MiPerfilComponent {
       this.listaEspecialistas = especialistas;
       console.log("lista de especialistas");
       console.log(this.listaEspecialistas);
+      for(let i=0; i < especialistas.length; i++)
+      {
+        if(especialistas[i].email == this.db.emailUsuarioAct)
+        {
+          this.especialidadElegida = this.listaEspecialistas[i].especialidad;
+          console.log(this.especialidadElegida);
+        }
+      }
     });
 
     this.db.listarPacientes().then((pacientes: Paciente[])=>{
@@ -65,6 +73,7 @@ export class MiPerfilComponent {
 
   agregarHorario(dia:string)
   {
+
     let valor = "";
     const duracionElegida = (<HTMLSelectElement>document.getElementById("duracionElegida"));
 
@@ -100,16 +109,16 @@ export class MiPerfilComponent {
     {
       if(this.listaEspecialistas[i].email == this.db.emailUsuarioAct)
       {
-        this.especialidadElegida = this.listaEspecialistas[i].especialidad;
         this.idEspecialista = this.listaEspecialistas[i].id;
       }
     }
     
     if(this.idEspecialista)
     {
+      console.log(this.listaHorarios);
       for(let i = 0;i < this.listaHorarios.length; i++)
       {
-        if((parseInt(this.listaHorarios[i].especialista.id) == this.idEspecialista) && (this.listaHorarios[i].dia == dia) && (parseInt(this.listaHorarios[i].duracion) == duracion))
+        if((parseInt(this.listaHorarios[i].especialista.id) == this.idEspecialista) && (this.listaHorarios[i].dia == dia))
         {
           horarioDiaOcupado = true;
         }
@@ -128,20 +137,57 @@ export class MiPerfilComponent {
       }
       else
       {
-        Swal.fire({
-          position: "top",
-          icon: "error",
-          title: "Error. El día y horario ya fue agregado, ingrese otro.",
-          showConfirmButton: false,
-          timer: 2000
-        });        
+        this.db.actualizarHorario(this.idEspecialista,dia,duracion).then((data)=>{
+          console.log(data);
+          if(data == null)
+          {
+            Swal.fire({
+              position: "top",
+              icon: "success",
+              title: "Horario actualizado",
+              showConfirmButton: false,
+              timer: 2000
+            });        
+          }
+          else
+          {
+            Swal.fire({
+              position: "top",
+              icon: "success",
+              title: "No se pudo actualizar el horario",
+              showConfirmButton: false,
+              timer: 2000
+            });                
+          }
+        });
       }
-
     }
   }
 
-  cambiarEspecialidadElegida(especialidad: string)
+  cambiarEspecialidadElegida(especialidad: string,nombreBoton: string)
   {
     this.especialidadElegida = especialidad;
+    console.log(this.especialidadElegida);
+    const btnA = document.getElementById('especialidadUno');
+    const btnB = document.getElementById('especialidadDos');
+    if(btnA && btnB)
+    {
+      if(nombreBoton == 'especialidadUno')
+      {
+        btnA.classList.remove('btn-secondary');
+        btnA.classList.add('btn-danger');
+
+        btnB.classList.remove('btn-danger');
+        btnB.classList.add('btn-secondary');
+      }
+      else if(nombreBoton == 'especialidadDos')
+      {
+        btnB.classList.remove('btn-secondary');
+        btnB.classList.add('btn-danger');
+
+        btnA.classList.remove('btn-danger');
+        btnA.classList.add('btn-secondary');  
+      }
+    }
   }
 }
