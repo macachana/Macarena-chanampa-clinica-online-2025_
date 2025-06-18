@@ -45,6 +45,12 @@ body{
     border-radius: 0px;
 }
 
+.card:hover
+{
+    background-color: aqua;
+    box-shadow: 0px 0px 30px rgb(238, 255, 0);    
+}
+
 .card-title
 {
     font-size: 20px;
