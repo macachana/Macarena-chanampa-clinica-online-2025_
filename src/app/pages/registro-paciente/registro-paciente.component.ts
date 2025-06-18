@@ -11,7 +11,6 @@ import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { Paciente } from '../../clases/paciente';
 import { Usuario } from '../../clases/usuario';
-import { HcaptchaService } from '../../services/hcaptcha.service';
 
 @Component({
   selector: 'app-registro-paciente',
@@ -33,7 +32,6 @@ export class RegistroPacienteComponent {
   db = inject(DatabaseService);
   auth = inject(AuthService);
   storage = inject(StorageService);
-  captcha = inject(HcaptchaService);
 
   primeraFoto : string = "";
   segundaFoto : string = "";

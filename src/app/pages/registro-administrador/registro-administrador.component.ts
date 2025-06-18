@@ -21,7 +21,6 @@ import Swal from 'sweetalert2';
 import { Especialista } from '../../clases/especialista';
 import { Usuario } from '../../clases/usuario';
 import { Administrador } from '../../clases/administrador';
-import { HcaptchaService } from '../../services/hcaptcha.service';
 
 @Component({
   selector: 'app-registro-administrador',

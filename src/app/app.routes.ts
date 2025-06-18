@@ -3,7 +3,6 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { ErrorComponent } from './pages/error/error.component';
-import { HomeComponent } from './pages/home/home.component';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
@@ -29,11 +28,6 @@ export const routes: Routes = [
         path: 'registro',
         component: RegistroComponent,
         title: 'Registro'
-    },
-    {
-        path: 'home',
-        component: HomeComponent,
-        title: 'Inicio'
     },
     {
         path: 'registros',

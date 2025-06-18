@@ -20,7 +20,6 @@ import { StorageService } from '../../services/storage.service';
 import Swal from 'sweetalert2';
 import { Especialista } from '../../clases/especialista';
 import { Usuario } from '../../clases/usuario';
-import { HcaptchaService } from '../../services/hcaptcha.service';
 
 @Component({
   selector: 'app-registro-especialista',

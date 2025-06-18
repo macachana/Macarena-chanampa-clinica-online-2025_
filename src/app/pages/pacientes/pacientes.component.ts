@@ -45,6 +45,11 @@ export class PacientesComponent {
     });
   }
 
+  tieneHistorial(pacienteId : number | undefined) : boolean
+  {
+    return this.listaHistorial.some(historial => historial.paciente.id === pacienteId);
+  }
+
   verHistorialClinico(idPaciente: number | undefined)
   {
     this.db.idPaciente = idPaciente;

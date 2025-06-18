@@ -35,9 +35,6 @@
                         @if(this.db.tipoUsuario == "especialista")
                         {
                             <li class="nav-item">
-                                <a (click)="redirigir('/home',2)" class="nav-link">Inicio</a>
-                            </li>
-                            <li class="nav-item">
                                 <a (click)="redirigir('/mi_perfil',2)" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
@@ -52,9 +49,6 @@
                         }@else if(this.db.tipoUsuario == "paciente")
                         {
                             <li class="nav-item">
-                                <a (click)="redirigir('/home',2)" class="nav-link">Inicio</a>
-                            </li>
-                            <li class="nav-item">
                                 <a (click)="redirigir('/mi_perfil',2)" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
@@ -68,9 +62,6 @@
                             </li>
                         }@else if(this.db.tipoUsuario == "administrador")
                         {
-                            <li class="nav-item">
-                                <a (click)="redirigir('/home')" class="nav-link">Inicio</a>
-                            </li>
                             <li class="nav-item">
                                 <a (click)="redirigir('/mi_perfil')" class="nav-link">Mi perfil</a>
                             </li>

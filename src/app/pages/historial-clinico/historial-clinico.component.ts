@@ -116,7 +116,7 @@ export class HistorialClinicoComponent {
             });
             this.db.cambiarEstadoHistorial(this.db.idTurno);
             this.reiniciar();
-            this.router.navigate(['/mis-turnos']);
+            this.router.navigate(['/mis_turnos']);
           }
           else
           {

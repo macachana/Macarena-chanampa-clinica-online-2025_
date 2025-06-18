@@ -103,7 +103,7 @@ export class LoginComponent{
             {
               this.resetCaptcha();
               setTimeout(()=>{
-                this.router.navigate(["/home"]);
+                this.router.navigate(["/mi_perfil"]);
                 this.clearForm();
                 this.db.mostrarSpinner = false;
                 setTimeout(()=>{
@@ -141,7 +141,7 @@ export class LoginComponent{
                 {
                   this.resetCaptcha();
                   setTimeout(()=>{
-                    this.router.navigate(["/home"]);
+                    this.router.navigate(["/mi_perfil"]);
                     this.clearForm();
                     this.db.mostrarSpinner = false;                    
                     setTimeout(()=>{
