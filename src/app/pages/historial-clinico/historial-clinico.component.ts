@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { DatabaseService } from '../../services/database.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-historial-clinico',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './historial-clinico.component.html',
   styleUrl: './historial-clinico.component.css',
   standalone: true
@@ -16,6 +17,8 @@ export class HistorialClinicoComponent {
   router = inject(Router);
 
   listaHistorial : any[] = [];
+
+  datoDinamico: { [key: string]: any } = {};
 
   clave01 : string = '';
   valor01 : string = '';
@@ -45,6 +48,12 @@ export class HistorialClinicoComponent {
   {
     this.db.listarHistorial().then((historial: any[])=>{
       this.listaHistorial = historial;
+      console.log(this.listaHistorial);
+      console.log(this.listaHistorial[0].datoDinamico);
+      for(let i = 0; i < this.listaHistorial[0].datoDinamico; i++)
+      {
+        console.log(this.listaHistorial[0].datoDinamico[i]);
+      }
     });
   }
 
@@ -61,25 +70,23 @@ export class HistorialClinicoComponent {
     let valor2 = (<HTMLInputElement>document.getElementById("valor02")).value;
     let valor3 = (<HTMLInputElement>document.getElementById("valor03")).value;
 
-    let datoDinamico: {[key:string]:any} = {};
-
     if(clave1 && valor1)
     {
-      datoDinamico[clave1] = valor1;
+      this.datoDinamico[clave1] = valor1;
     }
 
     if(clave2 && valor2)
     {
-      datoDinamico[clave2] = valor2;
+      this.datoDinamico[clave2] = valor2;
     }
 
     if(clave3 && valor3)
     {
-      datoDinamico[clave3] = valor3;
+      this.datoDinamico[clave3] = valor3;
     }
 
     console.log("como se envia el dato dinamico");
-    console.log(datoDinamico);
+    console.log(this.datoDinamico);
 
     console.log("dato dinamico");
     console.log(clave1 + " : " + valor1);
@@ -96,7 +103,7 @@ export class HistorialClinicoComponent {
       if(altura && peso && temperatura && presion)
       {
         console.log("form valido y datos cargados");
-        this.db.agregarHistorial(parseFloat(altura), parseFloat(peso), parseFloat(temperatura), parseFloat(presion), idPaciente, datoDinamico).then((data)=>{
+        this.db.agregarHistorial(parseFloat(altura), parseFloat(peso), parseFloat(temperatura), parseFloat(presion), idPaciente, this.datoDinamico,this.db.idTurno).then((data)=>{
           console.log(data);
           if(data == null)
           {
@@ -128,6 +135,11 @@ export class HistorialClinicoComponent {
   reiniciar()
   {
     this.formHistoria.reset();
+  }
+
+  obtenerClaves(datoDinamico: {}) : any[]
+  {
+    return Object.keys(datoDinamico);
   }
 
 }

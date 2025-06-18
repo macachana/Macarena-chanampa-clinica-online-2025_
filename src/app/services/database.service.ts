@@ -262,7 +262,7 @@ export class DatabaseService {
 
   async listarHistorial()
   {
-    const { data, error } = await this.supabase.from("historial_clinico").select("altura,peso,temperatura,presion,datoDinamico,paciente(id,nombre,email)");
+    const { data, error } = await this.supabase.from("historial_clinico").select("altura,peso,temperatura,presion,datoDinamico,paciente(id,nombre,email),turno(id,especialista(nombre,apellido),especialidad,fecha,horario)");
 
     let historial: any[] = [];
     if(data)
@@ -272,7 +272,7 @@ export class DatabaseService {
     return historial;
   }
   
-  async agregarHistorial(altura : number, peso : number, temperatura : number, presion : number, idPaciente : number | undefined, datoDinamico : {})
+  async agregarHistorial(altura : number, peso : number, temperatura : number, presion : number, idPaciente : number | undefined, datoDinamico : {}, idTurno: number | undefined)
   {
     const { data, error } = await this.supabase.from("historial_clinico").insert({
       "altura":altura,
@@ -280,7 +280,8 @@ export class DatabaseService {
       "temperatura":temperatura,
       "presion":presion,
       "paciente":idPaciente,
-      "datoDinamico":datoDinamico
+      "datoDinamico":datoDinamico,
+      "turno": idTurno
     });
   }
 }

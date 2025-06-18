@@ -190,4 +190,11 @@ export class MiPerfilComponent {
       }
     }
   }
+
+  abrirHistorial(idPaciente : number)
+  {
+    this.db.mostrarHistorial = true;
+    this.db.idPaciente = idPaciente;
+    this.router.navigate(['/historial_clinico']);    
+  }
 }

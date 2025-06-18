@@ -14,6 +14,7 @@
         </div>
         <div class="contenedor">
             <button type="button" class="btn btn-light botonAgregarUsuario" routerLink="/registro">Agregar usuario</button>
+            <button typw="button" class="btn btn-dark botonAgregarUsuario" (click)="generarExcel()">Guardar datos como excel</button>
             <label class="titulo">Lista de usuarios registrados</label>
             <label class="subTitulo">Lista de administradores</label>
             <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
@@ -98,6 +99,7 @@
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Obra social</th>
+                            <th>Historial clinico</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,8 +122,12 @@
                                         @if(historial.paciente.id == paciente.id)
                                         {
                                             <td>
-                                                <button type="button" class="btn btn-outline-primary" (click)="verHistorialClinico(paciente.id)">VER HISTORIAL</button>
+                                                <button type="button" class="btn btn-outline-dark" (click)="verHistorialClinico(paciente.id)">VER HISTORIAL</button>
                                             </td>
+                                        }
+                                        @else 
+                                        {
+                                            <td></td>
                                         }
                                     }                          
                                 </tr>

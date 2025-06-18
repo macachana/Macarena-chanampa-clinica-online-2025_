@@ -16,20 +16,50 @@
         <div class="contenedor">
             @if(this.db.mostrarHistorial)
             {
+                @if(this.db.tipoUsuario == "paciente")
+                {
                 @for(historial of this.listaHistorial; track historial.id)
                 {
                     @if(historial.paciente.id == this.db.idPaciente)
                     {
-                        <label class="titulo">HISTORIAL CLINICO DEL PACIENTE {{ historial.paciente.nombre }} {{ historial.paciente.apellido }}</label>
-                        <div class="historialClinico">
-                            <label><b>Altura: </b>{{ historial.altura}}</label>
-                            <label><b>Peso: </b>{{ historial.peso}}</label>
-                            <label><b>Temperatura: </b>{{ historial.temperatura}}</label>
-                            @for(dato of historial.datoDinamico; track dato)
-                            {
-                                <label><b>{{dato}}: </b>{{historial.datoDinamico[dato]}}</label>
-                            }                           
+                        <label class="titulo">FECHA : {{historial.turno.fecha}} - ESPECIALIDAD : {{historial.turno.especialidad}}</label>
+                        <div class="historialMostrado">
+                            <label>--------------------------------------------</label>
+                            <label><b>ESPECIALISTA </b> : {{historial.turno.especialista.nombre}} {{historial.turno.especialista.apellido}}</label>
+                            <label>--------------------------------------------</label>
+                            <label><b>Altura </b> : {{ historial.altura}}</label>
+                            <label><b>Peso </b> : {{ historial.peso}}</label>
+                            <label><b>Temperatura </b> : {{ historial.temperatura}}</label>
+                            <label><b>Presion </b> : {{ historial.presion }}</label>
+                            <label *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
+                                <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
+                            </label>            
                         </div>
+                    }
+                }
+                }
+                @else 
+                {
+                    @for(historial of this.listaHistorial; track historial.id)
+                    {
+                        @if(historial.paciente.id == this.db.idPaciente)
+                        {
+                            <label class="titulo">HISTORIAL CLINICO DEL PACIENTE {{ historial.paciente.nombre }} {{ historial.paciente.apellido }}</label>
+                            <div class="historialMostrado">
+                                <label>--------------------------------------------</label>
+                                <label><b>FECHA </b> : {{historial.turno.fecha}}</label>
+                                <label><b>HORA </b> : {{historial.turno.horario}}</label>
+                                <label><b>ESPECIALIDAD </b> : {{historial.turno.especialidad}}</label>
+                                <label>--------------------------------------------</label>
+                                <label><b>Altura </b> : {{ historial.altura}}</label>
+                                <label><b>Peso </b> : {{ historial.peso}}</label>
+                                <label><b>Temperatura </b> : {{ historial.temperatura}}</label>
+                                <label><b>Presion </b> : {{ historial.presion }}</label>
+                                <label *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
+                                    <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
+                                </label>            
+                            </div>
+                        }
                     }
                 }
             }

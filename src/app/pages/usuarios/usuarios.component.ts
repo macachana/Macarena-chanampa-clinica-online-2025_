@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { DatabaseService } from '../../services/database.service';
 import { Usuario } from '../../clases/usuario';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Especialista } from '../../clases/especialista';
 import { Paciente } from '../../clases/paciente';
 
@@ -14,6 +14,8 @@ import { Paciente } from '../../clases/paciente';
 export class UsuariosComponent {
 
   db = inject(DatabaseService);
+  router = inject(Router);
+
   listaUsuarios: Usuario[] = [];
   
   listaEspecialistas: Especialista[] = [];
@@ -69,6 +71,13 @@ export class UsuariosComponent {
 
   verHistorialClinico(idPaciente: number | undefined)
   {
+    this.db.mostrarHistorial = true;
+    this.db.idPaciente = idPaciente;
+    this.router.navigate(['/historial_clinico']);       
+  }
 
+  generarExcel()
+  {
+    
   }
 }
