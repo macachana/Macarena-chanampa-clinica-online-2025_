@@ -24,6 +24,7 @@ export class DatabaseService {
   idTurno : number = 0;
   estadoNuevoCuestionario : string = "";
   mostrarSpinner : boolean = false;
+  mostrarSegundoSpinner : boolean = false;
   mostrarHistorial : boolean = false;
   idPaciente : number | undefined = 0;
 

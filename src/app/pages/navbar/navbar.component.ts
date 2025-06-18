@@ -28,17 +28,34 @@ export class NavbarComponent {
 
   cerrarSesion()
   {
-    this.auth.cerrarSesion();
-    this.router.navigate(['/inicio']);
-    this.db.tipoUsuario = "";
+    this.db.mostrarSpinner = false;
+    this.db.mostrarSegundoSpinner = true;
+    setTimeout(()=>{
+      this.auth.cerrarSesion();
+      this.router.navigate(['/inicio']);
+      this.db.tipoUsuario = "";
+      this.db.mostrarSegundoSpinner = false;
+    },2000);
   }
 
-  redirigir(ruta: string)
+  redirigir(ruta: string, tipoSpinner: number = 1)
   {
-    this.db.mostrarSpinner = true;
-    setTimeout(()=>{
-      this.router.navigate([ruta]);
+    if(tipoSpinner == 1)
+    {
+      this.db.mostrarSpinner = true;
+      setTimeout(()=>{
+        this.router.navigate([ruta]);
+        this.db.mostrarSpinner = false;
+      },2000);      
+    }
+    else if(tipoSpinner == 2)
+    {
       this.db.mostrarSpinner = false;
-    },2000);      
+      this.db.mostrarSegundoSpinner = true;
+      setTimeout(()=>{
+        this.router.navigate([ruta]);
+        this.db.mostrarSegundoSpinner = false;
+      },2000);     
+    }
   }
 }

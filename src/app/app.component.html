@@ -8,4 +8,12 @@
         </div>
     </div>
 }
+@else if(this.db.mostrarSegundoSpinner)
+{
+    <div class="text-center spinner-overlay-mostrar">
+        <div class="spinner-grow text-success" style="width: 10rem; height: 10rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
 <router-outlet></router-outlet>

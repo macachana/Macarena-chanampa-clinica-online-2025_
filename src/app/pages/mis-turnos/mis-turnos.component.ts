@@ -12,9 +12,11 @@ import {
 
 import { Router } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-mis-turnos',
-  imports: [FormsModule,ReactiveFormsModule],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css'
 })
@@ -27,6 +29,7 @@ export class MisTurnosComponent {
   listaEncontrados : any[] = [];
   listaTurnosCompleta : any[] = [];
   listaComentarios: any[] = [];
+  listaHistoriales : any[] = [];
 
   // variables de la barra de busqueda
   busquedaTexto : string = "";
@@ -35,14 +38,10 @@ export class MisTurnosComponent {
 
   constructor()
   {
-  }
-
-  ngOnInit()
-  {
     this.db.listarTurnos().then((turnos: any[])=>{
       this.todosTurnos = true;
-      this.listaTurnosCompleta = turnos;
-      this.listaTurnos = this.listaTurnosCompleta;
+      this.listaTurnos = turnos;
+      this.listaEncontrados = this.listaTurnos;      
     });    
 
     this.db.listarComentarios().then((comentarios: any[])=>{
@@ -50,47 +49,106 @@ export class MisTurnosComponent {
       console.log(this.listaComentarios);
     });
 
-    if(this.todosTurnos == true)
-    {
-      this.listaTurnos = this.listaTurnosCompleta;
-    }
-    else
-    {
-      this.listaTurnos = this.listaEncontrados;
-    }
+    this.db.listarHistorial().then((historiales)=>{
+      this.listaHistoriales = historiales;
+    });
   }
 
-  buscar()
+  ngOnInit()
   {
-    if(this.busquedaTexto != "")
-    {
-      for(let i = 0; i < this.listaTurnos.length; i++)
-      {
-        if(this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialista.nombre.toLowerCase() || (this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialidad.toLowerCase()))
-        {
-          this.listaEncontrados.push(this.listaTurnos[i]);
-        }
-      }
-
-      if(this.listaEncontrados.length > 0)
-      {
-        if(this.listaEncontrados.length == 1)
-        {
-          this.mensajeEstadoB = "Hay " + this.listaEncontrados.length + " coincidencia";
-        }
-        else
-        {
-          this.mensajeEstadoB = "Hay " + this.listaEncontrados.length + " coincidencias";          
-        }
-        this.todosTurnos = false;
-        this.ngOnInit();
-      }
-      else
-      {
-        this.mensajeEstadoB = "No hay ningun especialista o especialidad con ese nombre";
-      }
-    }
+    this.listaEncontrados = this.listaTurnos;
   }
+
+  filtrarTurno()
+  {
+    const texto = this.busquedaTexto.toLowerCase().trim();
+
+    if(texto == '')
+    {
+      this.listaEncontrados = [...this.listaTurnos];
+      return;
+    }
+
+    this.listaEncontrados = this.listaTurnos.filter(turno => {
+      return (
+        String(turno.fecha).toLowerCase().includes(texto) ||
+        String(turno.especialista.nombre).toLowerCase().includes(texto) ||
+        String(turno.especialidad).toLocaleLowerCase().includes(texto) ||
+        String(turno.paciente.nombre).toLowerCase().includes(texto) ||
+        String(turno.paciente.ObraSocial).toLowerCase().includes(texto) ||
+        String(turno.estado).toLowerCase().includes(texto)
+        // String(this.buscarDato(turno.id)).toLowerCase().includes(texto)
+      );
+    });
+
+
+    // const texto = this.busquedaTexto.toLowerCase().trim();
+
+    // if(texto == '')
+    // {
+    //   this.listaEncontrados = [...this.listaTurnos];
+    //   return;
+    // }
+
+    // let listaCombinada = [...this.listaTurnos];
+
+    // this.listaEncontrados = listaCombinada.filter(turno => {
+    //   return (
+    //     String(turno.fecha).toLowerCase().includes(texto) ||
+    //     String(turno.especialista.nombre).toLowerCase().includes(texto) ||
+    //     String(turno.especialidad).toLocaleLowerCase().includes(texto) ||
+    //     String(turno.paciente.nombre).toLowerCase().includes(texto) ||
+    //     String(turno.paciente.ObraSocial).toLowerCase().includes(texto) ||
+    //     String(turno.estado).toLowerCase().includes(texto) ||
+        // String(turno.altura).toLowerCase().includes(texto) ||
+        // String(turno.peso).toLowerCase().includes(texto) ||
+        // String(turno.temperatura).toLowerCase().includes(texto) ||
+        // String(turno.presion).toLowerCase().includes(texto) ||
+        // String(turno.datoDinamico[0]).toLowerCase().includes(texto) ||
+        // String(turno.datoDinamico[1]).toLowerCase().includes(texto) ||
+        // String(turno.datoDinamico[2]).toLowerCase().includes(texto)                
+      // );
+    // });
+
+  }
+
+  buscarDato(idTurno : number | undefined) : any
+  {
+
+    return "";
+  }
+
+  // buscar()
+  // {
+  //   if(this.busquedaTexto != "")
+  //   {
+  //     for(let i = 0; i < this.listaTurnos.length; i++)
+  //     {
+  //       if(this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialista.nombre.toLowerCase() || (this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialidad.toLowerCase()))
+  //       {
+  //         this.listaEncontrados.push(this.listaTurnos[i]);
+  //       }
+  //     }
+
+  //     if(this.listaEncontrados.length > 0)
+  //     {
+  //       if(this.listaEncontrados.length == 1)
+  //       {
+  //         this.mensajeEstadoB = "Hay " + this.listaEncontrados.length + " coincidencia";
+  //       }
+  //       else
+  //       {
+  //         this.mensajeEstadoB = "Hay " + this.listaEncontrados.length + " coincidencias";          
+  //       }
+  //       this.todosTurnos = false;
+  //       this.ngOnInit();
+  //     }
+  //     else
+  //     {
+  //       this.mensajeEstadoB = "No hay ningun especialista o especialidad con ese nombre";
+  //     }
+  //   }
+  // }
 
   reiniciar()
   {
@@ -144,6 +202,11 @@ export class MisTurnosComponent {
     this.db.mostrarHistorial = true;
     this.db.idPaciente = idPaciente;
     this.router.navigate(['/historial-clinico']);
+  }
+
+  obtenerClaves(datoDinamico: {}) : any[]
+  {
+    return Object.keys(datoDinamico);
   }
 }
 

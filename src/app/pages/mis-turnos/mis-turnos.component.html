@@ -14,17 +14,16 @@
         </div>
         <div class="contenedor">
             <div class="input-group mb-3 filtro">
-                <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" />
-                <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>
-                <button class="btn btn-primary" type="button" id="button-addon2" (click)="reiniciar()"><i class="bi bi-arrow-counterclockwise"></i></button>                
-            </div>
+                <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" (ngModelChange)="filtrarTurno()" placeholder="Buscar turno..." />
+                <!-- <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>               -->
+            </div>     
             <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
             @if(this.db.tipoUsuario == "paciente")
             {
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    @if(this.listaTurnos.length > 0)
+                    @if(this.listaEncontrados.length > 0)
                     {
-                        @for(turno of this.listaTurnos; track turno.id)
+                        @for(turno of this.listaEncontrados; track turno.id)
                         {
                             @if(turno.paciente.email == this.db.emailUsuarioAct)
                             {
@@ -51,7 +50,23 @@
                                                 @else 
                                                 {
                                                     <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('calificado',turno.id)">CALIFICAR ATENCIÓN</button>
-                                                }                                              
+                                                }    
+                                                @if(turno.historial_subido)
+                                                {
+                                                    @for(historial of this.listaHistoriales; track historial.id)
+                                                    {
+                                                        @if(historial.paciente.id == turno.paciente.id)
+                                                        {
+                                                            <div>Altura: {{historial.altura}}</div>
+                                                            <div>Peso: {{historial.peso}}</div>
+                                                            <div>Temperatura: {{historial.temperatura}}</div>
+                                                            <div>Presión: {{historial.presion}}</div>
+                                                            <div *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
+                                                                <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
+                                                            </div>  
+                                                        }
+                                                    }
+                                                }                                          
                                             }
                                             @else if(turno.estado == "solicitado")
                                             {
@@ -146,9 +161,9 @@
             }@else 
             {       
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    @if(this.listaTurnos.length > 0)
+                    @if(this.listaEncontrados.length > 0)
                     {
-                        @for(turno of this.listaTurnos; track turno.id)
+                        @for(turno of this.listaEncontrados; track turno.id)
                         {
                             @if(turno.especialista.email == this.db.emailUsuarioAct)
                             {
@@ -178,6 +193,22 @@
                                                 @if(turno.historial_subido == false)
                                                 {
                                                     <button type="button" class="btn btn-outline-primary" (click)="iniciarHistorialClinico(turno.paciente.id,turno.id)">AGREGAR HISTORIAL</button>
+                                                }
+                                                @else 
+                                                {
+                                                    @for(historial of this.listaHistoriales; track historial.id)
+                                                    {
+                                                        @if(historial.paciente.id == turno.paciente.id)
+                                                        {
+                                                            <div>Altura: {{historial.altura}}</div>
+                                                            <div>Peso: {{historial.peso}}</div>
+                                                            <div>Temperatura: {{historial.temperatura}}</div>
+                                                            <div>Presión: {{historial.presion}}</div>
+                                                            <div *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
+                                                                <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
+                                                            </div>  
+                                                        }
+                                                    }
                                                 }
                                                 @for(comentario of listaComentarios; track comentario.id)
                                                 {

@@ -44,7 +44,7 @@ export class TurnosComponent {
       this.listaTurnos = turnos;
       this.listaEncontrados = this.listaTurnos;
       console.log(this.listaEncontrados);
-    });  
+    });
   }
 
   ngOnInit()

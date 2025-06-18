@@ -35,16 +35,16 @@
                         @if(this.db.tipoUsuario == "especialista")
                         {
                             <li class="nav-item">
-                                <a (click)="redirigir('/home')" class="nav-link">Inicio</a>
+                                <a (click)="redirigir('/home',2)" class="nav-link">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a (click)="redirigir('/mi_perfil')" class="nav-link">Mi perfil</a>
+                                <a (click)="redirigir('/mi_perfil',2)" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a (click)="redirigir('/mis_turnos')" class="nav-link">Mis turnos</a>
+                                <a (click)="redirigir('/mis_turnos',2)" class="nav-link">Mis turnos</a>
                             </li>
                             <li class="nav-item">
-                                <a (click)="redirigir('/pacientes')" class="nav-link">Pacientes</a>
+                                <a (click)="redirigir('/pacientes',2)" class="nav-link">Pacientes</a>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>
@@ -52,16 +52,16 @@
                         }@else if(this.db.tipoUsuario == "paciente")
                         {
                             <li class="nav-item">
-                                <a (click)="redirigir('/home')" class="nav-link">Inicio</a>
+                                <a (click)="redirigir('/home',2)" class="nav-link">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a (click)="redirigir('/mi_perfil')" class="nav-link">Mi perfil</a>
+                                <a (click)="redirigir('/mi_perfil',2)" class="nav-link">Mi perfil</a>
                             </li>
                             <li class="nav-item">
-                                <a (click)="redirigir('/solicitar_turno')" class="nav-link">Solicitar turno</a>
+                                <a (click)="redirigir('/solicitar_turno',2)" class="nav-link">Solicitar turno</a>
                             </li>
                             <li class="nav-item">
-                                <a (click)="redirigir('/mis_turnos')" class="nav-link">Mis turnos</a>
+                                <a (click)="redirigir('/mis_turnos',2)" class="nav-link">Mis turnos</a>
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" (click)="cerrarSesion()"><i class="bi bi-box-arrow-right"></i></button>

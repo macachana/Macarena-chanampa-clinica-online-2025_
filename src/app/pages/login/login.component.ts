@@ -95,14 +95,13 @@ export class LoginComponent{
         console.log("Tipo de usuario:" + this.db.tipoUsuario);
         if(this.db.tipoUsuario !== "especialista")
         {
+          this.db.mostrarSpinner = true;
           // ahora si el tipo no es "especialista", entonces ingresa como cualquier otro usuario.
           this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
-          
-            console.log(resultado);
 
             if(resultado.data.session != null)
             {
-              this.db.mostrarSpinner = true;
+              this.resetCaptcha();
               setTimeout(()=>{
                 this.router.navigate(["/home"]);
                 this.clearForm();
@@ -132,28 +131,19 @@ export class LoginComponent{
 
           if(especialista.data !== null)
           {
-            console.log(especialista.data);
-            console.log("estado:" + especialista.data[0].estado);
             
             // si el estado del especialista es habilitado, se hace el proceso de inicio de sesion.
             if(especialista.data[0].estado == "habilitado")
             {
+              this.db.mostrarSpinner = true;
               this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
-                console.log(resultado);
                 if(resultado.data.session != null)
                 {
-                  console.log("tipo de usuario:" + this.db.tipoUsuario);
-                  Swal.fire({
-                    position: "top",
-                    icon: "success",
-                    title: "Bienvenido/a " + data[0].nombre,
-                    showConfirmButton: false,
-                    timer: 1000
-                  });
                   this.resetCaptcha();
                   setTimeout(()=>{
                     this.router.navigate(["/home"]);
                     this.clearForm();
+                    this.db.mostrarSpinner = false;                    
                     setTimeout(()=>{
                       this.emailIng = "";
                       this.claveIng = "";

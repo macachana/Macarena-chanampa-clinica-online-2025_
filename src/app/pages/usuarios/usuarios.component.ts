@@ -5,6 +5,11 @@ import { Router, RouterLink } from '@angular/router';
 import { Especialista } from '../../clases/especialista';
 import { Paciente } from '../../clases/paciente';
 
+// import de generar excel
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
+
 @Component({
   selector: 'app-usuarios',
   imports: [RouterLink],
@@ -78,6 +83,36 @@ export class UsuariosComponent {
 
   generarExcel()
   {
-    
+    let datos : any[] = [];
+
+    for(let i = 0; i < this.listaUsuarios.length; i++)
+    {
+      datos.push({nombre: this.listaUsuarios[i].nombre,apellido: this.listaUsuarios[i].apellido,edad: this.listaUsuarios[i].edad, email: this.listaUsuarios[i].email, dni: this.listaUsuarios[i].dni, tipo_usuario: this.listaUsuarios[i].tipo});
+    }
+
+    // convertir 'datos' a hoja de excel
+    let worksheet:XLSX.WorkSheet = XLSX.utils.json_to_sheet(datos);
+
+    // crear el libro de excel
+    let workbook:XLSX.WorkBook = {
+      Sheets: {'Usuarios': worksheet },
+      SheetNames: ['Usuarios']
+    };
+
+    // convertimos el libro en un buffer
+    let excelBuffer: any = XLSX.write(
+      workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      }
+    );
+
+    // Guardar el archivo
+    let data: Blob = new Blob([excelBuffer], {
+      type: 'application/octet-stream'
+    });
+
+    FileSaver.saveAs(data, 'usuarios_clinica.xlsx');
+
   }
 }
