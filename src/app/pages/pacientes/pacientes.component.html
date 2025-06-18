@@ -25,6 +25,7 @@
                             <th>DNI</th>
                             <th>Correo</th>
                             <th>Obra social</th>
+                            <th>Historial clínico</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +41,16 @@
                                     <td>{{ turno.paciente.edad }}</td>
                                     <td>{{ turno.paciente.dni }}</td>
                                     <td>{{ turno.paciente.email }}</td>  
-                                    <td>{{ turno.paciente.obraSocial }}</td>                           
+                                    <td>{{ turno.paciente.obraSocial }}</td>  
+                                    <td>
+                                        @for(historial of this.listaHistorial; track historial.id)
+                                        {
+                                            @if(historial.paciente.id == turno.paciente.id)
+                                            {
+                                                    <button type="button" class="btn btn-outline-primary" (click)="verHistorialClinico(turno.paciente.id)">HISTORIAL</button>                                                
+                                            }
+                                        }
+                                    </td>                         
                                 </tr>
                             }
                         }

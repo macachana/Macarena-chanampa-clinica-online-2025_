@@ -11,6 +11,7 @@ import { TurnosComponent } from './pages/turnos/turnos.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { EncuestaComponent } from './pages/encuesta/encuesta.component';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { HistorialClinicoComponent } from './pages/historial-clinico/historial-clinico.component';
 
 export const routes: Routes = [
     {
@@ -71,6 +72,11 @@ export const routes: Routes = [
         path: 'pacientes',
         component: PacientesComponent,
         title: 'Lista de pacientes'
+    },
+    {
+        path: 'historial_clinico',
+        component: HistorialClinicoComponent,
+        title: 'Historial clínico'
     },
     {
         path: 'error',

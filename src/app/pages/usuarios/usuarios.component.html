@@ -114,7 +114,16 @@
                                     <td>{{ paciente.dni }}</td>
                                     <td>{{ paciente.nombre }} {{ paciente.apellido }}</td>
                                     <td>{{ paciente.email }}</td>  
-                                    <td>{{ paciente.obraSocial }}</td>                           
+                                    <td>{{ paciente.obraSocial }}</td> 
+                                    @for(historial of this.listaHistorial; track historial.id)
+                                    {
+                                        @if(historial.paciente.id == paciente.id)
+                                        {
+                                            <td>
+                                                <button type="button" class="btn btn-outline-primary" (click)="verHistorialClinico(paciente.id)">VER HISTORIAL</button>
+                                            </td>
+                                        }
+                                    }                          
                                 </tr>
                             }
                         }

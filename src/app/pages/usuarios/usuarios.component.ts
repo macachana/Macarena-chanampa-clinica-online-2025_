@@ -18,6 +18,7 @@ export class UsuariosComponent {
   
   listaEspecialistas: Especialista[] = [];
   listaPacientes: Paciente[] = [];
+  listaHistorial: any[] = [];
 
 
   ngOnInit()
@@ -31,6 +32,10 @@ export class UsuariosComponent {
 
     this.db.listarPacientes().then((pacientes: Paciente[])=>{
       this.listaPacientes = pacientes;
+    });
+
+    this.db.listarHistorial().then((historial: any[])=>{
+      this.listaHistorial = historial;
     });
   }
 
@@ -60,5 +65,10 @@ export class UsuariosComponent {
       return true;
     }
     return false;
+  }
+
+  verHistorialClinico(idPaciente: number | undefined)
+  {
+
   }
 }

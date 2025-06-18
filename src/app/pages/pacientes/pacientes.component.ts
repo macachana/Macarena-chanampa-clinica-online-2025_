@@ -17,6 +17,7 @@ export class PacientesComponent {
   pacientesAgregados : Set<String> = new Set<string>();
   listaTurnos: any[] = [];
   listaPacientes : Paciente[] = [];
+  listaHistorial: any[] = [];
 
   constructor()
   {
@@ -38,7 +39,14 @@ export class PacientesComponent {
         }
       }
     });
+
+    this.db.listarHistorial().then((historial: any[])=>{
+      this.listaHistorial = historial;
+    });
   }
 
+  verHistorialClinico(idPaciente: number | undefined)
+  {
 
+  }
 }

@@ -175,13 +175,9 @@
                                             }
                                             @else if(turno.estado == "realizado")
                                             {
-                                                @if(turno.historial_subido == true)
+                                                @if(turno.historial_subido == false)
                                                 {
-                                                    <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER HISTORIAL</button>
-                                                }
-                                                @else 
-                                                {
-                                                    <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">AGREGAR HISTORIAL</button>
+                                                    <button type="button" class="btn btn-outline-primary" (click)="iniciarHistorialClinico(turno.paciente.id)">AGREGAR HISTORIAL</button>
                                                 }
                                                 @for(comentario of listaComentarios; track comentario.id)
                                                 {

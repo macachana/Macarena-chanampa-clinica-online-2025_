@@ -130,5 +130,19 @@ export class MisTurnosComponent {
     this.db.estadoNuevoCuestionario = estadoNuevo;
     this.router.navigate(['/encuesta']);
   }
+
+  iniciarHistorialClinico(idPaciente: number | undefined)
+  {
+    this.db.mostrarHistorial = false;
+    this.db.idPaciente = idPaciente;
+    this.router.navigate(['/historial_clinico']);
+  }
+
+  verHistorial(idPaciente: number | undefined)
+  {
+    this.db.mostrarHistorial = true;
+    this.db.idPaciente = idPaciente;
+    this.router.navigate(['/historial-clinico']);
+  }
 }
 

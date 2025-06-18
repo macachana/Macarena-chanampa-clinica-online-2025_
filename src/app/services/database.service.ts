@@ -23,7 +23,9 @@ export class DatabaseService {
   mostrarCuestionario : boolean = false;
   idTurno : number = 0;
   estadoNuevoCuestionario : string = "";
-  mostrarSpinner: boolean = false;
+  mostrarSpinner : boolean = false;
+  mostrarHistorial : boolean = false;
+  idPaciente : number | undefined = 0;
 
   constructor() {
     this.supabase = createClient("https://xrexkrbpejzmwszuhags.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZXhrcmJwZWp6bXdzenVoYWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjQ1NzUsImV4cCI6MjA2MDQwMDU3NX0.rX9uMza6cojqtEKNMtrCoTSSyID9LVGc0x6gjTkOtLI");
@@ -85,18 +87,6 @@ export class DatabaseService {
     return data;
   }
 
-  // async obtenerEspecialidades()
-  // {
-  //   const { data,error } = await this.supabase.from("especialistas").select("especialidad,segundaEspecialidad");
-  //   let especialidades : any[] = [];
-  //   if(data)
-  //   {
-  //     especialidades = data;
-  //   }
-
-  //   return especialidades;
-  // }
-
   //////////////////////////// PACIENTES ////////////////////////////
 
   async listarPacientes()
@@ -127,7 +117,7 @@ export class DatabaseService {
 
   async listarTurnos()
   {
-    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(id,nombre,email),estado,paciente(nombre,apellido,edad,email,dni,obraSocial),especialidad,ContieneComentario,fecha,horario,duracion_minutos,historial_subido");
+    const { data, error } = await this.supabase.from("turnos").select("id,created_at,especialista(id,nombre,email),estado,paciente(id,nombre,apellido,edad,email,dni,obraSocial),especialidad,ContieneComentario,fecha,horario,duracion_minutos,historial_subido");
     let turnos : any[] = [];
     if(data)
     {
@@ -182,6 +172,11 @@ export class DatabaseService {
       "duracion_minutos":duracion_minutos,
       "historial_subido":false
     });
+  }
+
+  async cambiarEstadoHistorial(idTurno: number, estadoNuevo : boolean)
+  {
+
   }
 
   //////////////////////////// COMENTARIOS/RESEÑAS ////////////////////////////
@@ -251,5 +246,30 @@ export class DatabaseService {
       console.log("Horario actualizado");
     }
   }
+
+  //////////////////////////// HISTORIAL CLINICO ////////////////////////////
+
+  async listarHistorial()
+  {
+    const { data, error } = await this.supabase.from("historial_clinico").select("altura,peso,temperatura,presion,datoDinamico,paciente(id,nombre,email)");
+
+    let historial: any[] = [];
+    if(data)
+    {
+      historial = data;
+    }
+    return historial;
+  }
   
+  async agregarHistorial(altura : number, peso : number, temperatura : number, presion : number, idPaciente : number | undefined, datoDinamico : {})
+  {
+    const { data, error } = await this.supabase.from("historial_clinico").insert({
+      "altura":altura,
+      "peso":peso,
+      "temperatura":temperatura,
+      "presion":presion,
+      "paciente":idPaciente,
+      "datoDinamico":datoDinamico
+    });
+  }
 }
