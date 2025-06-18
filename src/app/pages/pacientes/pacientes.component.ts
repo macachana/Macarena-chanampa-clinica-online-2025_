@@ -47,6 +47,8 @@ export class PacientesComponent {
 
   verHistorialClinico(idPaciente: number | undefined)
   {
-
+    this.db.idPaciente = idPaciente;
+    this.db.mostrarHistorial = true;
+    this.router.navigate(['/historial_clinico']);
   }
 }

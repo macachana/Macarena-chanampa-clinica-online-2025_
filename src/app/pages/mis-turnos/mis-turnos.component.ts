@@ -131,10 +131,11 @@ export class MisTurnosComponent {
     this.router.navigate(['/encuesta']);
   }
 
-  iniciarHistorialClinico(idPaciente: number | undefined)
+  iniciarHistorialClinico(idPaciente: number | undefined,idTurno : number)
   {
     this.db.mostrarHistorial = false;
     this.db.idPaciente = idPaciente;
+    this.db.idTurno = idTurno;
     this.router.navigate(['/historial_clinico']);
   }
 

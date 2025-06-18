@@ -107,6 +107,8 @@ export class HistorialClinicoComponent {
               showConfirmButton: false,
               timer: 2000
             });
+            this.db.cambiarEstadoHistorial(this.db.idTurno);
+            this.reiniciar();
           }
           else
           {
@@ -119,9 +121,13 @@ export class HistorialClinicoComponent {
             });            
           }
         });
-        this.db.cambiarEstadoClinicoTurno();
       }
     }
+  }
+
+  reiniciar()
+  {
+    this.formHistoria.reset();
   }
 
 }

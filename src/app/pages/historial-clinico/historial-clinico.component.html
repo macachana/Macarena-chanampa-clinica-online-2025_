@@ -23,8 +23,8 @@
                         <label class="titulo">HISTORIAL CLINICO DEL PACIENTE {{ historial.paciente.nombre }} {{ historial.paciente.apellido }}</label>
                         <div class="historialClinico">
                             <label><b>Altura: </b>{{ historial.altura}}</label>
-                            <label><b>Peso: </b>{{ historial.altura}}</label>
-                            <label><b>Temperatura: </b>{{ historial.altura}}</label>
+                            <label><b>Peso: </b>{{ historial.peso}}</label>
+                            <label><b>Temperatura: </b>{{ historial.temperatura}}</label>
                             @for(dato of historial.datoDinamico; track dato)
                             {
                                 <label><b>{{dato}}: </b>{{historial.datoDinamico[dato]}}</label>

@@ -177,7 +177,7 @@
                                             {
                                                 @if(turno.historial_subido == false)
                                                 {
-                                                    <button type="button" class="btn btn-outline-primary" (click)="iniciarHistorialClinico(turno.paciente.id)">AGREGAR HISTORIAL</button>
+                                                    <button type="button" class="btn btn-outline-primary" (click)="iniciarHistorialClinico(turno.paciente.id,turno.id)">AGREGAR HISTORIAL</button>
                                                 }
                                                 @for(comentario of listaComentarios; track comentario.id)
                                                 {

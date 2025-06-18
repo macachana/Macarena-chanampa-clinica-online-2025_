@@ -174,9 +174,20 @@ export class DatabaseService {
     });
   }
 
-  async cambiarEstadoHistorial(idTurno: number, estadoNuevo : boolean)
+  async cambiarEstadoHistorial(idTurno: number)
   {
+    const { data, error } = await this.supabase.from("turnos").update({"historial_subido":true}).eq("id",idTurno);
 
+    if(error)
+    {
+      console.error("no se pudo actualizar el estado Contiene Comentario");
+    }
+    else
+    {
+      console.log("estado Contiene Comentario actualizado");
+    }
+
+    return data;
   }
 
   //////////////////////////// COMENTARIOS/RESEÑAS ////////////////////////////
