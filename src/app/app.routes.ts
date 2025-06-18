@@ -12,6 +12,7 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { EncuestaComponent } from './pages/encuesta/encuesta.component';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { HistorialClinicoComponent } from './pages/historial-clinico/historial-clinico.component';
+import { InformesComponent } from './pages/informes/informes.component';
 
 export const routes: Routes = [
     {
@@ -77,6 +78,11 @@ export const routes: Routes = [
         path: 'historial_clinico',
         component: HistorialClinicoComponent,
         title: 'Historial clínico'
+    },
+    {
+        path: 'informes',
+        component: InformesComponent,
+        title: 'Informes'
     },
     {
         path: 'error',

@@ -1,0 +1,52 @@
+body{
+    margin: 0;
+    background: #ececec;
+    height: auto;
+}
+
+.contenedor-h
+{
+    position: relative;
+    width: 100%;
+    height: auto; /* Ocupa toda la altura de la ventana */
+    overflow:hidden;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    margin: 120px 50px;
+    color:white;
+}
+
+.imagenFondo img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: brightness(40%);
+}
+
+.card-group
+{
+    gap:20px;
+}
+
+.card
+{
+    padding: 1%;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+.card-title
+{
+    font-size: 20px;
+    font-weight: bold;    
+}
