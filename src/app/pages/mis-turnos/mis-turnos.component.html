@@ -172,10 +172,10 @@
                                     <div class="card">
                                         <div class="card-header">Turno nro: {{ turno.id }}</div>
                                         <div class="card-body">
-                                            <div>Fecha: {{ turno.fecha }}</div>
-                                            <div>Paciente: {{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</div>
-                                            <div>Especialidad: {{ turno.especialidad }}</div>
-                                            <div>Obra social: {{ turno.paciente.obraSocial }}</div>
+                                            <div><b>Fecha:</b> {{ turno.fecha }}</div>
+                                            <div><b>Paciente:</b> {{ turno.paciente.nombre }} {{ turno.paciente.apellido }}</div>
+                                            <div><b>Especialidad:</b> {{ turno.especialidad }}</div>
+                                            <div><b>Obra social:</b> {{ turno.paciente.obraSocial }}</div>
                                             <div>Estado: <div style="font-weight: bold;">{{ turno.estado.toUpperCase() }}</div></div>
                                             @if(turno.estado == "aceptado")
                                             {
@@ -198,12 +198,13 @@
                                                 {
                                                     @for(historial of this.listaHistoriales; track historial.id)
                                                     {
-                                                        @if(historial.paciente.id == turno.paciente.id)
+                                                        @if(historial.turno.id == turno.id)
                                                         {
-                                                            <div>Altura: {{historial.altura}}</div>
-                                                            <div>Peso: {{historial.peso}}</div>
-                                                            <div>Temperatura: {{historial.temperatura}}</div>
-                                                            <div>Presión: {{historial.presion}}</div>
+                                                            <div>---------------------------------</div>
+                                                            <div><b>Altura</b> : {{historial.altura}}</div>
+                                                            <div><b>Peso</b> : {{historial.peso}}</div>
+                                                            <div><b>Temperatura</b> : {{historial.temperatura}}</div>
+                                                            <div><b>Presión</b> : {{historial.presion}}</div>
                                                             <div *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
                                                                 <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
                                                             </div>  
