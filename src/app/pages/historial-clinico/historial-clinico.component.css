@@ -140,3 +140,27 @@ font-size: 1rem;
         }
     }
 }
+
+.listaEspecialidades
+{
+    display: flex;
+    margin: 20px auto;
+    gap: 30px;
+    button
+    {
+        font-size: 25px;
+        font-weight: bold;
+    }
+}
+
+.separador
+{
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: oblique;
+    background-color: rgb(0, 0, 0);
+    margin: 10px 0px;    
+}

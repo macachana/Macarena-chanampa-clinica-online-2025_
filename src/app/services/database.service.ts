@@ -263,7 +263,7 @@ export class DatabaseService {
 
   async listarHistorial()
   {
-    const { data, error } = await this.supabase.from("historial_clinico").select("altura,peso,temperatura,presion,datoDinamico,paciente(id,nombre,email),turno(id,especialista(nombre,apellido),especialidad,fecha,horario)");
+    const { data, error } = await this.supabase.from("historial_clinico").select("id,altura,peso,temperatura,presion,datoDinamico,paciente(id,nombre,apellido,email),turno(id,especialista(nombre,apellido),especialidad,fecha,horario)");
 
     let historial: any[] = [];
     if(data)

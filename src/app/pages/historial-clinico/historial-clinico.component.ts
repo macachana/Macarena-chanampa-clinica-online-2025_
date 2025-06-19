@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, A
 import { DatabaseService } from '../../services/database.service';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Especialista } from '../../clases/especialista';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-historial-clinico',
@@ -29,6 +31,11 @@ export class HistorialClinicoComponent {
   clave03 : string = '';
   valor03 : string = '';
 
+  listaEspecialistas : Especialista[] = [];
+  listaEspecialidades : Set<string | undefined> = new Set();
+
+  especialidadSeleccionada : string = "";
+
   formHistoria = new FormGroup({
     altura: new FormControl('',{
       validators: [Validators.required, Validators.min(0), Validators.max(3)]
@@ -46,15 +53,24 @@ export class HistorialClinicoComponent {
 
   constructor()
   {
-    this.db.listarHistorial().then((historial: any[])=>{
-      this.listaHistorial = historial;
-      console.log(this.listaHistorial);
-      console.log(this.listaHistorial[0].datoDinamico);
-      for(let i = 0; i < this.listaHistorial[0].datoDinamico; i++)
-      {
-        console.log(this.listaHistorial[0].datoDinamico[i]);
-      }
+    this.db.listarHistorial().then((historiales: any[])=>{
+      this.listaHistorial = historiales;
     });
+
+    this.db.listarEspecialistas().then((especialistas : Especialista[])=>{
+      for(let i = 0; i < especialistas.length; i++)
+      {
+        if(especialistas[i].segundaEspecialidad !== null)
+        {
+          this.listaEspecialidades.add(especialistas[i].especialidad.toUpperCase());
+          this.listaEspecialidades.add(especialistas[i].segundaEspecialidad?.toUpperCase());        
+        }
+        else
+        {
+          this.listaEspecialidades.add(especialistas[i].especialidad.toUpperCase());          
+        }
+      }
+    });  
   }
 
   guardarHistorial()
@@ -143,4 +159,106 @@ export class HistorialClinicoComponent {
     return Object.keys(datoDinamico);
   }
 
+  especialidadElegida(nombreEspecialidad: string | null)
+  {
+    if(nombreEspecialidad)
+      this.especialidadSeleccionada = nombreEspecialidad;
+
+  }
+
+  generarPDF(historialIngresado: number | undefined)
+  {
+    
+    if(historialIngresado)
+    {
+      // console.log(this.listaHistorial[historialIngresado]);
+
+      let historialClinico: any = {};
+    
+      const doc = new jsPDF();
+  
+      for(let i = 0; i < this.listaHistorial.length; i++)
+      {
+        if(this.listaHistorial[i].turno.id == historialIngresado)
+        {
+          historialClinico = this.listaHistorial[i];
+          console.log(historialClinico);
+        }
+      }
+
+      let titulo = "Historial médico: " + historialClinico.turno.fecha + ' - ' + historialClinico.turno.horario + ' hs';  
+
+      let logo = 'https://i.postimg.cc/59z68LyS/55-sin-t-tulo-1.png';
+
+      let lineas : string[] = [
+        'PACIENTE: ' + historialClinico.paciente.nombre + ' ' + historialClinico.paciente.apellido,
+        '',
+        'ESPECIALISTA: ' + historialClinico.turno.especialista.nombre + ' ' + historialClinico.turno.especialista.apellido,
+        '',
+        'ESPECIALIDAD: ' + historialClinico.turno.especialidad,
+        '',
+        'ALTURA: ' + historialClinico.altura,
+        '',
+        'PESO: ' + historialClinico.peso,
+        '',
+        'TEMPERATURA: ' + historialClinico.temperatura,
+        '',
+        'PRESIÓN: ' + historialClinico.presion,
+      ];
+
+      for(let clave of this.obtenerClaves(historialClinico.datoDinamico))
+      {
+        lineas.push('');
+        lineas.push(clave.toUpperCase() + ': ' + historialClinico.datoDinamico[clave]);
+      }
+
+      console.log(lineas);
+
+      this.convertirImagenUrlABase64(logo).then((imagenBase64) => {
+          // Agregar título
+          doc.setFontSize(30);
+          doc.setFont('Arial','normal','bold');
+          doc.text(titulo, 20, 20);
+
+          // Agregar imagen
+          doc.addImage(imagenBase64, 'PNG', 80, 30, 60, 60); // (img, tipo, x, y, width, height)
+
+          // Texto con salto de línea
+          doc.setFontSize(20);
+          doc.setFont('Arial','normal','bold');
+          doc.text(lineas, 20, 120); // x = 20, y = 100 (esto hara que el texto quede debajo de la imagen)
+
+          // Guardar el PDF
+          doc.save('historial_medico_' + historialClinico.paciente.nombre.toLowerCase() + '_' + historialClinico.paciente.apellido.toLowerCase() + '.pdf');
+      });
+    }
+  }
+
+  // Función para convertir una imagen a base64
+  convertirImagenUrlABase64(url: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = url;
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          const dataUrl = canvas.toDataURL('image/png');
+          resolve(dataUrl);
+        } else {
+          reject('No se pudo obtener el contexto del canvas.');
+        }
+      };
+
+      img.onerror = (err) => {
+        reject('Error al cargar la imagen.');
+      };
+    });
+  }
 }

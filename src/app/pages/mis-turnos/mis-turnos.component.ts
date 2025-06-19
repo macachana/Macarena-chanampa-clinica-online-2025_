@@ -118,38 +118,6 @@ export class MisTurnosComponent {
     return "";
   }
 
-  // buscar()
-  // {
-  //   if(this.busquedaTexto != "")
-  //   {
-  //     for(let i = 0; i < this.listaTurnos.length; i++)
-  //     {
-  //       if(this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialista.nombre.toLowerCase() || (this.busquedaTexto.toLowerCase() == this.listaTurnos[i].especialidad.toLowerCase()))
-  //       {
-  //         this.listaEncontrados.push(this.listaTurnos[i]);
-  //       }
-  //     }
-
-  //     if(this.listaEncontrados.length > 0)
-  //     {
-  //       if(this.listaEncontrados.length == 1)
-  //       {
-  //         this.mensajeEstadoB = "Hay " + this.listaEncontrados.length + " coincidencia";
-  //       }
-  //       else
-  //       {
-  //         this.mensajeEstadoB = "Hay " + this.listaEncontrados.length + " coincidencias";          
-  //       }
-  //       this.todosTurnos = false;
-  //       this.ngOnInit();
-  //     }
-  //     else
-  //     {
-  //       this.mensajeEstadoB = "No hay ningun especialista o especialidad con ese nombre";
-  //     }
-  //   }
-  // }
-
   reiniciar()
   {
     this.todosTurnos = true;
@@ -167,7 +135,7 @@ export class MisTurnosComponent {
       {
         setTimeout(()=>{
           this.ngOnInit();
-        },500);
+        },2000);
       }
     });
   }
