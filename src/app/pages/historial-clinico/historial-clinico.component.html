@@ -29,9 +29,9 @@
                     </div>
                     @if(this.especialidadSeleccionada != '')
                     {
-                        @for(historial of this.listaHistorial; track historial.id)
+                        @if(obtenerHistorialesPorESP().length > 0)
                         {
-                            @if((historial.paciente.id == this.db.idPaciente)  && (historial.turno.especialidad.toUpperCase() == this.especialidadSeleccionada.toUpperCase()))
+                            @for(historial of obtenerHistorialesPorESP(); track historial.id)
                             {
                                 <div class="separador">t</div>
                                 <label class="titulo">FECHA : {{historial.turno.fecha}} - ESPECIALIDAD : {{historial.turno.especialidad}}</label>
@@ -46,11 +46,18 @@
                                     <label><b>Presion </b> : {{ historial.presion }}</label>
                                     <label *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
                                         <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
-                                    </label>            
-                                </div>
+                                    </label>       
+                                </div>     
                             }
                         }
-
+                        @else 
+                        {
+                            <label [ngClass]="sinHistorial ? 'tituloError' : ''">NO TIENE HISTORIAL CLINICO DE ESTÁ ESPECIALIDAD</label>
+                        }
+                    }
+                    @else 
+                    {
+                        <label [ngClass]="sinHistorial ? 'tituloError' : ''">SELECCIONE UNA ESPECIALIDAD</label>
                     }
                 }
                 @else 

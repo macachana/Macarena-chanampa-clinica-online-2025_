@@ -13,8 +13,7 @@
             <div class="input-group mb-3 filtro">
                 <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" (ngModelChange)="filtrarTurno()" placeholder="Buscar turno..." />
                 <!-- <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>               -->
-            </div>     
-            <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
+            </div>
             <div class="listaUsuarios este" id="detalleseleccion" name="detalleseleccion">
 
                 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -24,14 +23,14 @@
                             {
                                 <div class="col">
                                     <div class="card">
-                                        <div class="card-header">Turno nro: {{ turno.id }}</div>
+                                        <div class="card-header"><b>Turno nro:</b> {{ turno.id }}</div>
                                         <div class="card-body">
-                                            <div>Fecha: {{ turno.fecha }}</div>
-                                            <div>Especialista: {{ turno.especialista.nombre }}</div>
-                                            <div>Especialidad: {{ turno.especialidad }}</div>
-                                            <div>Paciente: {{ turno.paciente.nombre }}</div>
-                                            <div>Obra social: {{ turno.paciente.obraSocial }}</div>
-                                            <div>Estado: {{ turno.estado.toUpperCase() }}</div>
+                                            <div><b>Fecha:</b> {{ turno.fecha }}</div>
+                                            <div><b>Especialista:</b> {{ turno.especialista.nombre }}</div>
+                                            <div><b>Especialidad:</b> {{ turno.especialidad }}</div>
+                                            <div><b>Paciente:</b> {{ turno.paciente.nombre }}</div>
+                                            <div><b>Obra social:</b> {{ turno.paciente.obraSocial }}</div>
+                                            <div><b>Estado:</b> {{ turno.estado.toUpperCase() }}</div>
                                             @if(turno.estado == "solicitado")
                                             {
                                                 <button type="button" class="btn btn-outline-danger" (click)="cambiarEstado('cancelado',turno.id)">CANCELAR</button>                                       

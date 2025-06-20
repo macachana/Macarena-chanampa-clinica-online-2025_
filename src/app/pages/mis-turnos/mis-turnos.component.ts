@@ -72,10 +72,10 @@ export class MisTurnosComponent {
     this.listaEncontrados = this.listaTurnos.filter(turno => {
       return (
         String(turno.fecha).toLowerCase().includes(texto) ||
-        String(turno.especialista.nombre).toLowerCase().includes(texto) ||
-        String(turno.especialidad).toLocaleLowerCase().includes(texto) ||
         String(turno.paciente.nombre).toLowerCase().includes(texto) ||
-        String(turno.paciente.ObraSocial).toLowerCase().includes(texto) ||
+        String(turno.especialidad).toLocaleLowerCase().includes(texto) ||
+        String(turno.especialista.nombre).toLowerCase().includes(texto) ||
+        String(turno.paciente.obraSocial).toLowerCase().includes(texto) ||
         String(turno.estado).toLowerCase().includes(texto)
         // String(this.buscarDato(turno.id)).toLowerCase().includes(texto)
       );

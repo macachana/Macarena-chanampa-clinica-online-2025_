@@ -101,6 +101,7 @@ export class LoginComponent{
 
             if(resultado.data.session != null)
             {
+              this.db.agregarLog(data[0].id);
               this.resetCaptcha();
               setTimeout(()=>{
                 this.router.navigate(["/mi_perfil"]);
@@ -139,6 +140,7 @@ export class LoginComponent{
               this.auth.iniciarSesion(this.emailIng,this.claveIng).then((resultado)=>{
                 if(resultado.data.session != null)
                 {
+                  this.db.agregarLog(data[0].id);
                   this.resetCaptcha();
                   setTimeout(()=>{
                     this.router.navigate(["/mi_perfil"]);

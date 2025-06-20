@@ -16,8 +16,7 @@
             <div class="input-group mb-3 filtro">
                 <input type="text" class="form-control" aria-describedby="button-addon2" [(ngModel)]="busquedaTexto" (ngModelChange)="filtrarTurno()" placeholder="Buscar turno..." />
                 <!-- <button class="btn btn-dark" type="button" id="button-addon2" (click)="buscar()">BUSCAR</button>               -->
-            </div>     
-            <div class="mensajeBusqueda">Estado de busqueda:{{mensajeEstadoB}}</div>
+            </div>
             @if(this.db.tipoUsuario == "paciente")
             {
                 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -32,11 +31,11 @@
                                     <div class="card">
                                         <div class="card-header">Turno nro: {{ turno.id }}</div>
                                         <div class="card-body">
-                                            <div>Fecha: {{ turno.fecha }}</div>
-                                            <div>Especialista: {{ turno.especialista.nombre }}</div>
-                                            <div>Especialidad: {{ turno.especialidad }}</div>
-                                            <div>Obra social: {{ turno.paciente.obraSocial }}</div>
-                                            <div>Estado: <div style="font-weight: bold;">{{ turno.estado.toUpperCase() }}</div></div>
+                                            <div><b>Fecha:</b> {{ turno.fecha }}</div>
+                                            <div><b>Especialista:</b> {{ turno.especialista.nombre }}</div>
+                                            <div><b>Especialidad:</b> {{ turno.especialidad }}</div>
+                                            <div><b>Obra social:</b> {{ turno.paciente.obraSocial }}</div>
+                                            <div><b>Estado:</b> <div style="font-weight: bold;">{{ turno.estado.toUpperCase() }}</div></div>
                                             @if(turno.estado == "aceptado")
                                             {
                                                     <button type="button" class="btn btn-outline-danger"  (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
@@ -57,10 +56,10 @@
                                                     {
                                                         @if(historial.paciente.id == turno.paciente.id)
                                                         {
-                                                            <div>Altura: {{historial.altura}}</div>
-                                                            <div>Peso: {{historial.peso}}</div>
-                                                            <div>Temperatura: {{historial.temperatura}}</div>
-                                                            <div>Presión: {{historial.presion}}</div>
+                                                            <div><b>Altura:</b> {{historial.altura}}</div>
+                                                            <div><b>Peso:</b> {{historial.peso}}</div>
+                                                            <div><b>Temperatura:</b> {{historial.temperatura}}</div>
+                                                            <div><b>Presión:</b> {{historial.presion}}</div>
                                                             <div *ngFor="let clave of obtenerClaves(historial.datoDinamico)">
                                                                 <b>{{ clave }}</b> : {{ historial.datoDinamico[clave] }}
                                                             </div>  

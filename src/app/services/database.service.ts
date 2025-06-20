@@ -285,4 +285,47 @@ export class DatabaseService {
       "turno": idTurno
     });
   }
+
+  //////////////////////////// LOGS DE SISTEMA ////////////////////////////
+  async listarLogs()
+  {
+    const { data, error } = await this.supabase.from("logs_sistema").select("id,usuario(id,nombre,apellido,tipo),fecha,hora");
+    let logs : any[] = [];
+    if(error)
+    {
+      console.error("Error: " + error);
+    }
+    else
+    {
+      if(data)
+      {
+        logs = data;
+      }
+    }
+
+    return logs;
+  }
+
+  async agregarLog(idUsuario: number | undefined)
+  {
+    let hoy = new Date();
+    let fecha = new Date(hoy);
+    const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
+    const hora = hoy.toTimeString().substring(0, 5); // Formato "HH:MM"
+
+    const { data, error } = await this.supabase.from("logs_sistema").insert({
+      "usuario": idUsuario,
+      "fecha": fecha,
+      "hora": hora
+    });
+
+    if(error)
+    {
+      console.error("Hubo un error al agregar el log: " + error);
+    }
+    else
+    {
+      console.log("log agregado a la base de datos");
+    }
+  }
 }

@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { DatePipe, TitleCasePipe, LowerCasePipe, registerLocaleData, UpperCasePipe } from '@angular/common';
+import { DatabaseService } from '../../services/database.service';
+
+import localeEs from '@angular/common/locales/es';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { trigger, transition, style, animate, query, animateChild, group, state, keyframes } from '@angular/animations';
 
 // import de generar excel
 import * as XLSX from 'xlsx';
@@ -8,13 +14,31 @@ import * as FileSaver from 'file-saver';
 // import de generar PDF
 import { jsPDF } from 'jspdf';
 
+// imports de graficos
+import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(ChartDataLabels);
+
+registerLocaleData(localeEs, 'es');
+
 @Component({
   selector: 'app-informes',
-  imports: [],
+  imports: [DatePipe, TitleCasePipe, LowerCasePipe, UpperCasePipe],
   templateUrl: './informes.component.html',
-  styleUrl: './informes.component.css'
+  styleUrl: './informes.component.css',
+  animations: [
+    trigger('expandCollapse', [
+      state('expanded', style({ transform: 'scale(1)'})),
+      state('collapsed', style({ transform: 'scale(0.8)'})),
+      transition('expanded => collapsed', animate('300ms ease-in')),
+      transition('collapsed => expanded', animate('300ms ease-out'))
+    ])
+  ]
 })
 export class InformesComponent {
+
+  titulo = "lista de ingresos al sistema";
 
   graficos01 : boolean = false;
   graficos02 : boolean = false;
@@ -22,9 +46,18 @@ export class InformesComponent {
   graficos04 : boolean = false;
   mostrarLog : boolean = false;
 
+  db = inject(DatabaseService);
+  listaLogs : any[] = [];
+
+  expandState = 'collapsed';
+  expandState02 = 'collapsed';
+
   constructor()
   {
-
+    this.db.listarLogs().then((logs : any[])=>{
+      this.listaLogs = logs;
+      console.log(this.listaLogs);
+    }); 
   }
 
   ngOnInit()
@@ -112,7 +145,7 @@ export class InformesComponent {
 
   }
 
-  generarPDF(historialIngresado: number | undefined)
+  generarPDF()
   {
     // if(historialIngresado)
     // {
@@ -205,5 +238,93 @@ export class InformesComponent {
         reject('Error al cargar la imagen.');
       };
     });
+  }
+
+  horaModificada(hora: string) : string
+  {
+    return hora.split(":")[0] + ':' + hora.split(":")[1];
+  }
+
+  async crearGrafico()
+  {
+    // if(!this.graficoCanvas) return;
+
+    // const ctx = this.graficoCanvas.nativeElement.getContext('2d');
+
+    // const imagenesFiltradas = this.imagenes.filter(img => img.cantidad_likes > 0);
+
+    // const labels = imagenesFiltradas.map(img => `${img.cantidad_likes}`);
+    // const data = imagenesFiltradas.map(img => img.cantidad_likes);
+
+    // new Chart(ctx, {
+    //     type: 'pie',
+    //     data: {
+    //       labels: labels,
+    //       datasets: [{
+    //         data: data,
+    //         backgroundColor: [
+    //           '#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800',
+    //           '#BA68C8', '#81C784', '#F06292', '#9575CD', '#90CAF9'
+    //         ],
+    //       }]
+    //     },
+    //     options: {
+    //       responsive: true,
+    //       plugins: {
+    //         datalabels: {
+    //           color: 'black',
+    //           formatter: (value,context) => labels[context.dataIndex],
+    //           font: {
+    //             weight: 'bold',
+    //             size: 20,
+    //           }
+    //         },
+    //         legend: {
+    //           position: 'bottom'
+    //         }
+    //       },
+    //       onClick: (event, elements) => {
+    //         if (elements.length > 0) {
+    //           const index = elements[0].index;
+    //           const imagen = imagenesFiltradas[index];
+    //           this.imagenSeleccionadaUrl = imagen.url;
+    //         }
+    //       }
+    //     },
+    //     plugins: [ChartDataLabels]
+    //   });
+  }
+  
+  onMouseEnter(numberButton: number = 1)
+  {
+    if(numberButton == 1)
+    {
+      this.expandState = 'expanded';
+    }
+    else
+    {
+      this.expandState02 = 'expanded';
+    }
+  }
+
+  onMouseLeave(numberButton: number = 1)
+  {
+    if(numberButton == 1)
+    {
+      this.expandState = 'collapsed';
+    }
+    else
+    {
+      this,this.expandState02 = 'collapsed';
+    }
+  }
+
+  volver()
+  {
+      this.graficos01 = false;
+      this.graficos02 = false;
+      this.graficos03 = false;
+      this.graficos04 = false;
+      this.mostrarLog = false;
   }
 }

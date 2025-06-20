@@ -16,27 +16,91 @@
             <!-- Log de ingresos al sistema. Indicando el usuario, dia y horario que ingreso al sistema. -->
             @if(mostrarLog)
             {
-
+                <div class="contenedorLog">
+                    <label class="titulo">{{titulo | uppercase }}</label>
+                    <div class="seccionBotones">
+                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
+                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                    </div>
+                    <div class="listaLogs" id="detalleseleccion" name="detalleseleccion">
+                        <table class="table table-light table-bordered border-primary">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Usuario</th>
+                                    <th>Dia</th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(this.listaLogs.length > 0)
+                                {
+                                    @for(log of this.listaLogs; track log.id)
+                                    {
+                                        <tr class="table-primary">
+                                            <td> {{ log.id }}</td>
+                                            <td> {{ log.usuario.nombre | titlecase }} {{ log.usuario.apellido | titlecase }} ({{ log.usuario.tipo | lowercase }}) </td>
+                                            <td> {{ log.fecha | date:'dd MMMM yyyy' }} </td>
+                                            <td> {{ this.horaModificada(log.hora) }} </td>
+                                        </tr>  
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             }
             <!-- Cantidad de turnos por especialidad. -->
             @else if(graficos01)
             {
-
+                <div class="contenedorLog">
+                    <label class="titulo">{{titulo | uppercase }}</label>
+                    <div class="seccionBotones">
+                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
+                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                    </div>
+                </div>
+                <!-- <div style="display:block;">
+                    <canvas #graficoLikes></canvas>
+                </div>                 -->
             }
             <!-- Cantidad de turnos por día. -->
             @else if(graficos02)
             {
-
+                <div class="contenedorLog">
+                    <label class="titulo">{{titulo | uppercase }}</label>
+                    <div class="seccionBotones">
+                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
+                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                    </div>
+                </div>
             }
             <!-- Cantidad de turnos solicitados por médico en un lapso de tiempo. -->
             @else if(graficos03)
             {
-
+                <div class="contenedorLog">
+                    <label class="titulo">{{titulo | uppercase }}</label>
+                    <div class="seccionBotones">
+                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
+                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                    </div>
+                </div>
             }
             <!-- Cantidad de turnos finalizados por médico en un lapso de tiempo. -->
             @else if(graficos04)
             {
-
+                <div class="contenedorLog">
+                    <label class="titulo">{{titulo | uppercase }}</label>
+                    <div class="seccionBotones">
+                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
+                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                    </div>
+                </div>
             }
             @else 
             {

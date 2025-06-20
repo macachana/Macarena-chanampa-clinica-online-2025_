@@ -8,9 +8,11 @@ import { Especialista } from '../../clases/especialista';
 import { jsPDF } from 'jspdf';
 import { trigger, transition, style, animate, query, animateChild, group, state, keyframes } from '@angular/animations';
 
+import { NgClass } from '@angular/common';
+
 @Component({
   selector: 'app-historial-clinico',
-  imports: [RouterLink, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule, CommonModule, NgClass],
   templateUrl: './historial-clinico.component.html',
   styleUrl: './historial-clinico.component.css',
   standalone: true,
@@ -28,6 +30,8 @@ export class HistorialClinicoComponent {
   router = inject(Router);
 
   listaHistorial : any[] = [];
+
+  sinHistorial : boolean = false;
 
   datoDinamico: { [key: string]: any } = {};
 
@@ -87,6 +91,10 @@ export class HistorialClinicoComponent {
 
   ngOnInit()
   {
+    if(this.especialidadSeleccionada == '')
+    {
+      this.sinHistorial = true;
+    }
   }
 
   guardarHistorial()
@@ -326,5 +334,24 @@ export class HistorialClinicoComponent {
         }
       }
     }
+  }
+
+  obtenerHistorialesPorESP() : any[]
+  {
+    let historialEncontrado : any[] = [];
+    for(let i = 0 ; i < this.listaHistorial.length; i++)
+    {
+      if((this.listaHistorial[i].paciente.id == this.db.idPaciente)  && (this.listaHistorial[i].turno.especialidad.toUpperCase() == this.especialidadSeleccionada.toUpperCase()))
+      {
+        historialEncontrado.push(this.listaHistorial[i]);
+      }
+    }
+
+    if(!(historialEncontrado.length > 0))
+    {
+      this.sinHistorial = true; 
+    }
+
+    return historialEncontrado;
   }
 }

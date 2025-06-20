@@ -15,17 +15,23 @@ import Swal from 'sweetalert2';
 import { DatabaseService } from '../../services/database.service';
 import { Especialista } from '../../clases/especialista';
 import { Paciente } from '../../clases/paciente';
+import { NgClass, NgStyle } from '@angular/common';
+
+import { HighlightDirective } from '../../directives/highlight.directive';
+
 
 
 @Component({
   selector: 'app-solicitar-turno',
-  imports: [],
+  imports: [NgClass, HighlightDirective],
   templateUrl: './solicitar-turno.component.html',
   styleUrl: './solicitar-turno.component.css'
 })
 export class SolicitarTurnoComponent {
   db = inject(DatabaseService);
   router = inject(Router);
+  error : boolean = false;
+  color : string = "red";
 
   // si es paciente: seleccion de especialidad
   // si es administrador: seleccion de paciente
@@ -400,12 +406,16 @@ export class SolicitarTurnoComponent {
 
     this.horariosDisponibles = this.todosHorarios.filter(h => !this.horariosOcupados.includes(h));
 
-    console.log("TODOS LOS HORARIOS");
-    console.log(this.todosHorarios);
-    console.log("HORARIOS OCUPADOS");
-    console.log(this.horariosOcupados);
-    console.log("HORARIOS DISPONIBLES");
-    console.log(this.horariosDisponibles);
+    if(this.horariosDisponibles.length == 0)
+    {
+      this.error = true;
+    }
+    // console.log("TODOS LOS HORARIOS");
+    // console.log(this.todosHorarios);
+    // console.log("HORARIOS OCUPADOS");
+    // console.log(this.horariosOcupados);
+    // console.log("HORARIOS DISPONIBLES");
+    // console.log(this.horariosDisponibles);
   }
 
   generarHorariosOcupados()

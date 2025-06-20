@@ -68,7 +68,7 @@
                                 <div class="botonesFecha">
                                     @for(fecha of listaFechas; track fecha)
                                     {
-                                        <button class="btn btn-success" (click)="seleccionarFecha(fecha.fecha,fecha.dia)">{{fecha.fecha}}</button>
+                                        <button class="btn btn-success" (click)="seleccionarFecha(fecha.fecha,fecha.dia)">{{fecha.fecha}} ({{fecha.dia}})</button>
                                     }
                                 </div>
                             </div>    
@@ -140,8 +140,8 @@
                                         {
                                             @for(paciente of listaPacientes; track paciente.id)
                                             {
-                                                <tr class="table-primary" (click)="seleccionarPaciente(paciente.id)">
-                                                    <td>
+                                                <tr (click)="seleccionarPaciente(paciente.id)">
+                                                    <td [appHighlight]="color">
                                                         <img class="imagenPerfil" src="https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/pacientes/{{paciente.nombre}}_{{paciente.dni}}"/>
                                                     </td>   
                                                     <td>{{ paciente.nombre }} {{ paciente.apellido }}</td>
@@ -209,9 +209,9 @@
                                 <button class="btn btn-outline-primary botonVolver" (click)="volver(4)">Volver</button>
                                 <label>Elija el día:</label>
                                 <div class="botonesFecha">
-                                    @for(fecha of listaFechas; track fecha)
+                                    @for(fecha of listaFechas; track fecha.id)
                                     {
-                                        <button class="btn btn-success" (click)="seleccionarFecha(fecha.fecha,fecha.dia)">{{fecha.fecha}}</button>
+                                        <button class="btn btn-success" (click)="seleccionarFecha(fecha.fecha,fecha.dia)">{{fecha.fecha}} ({{ fecha.dia }})</button>
                                     }
                                 </div>
                             </div>    
@@ -234,9 +234,7 @@
                                     }
                                     @else 
                                     {
-                                        <div class="titulo">
-                                            <label>Lamentamos informar que el doctor no tiene turnos en este día</label>                                    
-                                        </div>
+                                        <label [ngClass]="error ? 'tituloError' : ''">Lamentamos informar que el doctor no tiene turnos en este día</label>                                    
                                     }
                                 </div>
                             </div>

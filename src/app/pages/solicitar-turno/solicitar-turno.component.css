@@ -39,6 +39,17 @@ body{
     }
 }
 
+.tituloError
+{
+    color: red;
+    margin-top:20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position:relative;
+    justify-content: center;
+}
+
 .contenedor {
     display: flex;
     flex-direction: column;
