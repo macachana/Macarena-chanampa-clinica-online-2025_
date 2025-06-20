@@ -23,7 +23,7 @@
                         {
                             @if(especialidad != null)
                             {
-                                <button class="btn btn-warning" (click)="especialidadElegida(especialidad)">{{especialidad}}</button>
+                                <button class="btn btn-warning" (click)="especialidadElegida(especialidad)" id="{{especialidad}}">{{especialidad}}</button>
                             }
                         }
                     </div>
@@ -170,8 +170,8 @@
                     </div>
                 </form>
                 <div class="botones">
-                    <button routerLink="/mis_turnos" type="button" class="btn btn-secondary"><i class="bi bi-reply-fill"></i></button>
-                    <button (click)="guardarHistorial()" type="button" class="btn btn-success">Enviar</button>
+                    <button routerLink="/mis_turnos" type="button" class="btn btn-secondary" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"><i class="bi bi-reply-fill"></i></button>
+                    <button (click)="guardarHistorial()" type="button" class="btn btn-success" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Enviar</button>
                 </div>
             }
         </div>

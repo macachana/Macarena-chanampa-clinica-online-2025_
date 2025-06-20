@@ -22,12 +22,10 @@
             <div class="perfiles">
                 @if(this.db.tipoUsuario == "")
                 {
-                    <button class="contenedor-especialista" routerLink="/registros/registro-especialista">
-                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0xnnDhCwHb4R5uS9mQlB7MsDpGN1ln5YGWA&s" alt="imagenEspecialistas"/> -->
+                    <button class="contenedor-especialista" (click)="irAregistroESP()">
                         <div class="emoj">🧑🏽‍⚕️</div>ESPECIALISTA
                     </button>
-                    <button class="contenedor-paciente" routerLink="/registros/registro-paciente">
-                        <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBAM0kpuY2MUn9BW-ksLYksLaFwCt1snBwbA&s" alt="imagenPaciente"/> -->
+                    <button class="contenedor-paciente" (click)="irAregistroPAC()">
                         <div class="emoj">😷</div>PACIENTE
                     </button>
                 }

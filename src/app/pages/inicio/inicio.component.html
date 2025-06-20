@@ -11,8 +11,8 @@
             <h2>BIENVENIDO A LA CLÍNICA CHANAMPA</h2>
             <p>Para realizar alguna acción, acceda a su cuenta o si no tiene una, REGÍSTRESE de forma gratuita y fácil</p>
             <div class="botonesInicio">
-                <button type="button" class="btn btn-light" (click)="irAinicio()">Iniciar sesión</button>
-                <button type="button" class="btn btn-light" (click)="irAregistro()">Registrarse</button>
+                <button type="button" class="btn btn-light" (click)="irAinicio()" [@fadeInOut]="fadeState" (mouseenter)="onMouseEnter('fade')" (mouseleave)="onMouseLeave('fade')">Iniciar sesión</button>
+                <button type="button" class="btn btn-light" (click)="irAregistro()" [@fadeInOut]="fadeState02" (mouseenter)="onMouseEnter('fade',2)" (mouseleave)="onMouseLeave('fade',2)">Registrarse</button>
             </div>
         </div>
     </div>

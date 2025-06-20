@@ -7,17 +7,20 @@ const routes: Routes = [
     {
         path: 'registro-especialista',
         component: RegistroEspecialistaComponent,
-        title: 'Registro de especialistas'
+        title: 'Registro de especialistas',
+        data: {animation: 'registroEsp'}
     },
     {
         path: 'registro-paciente',
         component: RegistroPacienteComponent,
-        title: 'Registro de pacientes'
+        title: 'Registro de pacientes',
+        data: {animation: 'registroPac'}
     },
     {
         path: 'registro-administrador',
         component: RegistroAdministradorComponent,
-        title: 'Registro de administrador'
+        title: 'Registro de administrador',
+        data: {animation: 'registroAdm'}
     }
 ];
 

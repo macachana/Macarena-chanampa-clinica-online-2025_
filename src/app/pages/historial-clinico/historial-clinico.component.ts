@@ -6,13 +6,22 @@ import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Especialista } from '../../clases/especialista';
 import { jsPDF } from 'jspdf';
+import { trigger, transition, style, animate, query, animateChild, group, state, keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-historial-clinico',
   imports: [RouterLink, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './historial-clinico.component.html',
   styleUrl: './historial-clinico.component.css',
-  standalone: true
+  standalone: true,
+  animations: [
+    trigger('expandCollapse', [
+      state('expanded', style({ transform: 'scale(1)'})),
+      state('collapsed', style({ transform: 'scale(0.8)'})),
+      transition('expanded => collapsed', animate('300ms ease-in')),
+      transition('collapsed => expanded', animate('300ms ease-out'))
+    ])
+  ]
 })
 export class HistorialClinicoComponent {
   db = inject(DatabaseService);
@@ -35,6 +44,9 @@ export class HistorialClinicoComponent {
   listaEspecialidades : Set<string | undefined> = new Set();
 
   especialidadSeleccionada : string = "";
+
+  expandState = 'collapsed';
+  expandState02 = 'collapsed';
 
   formHistoria = new FormGroup({
     altura: new FormControl('',{
@@ -71,6 +83,10 @@ export class HistorialClinicoComponent {
         }
       }
     });  
+  }
+
+  ngOnInit()
+  {
   }
 
   guardarHistorial()
@@ -162,7 +178,10 @@ export class HistorialClinicoComponent {
   especialidadElegida(nombreEspecialidad: string | null)
   {
     if(nombreEspecialidad)
+    {
       this.especialidadSeleccionada = nombreEspecialidad;
+      this.botonSeleccionado();
+    }
 
   }
 
@@ -260,5 +279,52 @@ export class HistorialClinicoComponent {
         reject('Error al cargar la imagen.');
       };
     });
+  }
+
+  onMouseEnter(numberButton: number = 1)
+  {
+    if(numberButton == 1)
+    {
+      this.expandState = 'expanded';
+    }
+    else
+    {
+      this.expandState02 = 'expanded';
+    }
+  }
+
+  onMouseLeave(numberButton: number = 1)
+  {
+    if(numberButton == 1)
+    {
+      this.expandState = 'collapsed';
+    }
+    else
+    {
+      this,this.expandState02 = 'collapsed';
+    }
+  }
+
+  botonSeleccionado()
+  {
+    if(this.especialidadSeleccionada != "")
+    {
+      for(let especialidad of this.listaEspecialidades)
+      {
+        if(especialidad == this.especialidadSeleccionada)
+        {
+          console.log("especialidad: " + especialidad);
+          console.log("especialidad seleccionada: " + this.especialidadSeleccionada);
+          (<HTMLButtonElement>document.getElementById(especialidad)).className = 'btn btn-danger';
+        }
+        else
+        {
+          if(especialidad != null)
+          {
+            (<HTMLButtonElement>document.getElementById(especialidad)).className = 'btn btn-warning';
+          }
+        }
+      }
+    }
   }
 }

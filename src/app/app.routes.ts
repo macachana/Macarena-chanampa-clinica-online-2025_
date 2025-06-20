@@ -27,7 +27,8 @@ export const routes: Routes = [
     {
         path: 'registro',
         component: RegistroComponent,
-        title: 'Registro'
+        title: 'Registro',
+        data: {animation: 'seleccionRegistro'}
     },
     {
         path: 'registros',
