@@ -2,43 +2,33 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
 import { trigger, transition, style, animate, query, animateChild, group, state, keyframes } from '@angular/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
-  imports: [RouterModule],
+  imports: [RouterModule,CommonModule],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
   animations: [
     trigger('routeAnimations', [
       transition('* <=> *', [
-        style({ position: 'relative' }),
         query(':enter, :leave', [
           style({
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%'
+            position: 'static', // 👈 importante: que fluya normalmente
+            width: '100%',
           })
         ], { optional: true }),
-        query(':enter', [
-          style({ left: '100%', opacity: 0 })
-        ], {optional: true }),
-        query(':leave', animateChild(), {
-        optional: true }),
+
         group([
           query(':leave', [
-            animate('3000ms ease-out',
-            style({ left: '-100%',
-            opacity: 0 }))
-          ], {optional: true}),
+            animate('300ms ease-out', style({ transform: 'translateX(-100%)', opacity: 0 }))
+          ], { optional: true }),
           query(':enter', [
-            animate('1500ms ease-out',
-            style({ left: '0%', opacity: 
-              1 }))
+            style({ transform: 'translateX(100%)', opacity: 0 }),
+            animate('300ms ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
           ], { optional: true })
-        ]),
-        query(':enter', animateChild(), {
-        optional: true }),
+        ])
       ])
     ])
   ]
@@ -66,13 +56,13 @@ export class RegistroComponent {
   irAregistroESP()
   {
     // /registros/registro-especialista
-    this.router.navigate(['/registros/registro-especialista']);
+    this.router.navigate(['registro/registro-especialista']);
   }
 
   irAregistroPAC()
   {
     // /registros/registro-paciente
-    this.router.navigate(['/registros/registro-paciente']);
+    this.router.navigate(['registro/registro-paciente']);
   }
 
   onMouseEnter(animation : string)

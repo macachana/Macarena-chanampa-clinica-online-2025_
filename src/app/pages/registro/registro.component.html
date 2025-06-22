@@ -21,13 +21,20 @@
             }
             <div class="perfiles">
                 @if(this.db.tipoUsuario == "")
-                {
-                    <button class="contenedor-especialista" (click)="irAregistroESP()">
-                        <div class="emoj">🧑🏽‍⚕️</div>ESPECIALISTA
-                    </button>
-                    <button class="contenedor-paciente" (click)="irAregistroPAC()">
-                        <div class="emoj">😷</div>PACIENTE
-                    </button>
+                {    
+                    <!-- Área animada -->
+                    <div [@routeAnimations]="prepareRoute(outlet)" class="router-container">
+                        <div class="botones-navegacion">
+                            <button class="contenedor-especialista" (click)="irAregistroESP()">
+                                <div class="emoj">🧑🏽‍⚕️</div>ESPECIALISTA
+                            </button>
+                            <button class="contenedor-paciente" (click)="irAregistroPAC()">
+                                <div class="emoj">😷</div>PACIENTE
+                            </button>
+                        </div>
+                        
+                        <router-outlet #outlet="outlet"></router-outlet>
+                    </div>
                 }
                 @else if(this.db.tipoUsuario == "administrador")
                 {

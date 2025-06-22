@@ -12,9 +12,9 @@ const hcaptchaSettings: CaptchaConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideAnimations(),
     provideRouter(routes),
     { provide: CAPTCHA_CONFIG, useValue: hcaptchaSettings},
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
+    provideAnimations()
   ]
 };

@@ -13,6 +13,8 @@ import { PacientesComponent } from './pages/pacientes/pacientes.component';
 import { HistorialClinicoComponent } from './pages/historial-clinico/historial-clinico.component';
 import { InformesComponent } from './pages/informes/informes.component';
 
+import { routes as registroChildren } from './pages/registro/registro.routes';
+
 export const routes: Routes = [
     {
         path: 'inicio',
@@ -22,17 +24,15 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        title: 'Inicio de sesión'
+        title: 'Inicio de sesión',
+        data: {animation: 'inicioSesion'}
     },
     {
         path: 'registro',
         component: RegistroComponent,
         title: 'Registro',
-        data: {animation: 'seleccionRegistro'}
-    },
-    {
-        path: 'registros',
-        loadChildren:() => import('./pages/registro/registro.routes').then((archivo)=> archivo.routes)
+        data: {animation: 'seleccionRegistro'},
+        children: registroChildren
     },
     {
         path: 'mi_perfil',

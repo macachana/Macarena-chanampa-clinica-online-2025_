@@ -7,7 +7,7 @@ body{
 {
     position: relative;
     width: 100%;
-    height: 94.5vh; /* Ocupa toda la altura de la ventana */
+    height: auto; /* Ocupa toda la altura de la ventana */
     overflow: hidden;
 }
 
@@ -22,16 +22,13 @@ body{
 }
 
 .contenedor {
+    width: 100%;
+    margin: 10px 0px;
     position: relative;
-    z-index: 2;
     text-align: center;
-    padding: 2rem;
-    top: 50%;
-    transform: translateY(-50%);
+    padding: 10px 20px;
     background-color: rgba(0, 0, 0, 0.459);
-    margin-left: 20px;
-    margin-right: 20px;
-    border-radius: .80em;
+    color:white;
 }
 
 .perfiles
@@ -95,4 +92,11 @@ h1,h2,h3,p{
 .emoji
 {
     font-size: 60px;
+}
+
+.router-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 300px; /* ajustá según necesidad */
 }

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import {NgHcaptchaModule } from 'ng-hcaptcha';
 
 // services

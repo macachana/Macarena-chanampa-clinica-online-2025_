@@ -8,7 +8,7 @@ body{
 {
     position: relative;
     width: 100%;
-    height: 800px; /* Ocupa toda la altura de la ventana */
+    height: auto; /* Ocupa toda la altura de la ventana */
     overflow:hidden;
 }
 
