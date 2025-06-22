@@ -409,6 +409,11 @@ export class InformesComponent {
       return;
     }
 
+    if(this.chart)
+    {
+      this.chart.destroy();
+    }
+
     const ctx = this.graficoCanvas.nativeElement.getContext('2d');
 
     if(numberGrafic == 1)

@@ -197,8 +197,9 @@ export class HistorialClinicoComponent {
   {
 
     const hoy = new Date();
-    const fecha = new Date(hoy); // yyyy-mm-dd
-
+    const fecha = new Date(hoy);
+    const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
+    const hora = hoy.toTimeString().substring(0, 5); // Formato "HH:MM"
     
     if(historialIngresado)
     {
@@ -243,7 +244,9 @@ export class HistorialClinicoComponent {
         lineas.push(clave.toUpperCase() + ': ' + historialClinico.datoDinamico[clave]);
       }
 
-      lineas.push('FECHA DE EMISION: ' + fecha);
+      lineas.push("");
+
+      lineas.push('FECHA DE EMISION: ' + formato.split("-")[2] + "/" + formato.split("-")[1] + "/" + formato.split("-")[0]);
 
       console.log(lineas);
 
@@ -263,6 +266,76 @@ export class HistorialClinicoComponent {
 
           // Guardar el PDF
           doc.save('historial_medico_' + historialClinico.paciente.nombre.toLowerCase() + '_' + historialClinico.paciente.apellido.toLowerCase() + '.pdf');
+      });
+    }
+  }
+
+  generarPDFCompleta()
+  {
+    const hoy = new Date();
+    const fecha = new Date(hoy);
+    const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
+    const hora = hoy.toTimeString().substring(0, 5); // Formato "HH:MM"
+
+    const doc = new jsPDF();
+
+    let lista_historial_medico : any[] = [];
+
+    let titulo : string[] = [];
+
+    titulo.push("Historial médico");
+    titulo.push("email: " + this.db.emailUsuarioAct); 
+
+    let logo = 'https://i.postimg.cc/59z68LyS/55-sin-t-tulo-1.png';
+
+    for(let historial of this.listaHistorial)
+    {
+      if(historial.paciente.email == this.db.emailUsuarioAct)
+      {
+        lista_historial_medico.push(historial);
+      }
+    }
+
+    if(lista_historial_medico.length > 0)
+    {
+      let lineas:string[] = [];
+      for(let historial_propio of lista_historial_medico)
+      {
+        lineas.push('--- ' + historial_propio.turno.fecha + ' --- ' + historial_propio.turno.horario + ' hs');
+        lineas.push('PACIENTE: ' + historial_propio.paciente.nombre + ' ' + historial_propio.paciente.apellido,          'ESPECIALISTA: ' + historial_propio.turno.especialista.nombre + ' ' + historial_propio.turno.especialista.apellido,
+                    'ESPECIALIDAD: ' + historial_propio.turno.especialidad,
+                    'ALTURA: ' + historial_propio.altura,
+                    'PESO: ' + historial_propio.peso,
+                    'TEMPERATURA: ' + historial_propio.temperatura,
+                    'PRESIÓN: ' + historial_propio.presion);
+        for(let clave of this.obtenerClaves(historial_propio.datoDinamico))
+        {
+          lineas.push(clave.toUpperCase() + ': ' + historial_propio.datoDinamico[clave]);
+        }
+      }
+
+      lineas.push("");
+
+      lineas.push('FECHA DE EMISION: ' + formato.split("-")[2] + "/" + formato.split("-")[1] + "/" + formato.split("-")[0]);
+
+      console.log(lineas);
+
+      this.convertirImagenUrlABase64(logo).then((imagenBase64) => {
+          // Agregar título
+          doc.setFontSize(30);
+          doc.setFont('Arial','normal','bold');
+          doc.text(titulo, 20, 20);
+
+          // Agregar imagen
+          doc.addImage(imagenBase64, 'PNG', 80, 40, 60, 60); // (img, tipo, x, y, width, height)
+
+          // Texto con salto de línea
+          doc.setFontSize(20);
+          doc.setFont('Arial','normal','bold');
+          doc.text(lineas, 20, 100); // x = 20, y = 100 (esto hara que el texto quede debajo de la imagen)
+
+          // Guardar el PDF
+          doc.save('historial_medico.pdf');
       });
     }
   }

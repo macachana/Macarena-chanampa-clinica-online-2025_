@@ -31,6 +31,9 @@
                     {
                         @if(obtenerHistorialesPorESP().length > 0)
                         {
+                            <div class="historialMostrado">
+                                <button class="btn btn-dark" (click)="generarPDFCompleta()">Exportar todo el historial médico como PDF</button>
+                            </div>
                             @for(historial of obtenerHistorialesPorESP(); track historial.id)
                             {
                                 <div class="separador">t</div>
