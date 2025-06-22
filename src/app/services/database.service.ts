@@ -309,8 +309,8 @@ export class DatabaseService {
   async agregarLog(idUsuario: number | undefined)
   {
     let hoy = new Date();
-    let fecha = new Date(hoy);
-    const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
+    let fecha = new Date(hoy); // yyyy-mm-dd
+    const formato = fecha.toISOString().split('T')[0];
     const hora = hoy.toTimeString().substring(0, 5); // Formato "HH:MM"
 
     const { data, error } = await this.supabase.from("logs_sistema").insert({

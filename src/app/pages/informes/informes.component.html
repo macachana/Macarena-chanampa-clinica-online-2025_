@@ -19,9 +19,9 @@
                 <div class="contenedorLog">
                     <label class="titulo">{{titulo | uppercase }}</label>
                     <div class="seccionBotones">
-                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
-                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
-                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                        <button class="btn btn-success" (click)="volver()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como PDF</button>
+                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState03" (mouseenter)="onMouseEnter(3)" (mouseleave)="onMouseLeave(3)">Exportar como Excel</button>
                     </div>
                     <div class="listaLogs" id="detalleseleccion" name="detalleseleccion">
                         <table class="table table-light table-bordered border-primary">
@@ -57,14 +57,13 @@
                 <div class="contenedorLog">
                     <label class="titulo">{{titulo | uppercase }}</label>
                     <div class="seccionBotones">
-                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
-                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
-                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                        <button class="btn btn-success" (click)="volver()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF(false)" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como PDF</button>
                     </div>
+                    <div class="fondoGrafico" style="display:block;">
+                        <canvas #grafico01 id="canva"></canvas>
+                    </div>                
                 </div>
-                <!-- <div style="display:block;">
-                    <canvas #graficoLikes></canvas>
-                </div>                 -->
             }
             <!-- Cantidad de turnos por día. -->
             @else if(graficos02)
@@ -72,10 +71,12 @@
                 <div class="contenedorLog">
                     <label class="titulo">{{titulo | uppercase }}</label>
                     <div class="seccionBotones">
-                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
-                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
-                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                        <button class="btn btn-success" (click)="volver()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF(false)" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como PDF</button>
                     </div>
+                    <div class="fondoGrafico" style="display:block;">
+                        <canvas #grafico01 id="canva"></canvas>
+                    </div>    
                 </div>
             }
             <!-- Cantidad de turnos solicitados por médico en un lapso de tiempo. -->
@@ -84,10 +85,18 @@
                 <div class="contenedorLog">
                     <label class="titulo">{{titulo | uppercase }}</label>
                     <div class="seccionBotones">
-                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
-                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
-                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                        <button class="btn btn-success" (click)="volver()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF(false)" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como PDF</button>
                     </div>
+                    <div class="fondoGrafico" style="display:block;">
+                        <div class="seccionBotones">
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(30)" id="30">30 minutos</button>
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(60)" id="60">60 minutos</button>
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(90)" id="90">90 minutos</button>
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(120)" id="120">120 minutos</button>
+                        </div>
+                        <canvas #grafico01 id="canva"></canvas>
+                    </div>   
                 </div>
             }
             <!-- Cantidad de turnos finalizados por médico en un lapso de tiempo. -->
@@ -96,10 +105,19 @@
                 <div class="contenedorLog">
                     <label class="titulo">{{titulo | uppercase }}</label>
                     <div class="seccionBotones">
-                        <button class="btn btn-success" (click)="volver()">VOLVER</button>
-                        <button class="btn btn-light" (click)="generarPDF()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">Exportar como PDF</button>
-                        <button class="btn btn-light" (click)="generarExcel()" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como Excel</button>
+                        <button class="btn btn-success" (click)="volver()" [@expandCollapse]="expandState" (mouseenter)="onMouseEnter(1)" (mouseleave)="onMouseLeave(1)">VOLVER</button>
+                        <button class="btn btn-light" (click)="generarPDF(false)" [@expandCollapse]="expandState02" (mouseenter)="onMouseEnter(2)" (mouseleave)="onMouseLeave(2)">Exportar como PDF</button>
                     </div>
+
+                    <div class="fondoGrafico" style="display:block;">
+                        <div class="seccionBotones">
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(30)" id="30">30 minutos</button>
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(60)" id="60">60 minutos</button>
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(90)" id="90">90 minutos</button>
+                            <button class="btn btn-warning" (click)="minutosSeleccionados(120)" id="120">120 minutos</button>
+                        </div>
+                        <canvas #grafico01 id="canva"></canvas>
+                    </div>   
                 </div>
             }
             @else 

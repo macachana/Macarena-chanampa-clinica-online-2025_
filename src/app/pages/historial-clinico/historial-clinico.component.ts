@@ -195,6 +195,10 @@ export class HistorialClinicoComponent {
 
   generarPDF(historialIngresado: number | undefined)
   {
+
+    const hoy = new Date();
+    const fecha = new Date(hoy); // yyyy-mm-dd
+
     
     if(historialIngresado)
     {
@@ -238,6 +242,8 @@ export class HistorialClinicoComponent {
         lineas.push('');
         lineas.push(clave.toUpperCase() + ': ' + historialClinico.datoDinamico[clave]);
       }
+
+      lineas.push('FECHA DE EMISION: ' + fecha);
 
       console.log(lineas);
 
@@ -321,8 +327,6 @@ export class HistorialClinicoComponent {
       {
         if(especialidad == this.especialidadSeleccionada)
         {
-          console.log("especialidad: " + especialidad);
-          console.log("especialidad seleccionada: " + this.especialidadSeleccionada);
           (<HTMLButtonElement>document.getElementById(especialidad)).className = 'btn btn-danger';
         }
         else

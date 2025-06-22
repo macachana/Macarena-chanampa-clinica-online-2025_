@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild,ElementRef } from '@angular/core';
 import { DatePipe, TitleCasePipe, LowerCasePipe, registerLocaleData, UpperCasePipe } from '@angular/common';
 import { DatabaseService } from '../../services/database.service';
 
@@ -6,6 +6,26 @@ import localeEs from '@angular/common/locales/es';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { trigger, transition, style, animate, query, animateChild, group, state, keyframes } from '@angular/animations';
+
+import {
+  BarController,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+
+Chart.register(
+  BarController,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 // import de generar excel
 import * as XLSX from 'xlsx';
@@ -15,7 +35,7 @@ import * as FileSaver from 'file-saver';
 import { jsPDF } from 'jspdf';
 
 // imports de graficos
-import Chart from 'chart.js/auto';
+import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 Chart.register(ChartDataLabels);
@@ -38,7 +58,7 @@ registerLocaleData(localeEs, 'es');
 })
 export class InformesComponent {
 
-  titulo = "lista de ingresos al sistema";
+  titulo = "";
 
   graficos01 : boolean = false;
   graficos02 : boolean = false;
@@ -46,170 +66,242 @@ export class InformesComponent {
   graficos04 : boolean = false;
   mostrarLog : boolean = false;
 
+  @ViewChild('grafico01') graficoCanvas!: ElementRef;
+  chart: Chart | null = null;
+
   db = inject(DatabaseService);
   listaLogs : any[] = [];
+  listaTurnos : any[] = [];
+  listaCantTurnos : any[] = [];
 
   expandState = 'collapsed';
   expandState02 = 'collapsed';
+  expandState03 = 'collapsed';
+
+  diasSemana = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  meses: {[nombre: string]: number} = {
+    'enero': 0,
+    'febrero': 1,
+    'marzo': 2,
+    'abril': 3,
+    'mayo': 4,
+    'junio': 5,
+    'julio': 6,
+    'agosto': 7,
+    'septiembre': 8,
+    'octubre': 9,
+    'noviembre': 10,
+    'diciembre': 11    
+  };
+  conteoEspecialidades: { [especialidad: string]: number } = {};
+
+  turnosSolicitados : any[] = [];
+  turnosFinalizados: any[] = [];
+
+  cantMinutosSeleccionado : number = 0;
+
 
   constructor()
   {
     this.db.listarLogs().then((logs : any[])=>{
       this.listaLogs = logs;
-      console.log(this.listaLogs);
     }); 
-  }
 
-  ngOnInit()
-  {
+    this.db.listarTurnos().then((turnos: any[])=>{
+      this.listaTurnos = turnos;
 
+      for(const turno of this.listaTurnos)
+      {
+        if(turno.estado === "solicitado")
+        {
+          this.turnosSolicitados.push(turno);
+        }
+        else if(turno.estado == "realizado")
+        {
+          this.turnosFinalizados.push(turno);
+        }
+      }
+    });
   }
 
   mostrarLogs()
   {
+    this.mostrarLog = true;
+    this.titulo = "lista de ingresos al sistema";
     this.graficos01 = false;
     this.graficos02 = false;
     this.graficos03 = false;
     this.graficos04 = false;
-    this.mostrarLog = true;
+    this.expandState = 'collapsed';
   }
 
   mostrarGraficos01()
   {
-    this.mostrarLog = false;
     this.graficos01 = true;
+    this.titulo = "Cantidad de turnos por especialidad";
+    this.mostrarLog = false;
     this.graficos02 = false;
     this.graficos03 = false;
     this.graficos04 = false;
+    setTimeout(()=>{
+      this.crearGrafico();
+    },500);
+    this.expandState = 'collapsed';
+    // this.crearGrafico();
   }
 
   mostrarGraficos02()
   {
+    this.graficos02 = true;
+    this.titulo = "Cantidad de turnos por día";
     this.mostrarLog = false;
     this.graficos01 = false;
-    this.graficos02 = true;
     this.graficos03 = false;
     this.graficos04 = false;
+    setTimeout(()=>{
+      this.crearGrafico(2);
+    },500);
+    this.expandState = 'collapsed';
   }
 
   mostrarGraficos03()
   {
+    this.graficos03 = true;
+    this.titulo = "Cantidad de turnos por médico en un lapso de tiempo";
     this.mostrarLog = false;
     this.graficos01 = false;
     this.graficos02 = false;
-    this.graficos03 = true;
     this.graficos04 = false;
+    setTimeout(()=>{
+      this.crearGrafico(3);
+    },500);
+    this.expandState = 'collapsed';
   }
 
   mostrarGraficos04()
   {
+    this.graficos04 = true;
+    this.titulo = "Cantidad de turnos finalizados por médico en un lapso de tiempo";
     this.mostrarLog = false;
     this.graficos01 = false;
     this.graficos02 = false;
     this.graficos03 = false;
-    this.graficos04 = true;
+    setTimeout(()=>{
+      this.crearGrafico(4);
+    },500);
+    this.expandState = 'collapsed';
   }
 
-  generarExcel()
+  generarExcel(logs : boolean = true)
   {
-    // let datos : any[] = [];
+    if(logs)
+    {
+      let datos : any[] = [];
 
-    // for(let i = 0; i < this.listaUsuarios.length; i++)
-    // {
-    //   datos.push({nombre: this.listaUsuarios[i].nombre,apellido: this.listaUsuarios[i].apellido,edad: this.listaUsuarios[i].edad, email: this.listaUsuarios[i].email, dni: this.listaUsuarios[i].dni, tipo_usuario: this.listaUsuarios[i].tipo});
-    // }
+      for(let log of this.listaLogs)
+      {
+        datos.push({id:log.id, usuario:log.usuario.nombre + " " + log.usuario.apellido, tipo:log.usuario.tipo, fecha:log.fecha, hora:log.hora});
+      }
 
-    // // convertir 'datos' a hoja de excel
-    // let worksheet:XLSX.WorkSheet = XLSX.utils.json_to_sheet(datos);
+      // se convierte los 'datos' a una hoja de excel
+      let worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datos);
 
-    // // crear el libro de excel
-    // let workbook:XLSX.WorkBook = {
-    //   Sheets: {'Usuarios': worksheet },
-    //   SheetNames: ['Usuarios']
-    // };
+      // se crea el libro de excel
+      let workbook:XLSX.WorkBook = {
+        Sheets: {'Datos': worksheet},
+        SheetNames: ['Datos']
+      }
 
-    // // convertimos el libro en un buffer
-    // let excelBuffer: any = XLSX.write(
-    //   workbook, {
-    //     bookType: 'xlsx',
-    //     type: 'array',
-    //   }
-    // );
+      // convertimos el libro en un buffer
+      let excelBuffer: any = XLSX.write(
+        workbook, {
+          bookType: 'xlsx',
+          type: 'array',
+        }
+      );
 
-    // // Guardar el archivo
-    // let data: Blob = new Blob([excelBuffer], {
-    //   type: 'application/octet-stream'
-    // });
+      // Guardar el archivo
+      let data: Blob = new Blob([excelBuffer], {
+        type: 'application/octet-stream'
+      });
 
-    // FileSaver.saveAs(data, 'usuarios_clinica.xlsx');
+      FileSaver.saveAs(data, 'logs_sistema_clinica_chanampa.xlsx');
+
+    }
 
   }
 
-  generarPDF()
+  generarPDF(logs: boolean = true)
   {
-    // if(historialIngresado)
-    // {
-    //   // console.log(this.listaHistorial[historialIngresado]);
+    if(logs)
+    {
 
-    //   let historialClinico: any = {};
-    
-    //   const doc = new jsPDF();
-  
-    //   for(let i = 0; i < this.listaHistorial.length; i++)
-    //   {
-    //     if(this.listaHistorial[i].turno.id == historialIngresado)
-    //     {
-    //       historialClinico = this.listaHistorial[i];
-    //       console.log(historialClinico);
-    //     }
-    //   }
+      const doc = new jsPDF();
 
-    //   let titulo = "Historial médico: " + historialClinico.turno.fecha + ' - ' + historialClinico.turno.horario + ' hs';  
+      const titulo: string = "Registro de logs de usuarios al sistema";
 
-    //   let logo = 'https://i.postimg.cc/59z68LyS/55-sin-t-tulo-1.png';
+      const logo: string = "https://i.postimg.cc/59z68LyS/55-sin-t-tulo-1.png";
 
-    //   let lineas : string[] = [
-    //     'PACIENTE: ' + historialClinico.paciente.nombre + ' ' + historialClinico.paciente.apellido,
-    //     '',
-    //     'ESPECIALISTA: ' + historialClinico.turno.especialista.nombre + ' ' + historialClinico.turno.especialista.apellido,
-    //     '',
-    //     'ESPECIALIDAD: ' + historialClinico.turno.especialidad,
-    //     '',
-    //     'ALTURA: ' + historialClinico.altura,
-    //     '',
-    //     'PESO: ' + historialClinico.peso,
-    //     '',
-    //     'TEMPERATURA: ' + historialClinico.temperatura,
-    //     '',
-    //     'PRESIÓN: ' + historialClinico.presion,
-    //   ];
+      let lineas : string[] = [];
 
-    //   for(let clave of this.obtenerClaves(historialClinico.datoDinamico))
-    //   {
-    //     lineas.push('');
-    //     lineas.push(clave.toUpperCase() + ': ' + historialClinico.datoDinamico[clave]);
-    //   }
+      for(let log of this.listaLogs)
+      {
+        lineas.push("Usuario: " + log.usuario.nombre + " " + log.usuario.apellido + " (" + log.usuario.tipo + ") | " + log.fecha + ":" + log.hora);
+      }
 
-    //   console.log(lineas);
+      this.convertirImagenUrlABase64(logo).then((imagenBase64) => {
+          // Agregar título
+          doc.setFontSize(30);
+          doc.setFont('Arial','normal','bold');
+          doc.text(titulo, 20, 20);
 
-    //   this.convertirImagenUrlABase64(logo).then((imagenBase64) => {
-    //       // Agregar título
-    //       doc.setFontSize(30);
-    //       doc.setFont('Arial','normal','bold');
-    //       doc.text(titulo, 20, 20);
+          // Agregar imagen
+          doc.addImage(imagenBase64, 'PNG', 80, 30, 60, 60); // (img, tipo, x, y, width, height)
 
-    //       // Agregar imagen
-    //       doc.addImage(imagenBase64, 'PNG', 80, 30, 60, 60); // (img, tipo, x, y, width, height)
+          // Texto con salto de línea
+          doc.setFontSize(20);
+          doc.setFont('Arial','normal','bold');
+          doc.text(lineas, 5, 100); // x = 5, y = 100 (esto hara que el texto quede debajo de la imagen)
 
-    //       // Texto con salto de línea
-    //       doc.setFontSize(20);
-    //       doc.setFont('Arial','normal','bold');
-    //       doc.text(lineas, 20, 120); // x = 20, y = 100 (esto hara que el texto quede debajo de la imagen)
+          // Guardar el PDF
+          doc.save('logs_sistema_clinica_chanampa.pdf');
+      });
+    }
+    else
+    {
+      const canvas: any = document.getElementById('canva');
 
-    //       // Guardar el PDF
-    //       doc.save('historial_medico_' + historialClinico.paciente.nombre.toLowerCase() + '_' + historialClinico.paciente.apellido.toLowerCase() + '.pdf');
-    //   });
-    // }
+      if (!canvas) {
+        console.error('No se encontró el canvas con ID "canva".');
+        return;
+      }
+
+      const doc = new jsPDF();
+
+      const imagenBase64 = canvas.toDataURL('image/png');
+
+      let tituloPDF : string[] = [];
+
+      tituloPDF.push("Gráfico de barras:");
+      tituloPDF.push(this.titulo);
+
+      let logo = 'https://i.postimg.cc/59z68LyS/55-sin-t-tulo-1.png';
+
+      this.convertirImagenUrlABase64(logo).then((imagen) => {
+          // Agregar título
+          doc.setFontSize(30);
+          doc.setFont('Arial','normal','bold');
+          doc.text(tituloPDF, 30, 20);
+
+          // Agregar imagen
+          doc.addImage(imagen, 'PNG', 80, 40, 60, 60); // (img, tipo, x, y, width, height)
+
+          doc.addImage(imagenBase64, 'PNG', 30, 120, 130,130);
+
+          doc.save('grafico_ ' + tituloPDF + '.pdf');
+      });  
+
+    }
   }
 
   // Función para convertir una imagen a base64
@@ -245,54 +337,376 @@ export class InformesComponent {
     return hora.split(":")[0] + ':' + hora.split(":")[1];
   }
 
-  async crearGrafico()
+  obtenerDiaSemana(fechaStr: string): string | null
   {
+    const partes = fechaStr.toLowerCase().split(' de ');
+    if(partes.length !== 2) return null;
+
+    const dia = parseInt(partes[0]);
+    const nombreMes = partes[1];
+
+    const mes = this.meses[nombreMes];
+
+    if(isNaN(dia) || mes === undefined) return null;
+
+    const anio = new Date().getFullYear();
+    const fecha = new Date(anio, mes, dia);
+
+    const diaSemana = fecha.getDay();
+
+    return this.diasSemana[diaSemana];
+
+  }
+
+  minutosSeleccionados(cantMinutos: number)
+  {
+    this.cantMinutosSeleccionado = cantMinutos;
+    if(cantMinutos == 30)
+    {
+      (<HTMLButtonElement>document.getElementById("30")).className = 'btn btn-danger';
+      (<HTMLButtonElement>document.getElementById("60")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("90")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("120")).className = 'btn btn-warning';
+    }
+    else if(cantMinutos == 60)
+    {
+      (<HTMLButtonElement>document.getElementById("60")).className = 'btn btn-danger';
+      (<HTMLButtonElement>document.getElementById("30")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("90")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("120")).className = 'btn btn-warning';
+    }
+    else if(cantMinutos == 90)
+    {
+      (<HTMLButtonElement>document.getElementById("90")).className = 'btn btn-danger';
+      (<HTMLButtonElement>document.getElementById("30")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("60")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("120")).className = 'btn btn-warning';
+    }
+    else
+    {
+      (<HTMLButtonElement>document.getElementById("120")).className = 'btn btn-danger';
+      (<HTMLButtonElement>document.getElementById("30")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("60")).className = 'btn btn-warning';
+      (<HTMLButtonElement>document.getElementById("90")).className = 'btn btn-warning';
+    }
+
+    if(this.graficos03)
+    {
+      this.crearGrafico(3);
+    }
+    else if(this.graficos04)
+    {
+      this.crearGrafico(4);
+    }
+  }
+
+  async crearGrafico(numberGrafic: number = 1)
+  {
+
+    if(!this.graficoCanvas)
+    {
+      console.error("graficoCanvas no definido");
+      return;
+    }
+
+    const ctx = this.graficoCanvas.nativeElement.getContext('2d');
+
+    if(numberGrafic == 1)
+    {
+
+      for(let i = 0; i < this.listaTurnos.length; i++)
+      {
+        if(!this.conteoEspecialidades[this.listaTurnos[i].especialidad])
+        {
+          this.conteoEspecialidades[this.listaTurnos[i].especialidad] = 0;
+        }
+
+        this.conteoEspecialidades[this.listaTurnos[i].especialidad]++;
+      }
+
+      console.log(this.conteoEspecialidades);
+
+      const especialidades = Object.keys(this.conteoEspecialidades); // ['Cardiología', 'Pediatría']
+      const cantidades = Object.values(this.conteoEspecialidades); // [3, 2]
+
+      const data = {
+        labels: especialidades,
+        datasets: [
+          {
+            label: "cantidad de turnos:",
+            data: cantidades,
+            backgroundColor: [
+              '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+            ]
+          }
+        ]
+      };
+
+      if(this.chart)
+      {
+        this.chart.destroy();
+      }
+
+      this.chart = new Chart( ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            datalabels: {
+              color: 'black',
+              font: {
+                weight: 'bold',
+                size: 20,
+              }
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        },
+      });
+
+    }
+    else if(numberGrafic == 2)
+    {
+      const conteoDias : { [dia: string]: number } = {
+        lunes: 0,
+        martes: 0,
+        miércoles: 0,
+        jueves: 0,
+        viernes: 0,
+        sabado: 0
+      };
+
+      for(let turno of this.listaTurnos)
+      {
+        let diaSemana = this.obtenerDiaSemana(turno.fecha);
+        if(diaSemana)
+        {
+          conteoDias[diaSemana]++;
+        }
+      }
+
+      const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+      const cantidad = dias.map(d => conteoDias[d]);
+
+      const data = {
+        labels: dias,
+        datasets: [
+          {
+            label: 'cantidad de turnos: ',
+            data: cantidad,
+            backgroundColor: [
+              '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+            ]
+          }
+        ]
+      };
+
+      if(this.chart)
+      {
+        this.chart.destroy();
+      }
+
+      this.chart = new Chart( ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            datalabels: {
+              color: 'black',
+              font: {
+                weight: 'bold',
+                size: 20,
+              }
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        },
+      });
+    }
+    else if(numberGrafic == 3)
+    {
+      console.log(this.turnosSolicitados);
+
+      if(this.cantMinutosSeleccionado != 0)
+      {
+        const conteoPorDuracion : {[Especialista : string] : number} = {
+  
+        };
+        for(const turnoSolicitado of this.turnosSolicitados)
+        {
+          if(parseInt(turnoSolicitado.duracion_minutos) == this.cantMinutosSeleccionado)
+          {
+            if(!conteoPorDuracion[turnoSolicitado.especialista.nombre])
+            {
+              conteoPorDuracion[turnoSolicitado.especialista.nombre] = 0;
+            }
+  
+            conteoPorDuracion[turnoSolicitado.especialista.nombre] ++;
+          }
+        }
+
+        console.log(conteoPorDuracion);
+
+        const especialistas = Object.keys(conteoPorDuracion);
+
+        const cantidades = Object.values(conteoPorDuracion);
+
+        const data = {
+          labels: especialistas,
+          datasets: [
+            {
+              label: "cantidad de turnos:",
+              data: cantidades,
+              backgroundColor: [
+                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+              ]
+            }
+          ]
+        };
+
+       if(this.chart)
+        {
+          this.chart.destroy();
+        }
+
+
+        this.chart = new Chart( ctx, {
+          type: 'bar',
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              datalabels: {
+                color: 'black',
+                font: {
+                  weight: 'bold',
+                  size: 20,
+                }
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          },
+        });
+      }
+    }
+    else
+    {
+      console.log(this.turnosFinalizados);
+
+      if(this.cantMinutosSeleccionado != 0)
+      {
+        const conteoPorDuracion02 : {[Especialista : string] : number} = {
+  
+        };
+        for(const turnoFinalizado of this.turnosFinalizados)
+        {
+          if(parseInt(turnoFinalizado.duracion_minutos) == this.cantMinutosSeleccionado)
+          {
+            if(!conteoPorDuracion02[turnoFinalizado.especialista.nombre])
+            {
+              conteoPorDuracion02[turnoFinalizado.especialista.nombre] = 0;
+            }
+  
+            conteoPorDuracion02[turnoFinalizado.especialista.nombre] ++;
+          }
+        }
+
+        console.log(conteoPorDuracion02);
+
+        const especialistas = Object.keys(conteoPorDuracion02); // ['Cardiología', 'Pediatría']
+
+        const cantidades = Object.values(conteoPorDuracion02); // [3, 2]
+
+        const data = {
+          labels: especialistas,
+          datasets: [
+            {
+              label: "cantidad de turnos:",
+              data: cantidades,
+              backgroundColor: [
+                '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+              ]
+            }
+          ]
+        };
+
+        if(this.chart)
+        {
+          this.chart.destroy();
+        }
+
+        this.chart = new Chart( ctx, {
+          type: 'bar',
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              datalabels: {
+                color: 'black',
+                font: {
+                  weight: 'bold',
+                  size: 20,
+                }
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          },
+        });
+      }
+    }
+
+    // const ctx = this.graficoCanvas.nativeElement as HTMLCanvasElement;
+
     // if(!this.graficoCanvas) return;
 
     // const ctx = this.graficoCanvas.nativeElement.getContext('2d');
 
-    // const imagenesFiltradas = this.imagenes.filter(img => img.cantidad_likes > 0);
+    // conteo de cantidad de turnos por especialidad
+    
+        // const imagenesFiltradas = this.imagenes.filter(img => img.cantidad_likes > 0);  
+        // const labels = this.listaTurnos.map(img => `${img.}`);
+        // const data = imagenesFiltradas.map(img => img.cantidad_likes);
+    
+        // new Chart(ctx, {
+        //     type: 'pie',
+        //     data: {
+        //       labels: especialidades,
+        //       datasets: [
+        //         {
+        //           label: 'Cantidad de turnos',
+        //           data: cantidades,
+        //           backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
+        //         }
+        //       ]
+        //     },
+        //     options: {
+        //       responsive: true,
+        //       plugins: {
+        //         datalabels: {
+        //           color: 'black',
+        //           font: {
+        //             weight: 'bold',
+        //             size: 20,
+        //           }
+        //         },
+        //         legend: {
+        //           position: 'bottom'
+        //         }
+        //       }
+        //     },
+        //     plugins: [ChartDataLabels]
+        //   });
 
-    // const labels = imagenesFiltradas.map(img => `${img.cantidad_likes}`);
-    // const data = imagenesFiltradas.map(img => img.cantidad_likes);
-
-    // new Chart(ctx, {
-    //     type: 'pie',
-    //     data: {
-    //       labels: labels,
-    //       datasets: [{
-    //         data: data,
-    //         backgroundColor: [
-    //           '#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800',
-    //           '#BA68C8', '#81C784', '#F06292', '#9575CD', '#90CAF9'
-    //         ],
-    //       }]
-    //     },
-    //     options: {
-    //       responsive: true,
-    //       plugins: {
-    //         datalabels: {
-    //           color: 'black',
-    //           formatter: (value,context) => labels[context.dataIndex],
-    //           font: {
-    //             weight: 'bold',
-    //             size: 20,
-    //           }
-    //         },
-    //         legend: {
-    //           position: 'bottom'
-    //         }
-    //       },
-    //       onClick: (event, elements) => {
-    //         if (elements.length > 0) {
-    //           const index = elements[0].index;
-    //           const imagen = imagenesFiltradas[index];
-    //           this.imagenSeleccionadaUrl = imagen.url;
-    //         }
-    //       }
-    //     },
-    //     plugins: [ChartDataLabels]
-    //   });
   }
   
   onMouseEnter(numberButton: number = 1)
@@ -301,9 +715,13 @@ export class InformesComponent {
     {
       this.expandState = 'expanded';
     }
-    else
+    else if(numberButton == 2)
     {
       this.expandState02 = 'expanded';
+    }
+    else
+    {
+      this.expandState03 = 'expanded';
     }
   }
 
@@ -313,18 +731,22 @@ export class InformesComponent {
     {
       this.expandState = 'collapsed';
     }
+    else if(numberButton == 2)
+    {
+      this.expandState02 = 'collapsed';
+    }
     else
     {
-      this,this.expandState02 = 'collapsed';
+      this.expandState03 = 'collapsed';
     }
   }
 
   volver()
   {
-      this.graficos01 = false;
-      this.graficos02 = false;
-      this.graficos03 = false;
-      this.graficos04 = false;
-      this.mostrarLog = false;
+    this.graficos01 = false;
+    this.graficos02 = false;
+    this.graficos03 = false;
+    this.graficos04 = false;
+    this.mostrarLog = false;
   }
 }
