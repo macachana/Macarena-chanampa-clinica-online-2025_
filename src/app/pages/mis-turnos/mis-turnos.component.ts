@@ -57,6 +57,20 @@ export class MisTurnosComponent {
   ngOnInit()
   {
     this.listaEncontrados = this.listaTurnos;
+    this.db.listarTurnos().then((turnos: any[])=>{
+      this.todosTurnos = true;
+      this.listaTurnos = turnos;
+      this.listaEncontrados = this.listaTurnos;      
+    });    
+
+    this.db.listarComentarios().then((comentarios: any[])=>{
+      this.listaComentarios = comentarios;
+      console.log(this.listaComentarios);
+    });
+
+    this.db.listarHistorial().then((historiales)=>{
+      this.listaHistoriales = historiales;
+    });
   }
 
   filtrarTurno()

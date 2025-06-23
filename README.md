@@ -22,6 +22,7 @@
 
 ### Desde aquí las personas son recibidas e indicadas a realizar ya sea el inicio de sesión o el registro para acceder a la clínica online.
 ![PaginaInicio](./src/assets/pagina_de_inicio.png)
+![AnimacionInicio](./src/assets/inicio.gif)
 
 ---
 
