@@ -38,15 +38,21 @@
                 }
                 @else if(this.db.tipoUsuario == "administrador")
                 {
-                    <button class="contenedor-especialista registrosAdmin" routerLink="/registros/registro-especialista">
-                        <div class="emoji">🧑🏽‍⚕️</div>ESPECIALISTA
-                    </button>
-                    <button class="contenedor-paciente registrosAdmin" routerLink="/registros/registro-paciente">
-                        <div class="emoji">😷</div>PACIENTE
-                    </button>
-                    <button class="contenedor-paciente registrosAdmin" routerLink="/registros/registro-administrador">
-                        <div class="emoji">🧑🏽‍💻</div>ADMINISTRADOR
-                    </button>
+                    <div [@routeAnimations]="prepareRoute(outlet)" class="router-container">
+                        <div class="botones-navegacion">
+                            <button class="contenedor-especialista registrosAdmin" (click)="irAregistroESP()">
+                                <div class="emoji">🧑🏽‍⚕️</div>ESPECIALISTA
+                            </button>
+                            <button class="contenedor-paciente registrosAdmin" (click)="irAregistroPAC()">
+                                <div class="emoji">😷</div>PACIENTE
+                            </button>
+                            <button class="contenedor-paciente registrosAdmin" (click)="irAregistroAdm()">
+                                <div class="emoji">🧑🏽‍💻</div>ADMINISTRADOR
+                            </button>
+                        </div>
+    
+                        <router-outlet #outlet="outlet"></router-outlet>
+                    </div>
                 }
             </div>
             <footer style="margin-top: 2rem;">

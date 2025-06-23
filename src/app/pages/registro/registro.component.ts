@@ -65,6 +65,11 @@ export class RegistroComponent {
     this.router.navigate(['registro/registro-paciente']);
   }
 
+  irAregistroAdm()
+  {
+    this.router.navigate(['registro/registro-administrador']);
+  }
+
   onMouseEnter(animation : string)
   {
     switch(animation)

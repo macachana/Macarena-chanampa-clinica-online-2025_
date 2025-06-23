@@ -277,6 +277,11 @@ export class HistorialClinicoComponent {
     const formato = fecha.toISOString().split('T')[0]; // yyyy-mm-dd
     const hora = hoy.toTimeString().substring(0, 5); // Formato "HH:MM"
 
+    const margenX = 20;
+    let posY = 120;
+    const altoLinea = 10;
+    const altoPagina = 290; // A4 es 297mm, dejamos margen
+
     const doc = new jsPDF();
 
     let lista_historial_medico : any[] = [];
@@ -312,6 +317,7 @@ export class HistorialClinicoComponent {
         {
           lineas.push(clave.toUpperCase() + ': ' + historial_propio.datoDinamico[clave]);
         }
+        lineas.push("");
       }
 
       lineas.push("");
@@ -332,7 +338,17 @@ export class HistorialClinicoComponent {
           // Texto con salto de línea
           doc.setFontSize(20);
           doc.setFont('Arial','normal','bold');
-          doc.text(lineas, 20, 100); // x = 20, y = 100 (esto hara que el texto quede debajo de la imagen)
+          for(let linea of lineas)
+          {
+            if(posY > altoPagina)
+            {
+              doc.addPage();
+              posY = 20;
+            }
+
+            doc.text(linea, margenX, posY); // x = 5, y = 100 (esto hara que el texto quede debajo de la imagen)
+            posY += altoLinea;
+          }
 
           // Guardar el PDF
           doc.save('historial_medico.pdf');

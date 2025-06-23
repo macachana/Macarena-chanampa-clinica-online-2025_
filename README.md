@@ -18,18 +18,6 @@
 
 ## Alumna: Macarena nicole chanampa 
 
-## ÍNDICE
-- [PáGINA DE INICIO](#paginaInicio)
-- [PÁGINA DE INICIO DE SESIÓN](#paginaInicioSesion)
-- [PáGINA DE REGISTRO](#paginaRegistro)
-- [REGISTRO DE ESPECIALISTAS](#registroEspecialistas)
-- [REGISTRO DE PACIENTES](#registroPacientes)
-- [SECCION PACIENTE](#seccionPaciente)
-- [SECCION ESPECIALISTA](#seccionEspecialista)
-- [SECCION ADMINISTRADOR](#seccionAdministrador)
-
----
-
 ## PáGINA DE INICIO
 
 ### Desde aquí las personas son recibidas e indicadas a realizar ya sea el inicio de sesión o el registro para acceder a la clínica online.
@@ -73,12 +61,18 @@
 ### Desde está sección se podran visualizar los datos del paciente que ingreso. Como su nombre, apellido, imágenes, etc.
 ![PaginaRegistroEspecialistas](./src/assets/perfil_paciente.png)
 
+## HISTORIAL CLINICO
+
+### al presionar el boton, el paciente puede descargar todo el historial clinico de una especialidad o descargar el historial clinico de un turno en particular.
+![HistorialClinico](./src/assets/paciente_historial_clinico.gif)
+
 ## SOLICITAR TURNO
 ## Desde está sección se puede solicitar un turno, eligiendo especialidad, especialista, día disponible del especialista elegido y un horario disponible
 ![PaginaSolicitarTurno](./src/assets/paciente_solicitar_turno_g.gif)
 
 ## MIS TURNOS
-
+### Desde está seccion el paciente puede ver los turnos que tiene y saber su estado y puede cancelar un turno en particular.
+![PaginaMisTurnos](./src/assets/paciente_turnos.png)
 
 ---
 
@@ -89,6 +83,10 @@
 ![PaginaRegistroEspecialistas](./src/assets/perfil_especialista.png)
 ![PaginaRegistroEspecialistas](./src/assets/perfil_especialista_02.png)
 
+## HORARIOS
+### Desde está seccion que se encuentra en el perfil kel especialista puede agregar o actualizar sus horarios
+![HorariosEspecialista](./src/assets/especialista_horarios.gif)
+
 ## MIS TURNOS
 ### Desde está seccion el especialista puede ver los turnos que tiene y saber su estado y lo que puede hacer, ya sea, cancelarlo, rechazarlo o aceptarlo.
 ![PaginaMisTurnos](./src/assets/especialista_turnos.png)
@@ -96,6 +94,7 @@
 ## PACIENTES
 ### Desde está seccion el especialista visualiza los datos de los pacientes a los que atendio al menos una ves.
 ![PaginaListaPacientes](./src/assets/especialista_pacientes.png)
+
 
 ---
 
@@ -120,5 +119,10 @@
 
 ## Desde está sección el administrador visualiza los administradores, especialistas y pacientes registrados. También puede habilitar o deshabilitar especialistas.
 ![PaginaListaUsuarios](./src/assets/adm_usuarios.gif)
+
+## INFORMES
+
+### Desde está sección el administrador puede visualizar una lista de logs de los usuarios que ingresaron al sistema, y también gráficos.
+![PaginaInformes](./src/assets/adm_informes.png)
 
 ---

@@ -236,6 +236,11 @@ export class InformesComponent {
     if(logs)
     {
 
+      const margenX = 5;
+      let posY = 100;
+      const altoLinea = 10;
+      const altoPagina = 290; // A4 es 297mm, dejamos margen
+
       const doc = new jsPDF();
 
       const titulo: string = "Registro de logs de usuarios al sistema";
@@ -246,7 +251,7 @@ export class InformesComponent {
 
       for(let log of this.listaLogs)
       {
-        lineas.push("Usuario: " + log.usuario.nombre + " " + log.usuario.apellido + " (" + log.usuario.tipo + ") | " + log.fecha + ":" + log.hora);
+        lineas.push("Usuario: " + log.usuario.nombre + " " + log.usuario.apellido + " (" + log.usuario.tipo + ") | " + this.ModificarFecha(log.fecha)  + " " + log.hora);
       }
 
       this.convertirImagenUrlABase64(logo).then((imagenBase64) => {
@@ -261,7 +266,17 @@ export class InformesComponent {
           // Texto con salto de línea
           doc.setFontSize(20);
           doc.setFont('Arial','normal','bold');
-          doc.text(lineas, 5, 100); // x = 5, y = 100 (esto hara que el texto quede debajo de la imagen)
+          for(let linea of lineas)
+          {
+            if(posY > altoPagina)
+            {
+              doc.addPage();
+              posY = 20;
+            }
+
+            doc.text(linea, margenX, posY); // x = 5, y = 100 (esto hara que el texto quede debajo de la imagen)
+            posY += altoLinea;
+          }
 
           // Guardar el PDF
           doc.save('logs_sistema_clinica_chanampa.pdf');
@@ -302,6 +317,11 @@ export class InformesComponent {
       });  
 
     }
+  }
+
+  ModificarFecha(fecha: string) : string
+  {
+    return fecha.split("-")[2] + "/" + fecha.split("-")[1] + "/" + fecha.split("-")[0];
   }
 
   // Función para convertir una imagen a base64
@@ -669,49 +689,6 @@ export class InformesComponent {
         });
       }
     }
-
-    // const ctx = this.graficoCanvas.nativeElement as HTMLCanvasElement;
-
-    // if(!this.graficoCanvas) return;
-
-    // const ctx = this.graficoCanvas.nativeElement.getContext('2d');
-
-    // conteo de cantidad de turnos por especialidad
-    
-        // const imagenesFiltradas = this.imagenes.filter(img => img.cantidad_likes > 0);  
-        // const labels = this.listaTurnos.map(img => `${img.}`);
-        // const data = imagenesFiltradas.map(img => img.cantidad_likes);
-    
-        // new Chart(ctx, {
-        //     type: 'pie',
-        //     data: {
-        //       labels: especialidades,
-        //       datasets: [
-        //         {
-        //           label: 'Cantidad de turnos',
-        //           data: cantidades,
-        //           backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
-        //         }
-        //       ]
-        //     },
-        //     options: {
-        //       responsive: true,
-        //       plugins: {
-        //         datalabels: {
-        //           color: 'black',
-        //           font: {
-        //             weight: 'bold',
-        //             size: 20,
-        //           }
-        //         },
-        //         legend: {
-        //           position: 'bottom'
-        //         }
-        //       }
-        //     },
-        //     plugins: [ChartDataLabels]
-        //   });
-
   }
   
   onMouseEnter(numberButton: number = 1)
