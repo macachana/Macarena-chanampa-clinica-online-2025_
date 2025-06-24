@@ -84,16 +84,48 @@ export class MisTurnosComponent {
     }
 
     this.listaEncontrados = this.listaTurnos.filter(turno => {
-      return (
+      let coincide = (
+        String(turno.id).toLowerCase().includes(texto) ||
         String(turno.fecha).toLowerCase().includes(texto) ||
         String(turno.paciente.nombre).toLowerCase().includes(texto) ||
-        String(turno.especialidad).toLocaleLowerCase().includes(texto) ||
+        String(turno.especialidad).toLowerCase().includes(texto) ||
         String(turno.especialista.nombre).toLowerCase().includes(texto) ||
         String(turno.paciente.obraSocial).toLowerCase().includes(texto) ||
         String(turno.estado).toLowerCase().includes(texto)
-        // String(this.buscarDato(turno.id)).toLowerCase().includes(texto)
       );
+
+      // Si tiene historial subido, buscar también en historial_clinico
+      if (turno.historial_subido) {
+        const historial = this.listaHistoriales.find(
+          h => h.turno.id == turno.id // depende de cómo esté el campo
+        );
+
+        if (historial) {
+          coincide ||= (
+            String(historial.altura).toLowerCase().includes(texto) ||
+            String(historial.peso).toLowerCase().includes(texto) ||
+            String(historial.temperatura).toLowerCase().includes(texto) ||
+            String(historial.presion).toLowerCase().includes(texto) ||
+            Object.entries(historial.datoDinamico || {}).some(([clave, valor]) => {
+              return (
+                String(clave).toLowerCase().includes(texto) ||
+                String(valor).toLowerCase().includes(texto)
+              );
+            })
+          );
+        }
+      }
+
+      return coincide;
+
     });
+    // this.listaEncontrados = listaDatoTurnoEncontrado;
+
+    // for(let d of listaDatosEncontrados)
+    // {
+    //   this.listaEncontrados.push(d);
+    // }
+
 
 
     // const texto = this.busquedaTexto.toLowerCase().trim();

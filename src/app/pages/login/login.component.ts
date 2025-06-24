@@ -218,8 +218,8 @@ export class LoginComponent{
         break;
       case 5:
         this.resetCaptcha(); 
-        this.emailIng = "marianelaCampana25@gmail.com"
-        this.claveIng = "marianela";
+        this.emailIng = "rodolfoRamirez2020@gmail.com"
+        this.claveIng = "ramirez";
         break;
       case 6:
         this.resetCaptcha(); 
@@ -247,7 +247,7 @@ export class LoginComponent{
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Armando_Especialista";
         break;
       case 5:
-        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Marianela_Especialista";
+        url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/especialistas/Rodolfo_Especialista";
         break;
       case 6:
         url = "https://xrexkrbpejzmwszuhags.supabase.co/storage/v1/object/public/clinica/administradores/Roberto_Urizuru";

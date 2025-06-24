@@ -19,11 +19,13 @@ import { NgClass, NgStyle } from '@angular/common';
 
 import { HighlightDirective } from '../../directives/highlight.directive';
 
+import { LowerCasePipe, TitleCasePipe } from '@angular/common';
+
 
 
 @Component({
   selector: 'app-solicitar-turno',
-  imports: [NgClass, HighlightDirective],
+  imports: [NgClass, HighlightDirective, LowerCasePipe, TitleCasePipe],
   templateUrl: './solicitar-turno.component.html',
   styleUrl: './solicitar-turno.component.css'
 })

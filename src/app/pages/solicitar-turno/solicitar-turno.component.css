@@ -7,7 +7,7 @@ body{
 {
     position: relative;
     width: 100%;
-    height: 94.5vh; /* Ocupa toda la altura de la ventana */
+    height: auto; /* Ocupa toda la altura de la ventana */
     overflow:hidden;
 }
 
@@ -59,8 +59,7 @@ body{
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.459);
-    margin: 60px 0px;
-    padding: 40px;
+    padding: 20px;
 }
 
 .contenedor-especialidades
@@ -100,8 +99,8 @@ body{
 
 .especialidadImg
 {
-    width: 200px;
-    height: auto;
+    width: auto;
+    height: 200px;
     padding: 10px;
 }
 
@@ -180,12 +179,17 @@ tbody tr
     height: auto;
 }
 
+.listaUsuarios
+{
+    padding: 5px;
+}
+
 .este {
   height: 400px;
   line-height: 1em;
   overflow-x: scroll;
   overflow-y: scroll;
-  width: auto;
+  width: 95%;
   border: 1px solid;
   --sb-track-color: #000000;
   --sb-thumb-color: #fcff61;

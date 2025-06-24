@@ -115,4 +115,9 @@ export class UsuariosComponent {
     FileSaver.saveAs(data, 'usuarios_clinica.xlsx');
 
   }
+
+  tieneHistorial(pacienteId : number | undefined) : boolean
+  {
+    return this.listaHistorial.some(historial => historial.paciente.id === pacienteId);
+  }
 }
