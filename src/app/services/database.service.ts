@@ -259,6 +259,21 @@ export class DatabaseService {
     }
   }
 
+  async eliminarHorario(idEspecialista: number, dia: string)
+  {
+    const { data, error } = await this.supabase.from("horarios-especialistas").delete().eq("especialista",idEspecialista).eq("dia",dia); 
+    if(error)
+    {
+      console.error("Error al eliminar el horario: ", error);
+    }
+    else
+    {
+      console.log("Horario eliminado con exito");
+    }
+
+    return data;
+  }
+
   //////////////////////////// HISTORIAL CLINICO ////////////////////////////
 
   async listarHistorial()

@@ -111,10 +111,10 @@ export class RegistroEspecialistaComponent {
         const usuario : Usuario = new Usuario(nombre,apellido,parseInt(edad),email,parseInt(dni),"especialista");
         if(segundaEspecialidad)
         {
-          especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad,segundaEspecialidad,"deshabilitado");
+          especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,this.toTitleCase(especialidad),this.toTitleCase(segundaEspecialidad),"deshabilitado");
         }else
         {
-          especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,especialidad,null,"deshabilitado");
+          especialista = new Especialista(nombre,apellido,parseInt(edad),email,parseInt(dni),this.fotoChange,this.toTitleCase(especialidad),null,"deshabilitado");
         }
 
         if(this.captchaToken != null)
@@ -157,6 +157,12 @@ export class RegistroEspecialistaComponent {
         timer: 2500
       });
     }
+  }
+
+  toTitleCase(str: string): string {
+  return str.toLowerCase().split(' ').map(function(word) {
+    return (word.charAt(0).toUpperCase() + word.slice(1));
+  }).join(' ');
   }
 
   clearForm()

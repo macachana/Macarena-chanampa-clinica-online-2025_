@@ -84,9 +84,16 @@
                                 <button class="btn btn-outline-primary botonVolver" (click)="volver(3)">Volver</button>
                                 <label>Elija el día:</label>
                                 <div class="botonesFecha">
-                                    @for(fecha of listaFechas; track fecha)
+                                    @if(listaFechas.length > 0)
                                     {
-                                        <button class="btn btn-success" (click)="seleccionarFecha(fecha.fecha,fecha.dia)">{{fecha.fecha}} ({{fecha.dia}})</button>
+                                        @for(fecha of listaFechas; track fecha)
+                                        {
+                                            <button class="btn btn-success" (click)="seleccionarFecha(fecha.fecha,fecha.dia)">{{fecha.fecha}} ({{fecha.dia}})</button>
+                                        }
+                                    }
+                                    @else 
+                                    {
+                                        <div class="subTitulo">No hay días disponibles para está especialidad</div>
                                     }
                                 </div>
                             </div>    
@@ -110,7 +117,7 @@
                                 }
                                 @else 
                                 {
-                                    <label style="color:rgb(136, 136, 0);">El especialista no tiene horario disponible en este día</label>                                    
+                                    <label style="color:rgb(136, 136, 0);" class="subTitulo">El especialista no tiene horario disponible en este día</label>                                    
                                 }
                             </div>
                         </div>
