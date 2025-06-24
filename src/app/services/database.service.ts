@@ -246,9 +246,9 @@ export class DatabaseService {
     }
   }
 
-  async actualizarHorario(idEspecialista: number, dia: string, duracion: number)
+  async actualizarHorario(idEspecialista: number, dia: string, duracion: number, especialidad: string)
   {
-    const { data, error } = await this.supabase.from("horarios-especialistas").update({"duracion":duracion}).eq("especialista",idEspecialista).eq("dia",dia);
+    const { data, error } = await this.supabase.from("horarios-especialistas").update({"duracion":duracion}).eq("especialista",idEspecialista).eq("dia",dia).eq("especialidad",especialidad);
     if(error)
     {
       console.error("No se pudo eliminar el horario " + error);
@@ -259,9 +259,9 @@ export class DatabaseService {
     }
   }
 
-  async eliminarHorario(idEspecialista: number, dia: string)
+  async eliminarHorario(idEspecialista: number, dia: string, especialidad: string)
   {
-    const { data, error } = await this.supabase.from("horarios-especialistas").delete().eq("especialista",idEspecialista).eq("dia",dia); 
+    const { data, error } = await this.supabase.from("horarios-especialistas").delete().eq("especialista",idEspecialista).eq("dia",dia).eq("especialidad",especialidad); 
     if(error)
     {
       console.error("Error al eliminar el horario: ", error);

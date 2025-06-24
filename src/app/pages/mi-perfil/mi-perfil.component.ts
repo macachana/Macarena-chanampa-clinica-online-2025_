@@ -120,7 +120,7 @@ export class MiPerfilComponent {
         console.log(this.listaHorarios);
         for(let i = 0;i < this.listaHorarios.length; i++)
         {
-          if((parseInt(this.listaHorarios[i].especialista.id) == this.idEspecialista) && (this.listaHorarios[i].dia == dia))
+          if((parseInt(this.listaHorarios[i].especialista.id) == this.idEspecialista) && (this.listaHorarios[i].dia == dia) && (this.listaHorarios[i].especialidad = this.especialidadElegida))
           {
             horarioDiaOcupado = true;
           }
@@ -139,7 +139,7 @@ export class MiPerfilComponent {
         }
         else
         {
-          this.db.actualizarHorario(this.idEspecialista,dia,duracion).then((data)=>{
+          this.db.actualizarHorario(this.idEspecialista,dia,duracion,this.especialidadElegida).then((data)=>{
             console.log(data);
             if(data == null)
             {
@@ -182,15 +182,15 @@ export class MiPerfilComponent {
         console.log("id de especialista:",this.idEspecialista);
         console.log("dia:",dia);
         
-        const { data, error} = await this.db.supabase.from("horarios-especialistas").select("*").eq("especialista",this.idEspecialista).eq("dia",dia);
+        const { data, error} = await this.db.supabase.from("horarios-especialistas").select("*").eq("especialista",this.idEspecialista).eq("dia",dia).eq("especialidad",this.especialidadElegida);
         console.log(data);
         if(data)
         {
           if(data[0] != null)
           {
             console.log(data[0]);
-              
-            this.db.eliminarHorario(this.idEspecialista,dia).then((data)=>{
+
+            this.db.eliminarHorario(this.idEspecialista,dia,this.especialidadElegida).then((data)=>{
               console.log(data);
               if(data == null)
               {
