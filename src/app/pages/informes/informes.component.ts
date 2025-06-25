@@ -304,9 +304,9 @@ export class InformesComponent {
 
       this.convertirImagenUrlABase64(logo).then((imagen) => {
           // Agregar título
-          doc.setFontSize(30);
+          doc.setFontSize(20);
           doc.setFont('Arial','normal','bold');
-          doc.text(tituloPDF, 30, 20);
+          doc.text(tituloPDF, 30, 5);
 
           // Agregar imagen
           doc.addImage(imagen, 'PNG', 80, 40, 60, 60); // (img, tipo, x, y, width, height)
