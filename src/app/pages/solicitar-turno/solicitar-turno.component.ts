@@ -180,10 +180,8 @@ export class SolicitarTurnoComponent {
       {
         for(let i = 0; i < this.listaHorarios.length; i++)
         {
-          if((this.listaHorarios[i].especialista.id == id) && (this.listaHorarios[i].especialidad == this.especialidadElegida))
+          if((this.listaHorarios[i].especialista.id == id) && (this.listaHorarios[i].especialidad.toLowerCase() == this.especialidadElegida.toLowerCase()))
           {
-            console.log(this.listaHorarios[i].especialista.id + " = " + id);
-            console.log(this.listaHorarios[i].especialidad + " = " + this.especialidadElegida);
             this.diasLaborales.push(this.listaHorarios[i].dia);
           }
         }
@@ -205,7 +203,7 @@ export class SolicitarTurnoComponent {
               this.listaFechas.push({"id":i,"fecha": formato.split('-')[2] + ' de ' + mes,"dia":this.obtenerNombreDia(formato)});              
               l ++;
             }
-            console.log(this.listaFechas);
+            // console.log(this.listaFechas);
           }
         } 
         
@@ -238,13 +236,13 @@ export class SolicitarTurnoComponent {
 
           if(this.diasLaborales.includes(this.obtenerNombreDia(formato)))
           {
-            if(this.listaFechas.length < 15)
+            if(this.listaFechas.length <= 15)
             {
               const mes = this.determinarMes(formato.split('-')[1]);
               this.listaFechas.push({"id":i,"fecha": formato.split('-')[2] + ' de ' + mes,"dia":this.obtenerNombreDia(formato)});              
               l ++;
             }
-            console.log(this.listaFechas);
+            // console.log(this.listaFechas);
           }
         } 
       }    
@@ -273,7 +271,14 @@ export class SolicitarTurnoComponent {
 
         if(this.duracionTurno != 0)
         {
-            this.generarHorarios(this.duracionTurno);
+          if(this.diaSemanaElegida.toLowerCase() == "sábado")
+          {
+            this.generarHorarios(this.duracionTurno,true);
+          }
+          else
+          {
+            this.generarHorarios(this.duracionTurno);            
+          }
         }
         this.cuartaSeleccion = true;
       }
