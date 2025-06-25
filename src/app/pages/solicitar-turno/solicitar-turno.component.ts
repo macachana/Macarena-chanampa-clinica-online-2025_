@@ -417,12 +417,6 @@ export class SolicitarTurnoComponent {
     {
       this.error = true;
     }
-    // console.log("TODOS LOS HORARIOS");
-    // console.log(this.todosHorarios);
-    // console.log("HORARIOS OCUPADOS");
-    // console.log(this.horariosOcupados);
-    // console.log("HORARIOS DISPONIBLES");
-    // console.log(this.horariosDisponibles);
   }
 
   generarHorariosOcupados()
