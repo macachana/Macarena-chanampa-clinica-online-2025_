@@ -125,5 +125,6 @@
 
 ### Desde está sección el administrador puede visualizar una lista de logs de los usuarios que ingresaron al sistema, y también gráficos.
 ![PaginaInformes](./src/assets/adm_informes.png)
+![VideoPaginaInformes](./src/assets/adm_informes_g.gif)
 
 ---
