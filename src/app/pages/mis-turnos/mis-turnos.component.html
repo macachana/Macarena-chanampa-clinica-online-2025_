@@ -54,7 +54,7 @@
                                                 {
                                                     @for(historial of this.listaHistoriales; track historial.id)
                                                     {
-                                                        @if(historial.paciente.id == turno.paciente.id)
+                                                        @if(historial.turno.id == turno.id)
                                                         {
                                                             <div><b>Altura:</b> {{historial.altura}}</div>
                                                             <div><b>Peso:</b> {{historial.peso}}</div>
@@ -85,78 +85,6 @@
                         }                
                     }
                 </div>
-                <!-- <table class="table table-info table-bordered border-dark">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Fecha</th>
-                            <th>Especialista</th>
-                            <th>Especialidad</th>
-                            <th>Obra social</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @if(this.listaTurnos.length > 0)
-                            {
-                                @for(turno of listaTurnos; track turno.id)
-                                {
-                                    @if(turno.paciente.email == this.db.emailUsuarioAct)
-                                    {
-                                        <tr>
-                                            <td>{{ turno.id }}</td>
-                                            <td>{{ turno.created_at.split("T")[0].split("-")[2] }}/{{ turno.created_at.split("T")[0].split("-")[1] }}/{{ turno.created_at.split("T")[0].split("-")[0] }} </td>
-                                            <td>{{ turno.especialista.nombre }}</td>
-                                            <td>{{ turno.especialidad }}</td>
-                                            <td>{{ turno.paciente.obraSocial }}</td>
-                                            <td>{{ turno.estado.toUpperCase() }}</td>
-                                            @if(turno.estado == "aceptado")
-                                            {
-                                                <td>
-                                                    <button type="button" class="btn btn-outline-danger"  (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
-                                                </td>
-                                            }
-                                            @else if(turno.estado == "realizado")
-                                            {
-                                                @if(turno.ContieneComentario)
-                                                {
-                                                    <td>
-                                                        <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
-                                                    </td> 
-                                                }
-                                                @else 
-                                                {
-                                                    <td>
-                                                        <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('calificado',turno.id)">CALIFICAR ATENCIÓN</button>
-                                                    </td> 
-                                                }                                              
-                                            }
-                                            @else if(turno.estado == "solicitado")
-                                            {
-                                                <td>
-                                                    <button type="button" class="btn btn-outline-danger" (click)="iniciarCuestionarioTurno('cancelado',turno.id)">CANCELAR</button>
-                                                </td>
-                                            }
-                                            @else 
-                                            {
-                                                @if(turno.ContieneComentario)
-                                                {
-                                                    <td>
-                                                        <button type="button" class="btn btn-outline-primary" (click)="verComentario(turno.id)">VER RESEÑA</button>
-                                                    </td> 
-                                                }
-                                                @else 
-                                                {
-                                                    <td></td>
-                                                }
-                                            }
-                                        </tr>
-                                    }
-                                }
-                            }
-                    </tbody>
-                </table> -->
             }@else 
             {       
                 <div class="row row-cols-1 row-cols-md-3 g-4">

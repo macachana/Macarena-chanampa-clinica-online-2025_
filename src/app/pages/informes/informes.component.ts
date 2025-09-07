@@ -513,7 +513,7 @@ export class InformesComponent {
         }
       }
 
-      const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+      const dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
       const cantidad = dias.map(d => conteoDias[d]);
 
       const data = {
