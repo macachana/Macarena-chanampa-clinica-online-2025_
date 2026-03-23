@@ -29,7 +29,7 @@ export class DatabaseService {
   idPaciente : number | undefined = 0;
 
   constructor() {
-    this.supabase = createClient("https://xrexkrbpejzmwszuhags.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhyZXhrcmJwZWp6bXdzenVoYWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4MjQ1NzUsImV4cCI6MjA2MDQwMDU3NX0.rX9uMza6cojqtEKNMtrCoTSSyID9LVGc0x6gjTkOtLI");
+    this.supabase = createClient("https://jrnilrgkvzxnooawogbk.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impybmlscmdrdnp4bm9vYXdvZ2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyNTYwMjYsImV4cCI6MjA4OTgzMjAyNn0.8nXik5yBzRZUfyIyGs75TAEBmPT5RvfN6x3w8M3tDSU");
   }
 
   //////////////////////////// USUARIOS ////////////////////////////
